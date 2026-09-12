@@ -1,10 +1,5 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import Icon from "@/components/Media/Icon.astro";
-import arrow from "@/assets/icons/arrow-full.svg";
-import close from "@/assets/icons/close.svg";
-import play from "@/assets/icons/play.svg";
-import pause from "@/assets/icons/pause.svg";
 import { slotContent } from "@/utils/slots.ts";
 
 type Emphasis = "primary" | "secondary";
@@ -122,7 +117,6 @@ const tagAttrs = isLink
   ? { href: href || "#" }
   : { type: type === "submit" ? undefined : type };
 
-const marks = { play, close, arrow };
 /* main and link are written, the rest are marks with a label. */
 const isWritten = variant === "main" || variant === "link";
 const content = isWritten ? await slotContent(Astro.slots) : "";
@@ -155,16 +149,23 @@ const named = {
         </span>
       )}
       {variant === "play" && (
-        <Fragment>
-          <Icon class="button_mark button_play" src={play} variant="small" />
-          <Icon class="button_mark button_pause" src={pause} variant="small" />
-        </Fragment>
+        <>
+          <i class="ph ph-play button_mark button_play" aria-hidden="true" />
+          <i class="ph ph-pause button_mark button_pause" aria-hidden="true" />
+        </>
       )}
       {variant === "close" && (
-        <Icon class="button_mark" src={marks.close} variant="small" />
+        <i class="ph ph-x button_mark" aria-hidden="true" />
       )}
       {variant === "arrow" && (
-        <Icon class="button_mark" src={marks.arrow} variant="small" />
+        <i
+          class:list={[
+            "ph",
+            direction === "back" ? "ph-arrow-left" : "ph-arrow-right",
+            "button_mark",
+          ]}
+          aria-hidden="true"
+        />
       )}
     </Tag>
   )
@@ -181,7 +182,10 @@ const named = {
       background-color: var(--button-background);
       color: var(--button-text);
       border: var(--border-width) solid var(--button-border);
-      border-radius: 0.5em;
+      border-radius: var(--button-radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
       line-height: 1.2;
       text-decoration: none;
       text-align: center;
@@ -239,9 +243,6 @@ const named = {
         gap: 0;
         padding: 0.75em;
         border-radius: var(--radius-round);
-      }
-      &.back .button_mark {
-        rotate: 180deg;
       }
       &.play .button_pause {
         display: none;

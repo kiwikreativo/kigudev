@@ -1,0 +1,1270 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Accordion from "@/components/Interactive/Accordion.astro";
+import AccordionItem from "@/components/Interactive/AccordionItem.astro";
+import Slider from "@/components/Interactive/Slider.astro";
+import Marquee from "@/components/Interactive/Marquee.astro";
+import comic from "@/assets/logo/comic.png";
+import projectOne from "@/assets/logo/1.webp";
+import projectTwo from "@/assets/logo/2.webp";
+import projectThree from "@/assets/logo/3.webp";
+
+const services = [
+  [
+    "01",
+    "UI/UX Design",
+    "Clear and thoughtful interfaces designed around real users and business goals.",
+    "Research · user flows · design systems",
+  ],
+  [
+    "02",
+    "Web Development",
+    "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
+    "Business sites · landing pages · e-commerce",
+  ],
+  [
+    "03",
+    "Mobile Enhancement",
+    "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
+    "Responsive redesign · usability · accessibility",
+  ],
+  [
+    "04",
+    "SEO",
+    "Building a stronger technical and content foundation so search engines and users can better understand the site.",
+    "Structure · performance · discoverability",
+  ],
+];
+
+const projects = [
+  {
+    image: projectOne,
+    title: "Independent identity",
+    category: "Brand system & portfolio",
+    copy: "A distinct visual language built to make a personal practice feel clear, recognizable, and ready to grow.",
+    role: "Design direction",
+    focus: "UI/UX + web development",
+    timeline: "4 weeks",
+  },
+  {
+    image: projectTwo,
+    title: "Product clarity",
+    category: "Interface design",
+    copy: "A focused product experience that reduces friction, improves hierarchy, and makes the next action obvious.",
+    role: "UX & front-end",
+    focus: "Clear customer journeys",
+    timeline: "6 weeks",
+  },
+  {
+    image: projectThree,
+    title: "Responsive by nature",
+    category: "Mobile enhancement",
+    copy: "A considered mobile rebuild that preserves personality while improving rhythm, reachability, and speed.",
+    role: "Responsive design",
+    focus: "Responsive redesign",
+    timeline: "3 weeks",
+  },
+];
+---
+
+<div class="portfolio_wrap">
+  <section class="portfolio-hero_wrap" aria-labelledby="hero-title">
+    <div
+      class="portfolio-hero_unicorn"
+      data-us-project="qF3qXhdiOxdUeQYH8wCK"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="portfolio-hero_ambient" aria-hidden="true"></div>
+    <div class="portfolio-hero_inner">
+      <div class="portfolio-hero_copy">
+        <p class="portfolio-kicker">Design + development</p>
+        <Heading
+          tag="h1"
+          variant="inherit"
+          id="hero-title"
+          class="portfolio-hero_title"
+          >Thoughtful digital experiences, designed and built.</Heading
+        >
+        <Paragraph variant="large" class="portfolio-hero_text"
+          >I design and build thoughtful digital experiences with a focus on
+          usability, performance, and clarity.</Paragraph
+        >
+        <div class="portfolio-hero_actions">
+          <Button element="link" href="#work"
+            >View my work <i class="ph ph-arrow-up-right" aria-hidden="true"
+            ></i></Button
+          >
+          <Button element="link" href="#contact" emphasis="secondary"
+            >Start a project</Button
+          >
+        </div>
+      </div>
+      <div class="portfolio-hero_portrait">
+        <div class="portfolio-hero_orbit" aria-hidden="true"></div>
+        <Image
+          src={comic}
+          alt="Illustrated portrait of Kigudev"
+          widths={[320, 480, 640]}
+          sizes="(max-width: 48rem) 13rem, 24rem"
+          loading="eager"
+        />
+      </div>
+    </div>
+    <a class="portfolio-hero_scroll" href="#services"
+      >Scroll to explore <i class="ph ph-arrow-down" aria-hidden="true"></i></a
+    >
+  </section>
+
+  <section class="portfolio-tech_wrap" aria-label="Services">
+    <Marquee label="Services" class="portfolio-tech_marquee">
+      {
+        [
+          "UI/UX Design",
+          "Web Design",
+          "Web Development",
+          "Responsive Design",
+          "Mobile Enhancement",
+          "SEO",
+          "Landing Pages",
+          "E-commerce",
+          "Design Systems",
+          "Website Redesign",
+        ].map((item) => <span class="portfolio-tech_item">{item}</span>)
+      }
+    </Marquee>
+  </section>
+
+  <section
+    class="portfolio-services_wrap"
+    id="services"
+    aria-labelledby="services-title"
+  >
+    <div class="portfolio-container">
+      <div class="portfolio-heading_wrap">
+        <p class="portfolio-kicker">Services</p><Heading
+          tag="h2"
+          variant="inherit"
+          id="services-title"
+          class="portfolio-section_title">I can help you with</Heading
+        >
+      </div>
+      <div class="portfolio-services_list">
+        {
+          services.map(([number, title, copy, detail], index) => (
+            <article
+              class:list={[
+                "portfolio-service_item",
+                index === 0 && "is-active",
+              ]}
+              tabindex="0"
+            >
+              <span class="portfolio-service_number">{number}</span>
+              <div class="portfolio-service_copy">
+                <>
+                  <Heading
+                    tag="h3"
+                    variant="inherit"
+                    class="portfolio-service_title"
+                  >
+                    {title}
+                  </Heading>
+                  <Paragraph class="portfolio-service_text">{copy}</Paragraph>
+                </>
+              </div>
+              <div class="portfolio-service_reveal">
+                <span>{detail}</span>
+              </div>
+              <span class="portfolio-service_arrow" aria-hidden="true">
+                <i class="ph ph-arrow-up-right" />
+              </span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio-work_wrap" id="work" aria-labelledby="work-title">
+    <div class="portfolio-container portfolio-work_inner">
+      <div class="portfolio-heading_wrap centered">
+        <p class="portfolio-kicker">Selected projects</p><Heading
+          tag="h2"
+          variant="inherit"
+          id="work-title"
+          class="portfolio-section_title">Work made to be useful</Heading
+        >
+      </div>
+      <Slider
+        variant="contained"
+        xsmall={1}
+        class="portfolio-work_slider"
+        label="Selected Kigudev projects"
+      >
+        {
+          projects.map((project) => (
+            <article class="portfolio-project_wrap">
+              <div class="portfolio-project_media">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} project artwork`}
+                  widths={[480, 720, 960]}
+                  sizes="(max-width: 48rem) 100vw, 45vw"
+                  loading="lazy"
+                />
+              </div>
+              <div class="portfolio-project_content">
+                <p class="portfolio-project_category">{project.category}</p>
+                <Heading
+                  tag="h3"
+                  variant="inherit"
+                  class="portfolio-project_title"
+                >
+                  {project.title}
+                </Heading>
+                <Paragraph class="portfolio-project_text">
+                  {project.copy}
+                </Paragraph>
+                <dl class="portfolio-project_meta">
+                  <>
+                    <div>
+                      <>
+                        <dt>Role</dt>
+                        <dd>{project.role}</dd>
+                      </>
+                    </div>
+                    <div>
+                      <>
+                        <dt>Focus</dt>
+                        <dd>{project.focus}</dd>
+                      </>
+                    </div>
+                    <div>
+                      <>
+                        <dt>Timeline</dt>
+                        <dd>{project.timeline}</dd>
+                      </>
+                    </div>
+                  </>
+                </dl>
+                <Button element="link" href="#contact" emphasis="secondary">
+                  Discuss a similar project{" "}
+                  <i class="ph ph-arrow-up-right" aria-hidden="true" />
+                </Button>
+              </div>
+            </article>
+          ))
+        }
+      </Slider>
+    </div>
+  </section>
+
+  <section
+    class="portfolio-about_wrap"
+    id="about"
+    aria-labelledby="about-title"
+  >
+    <div class="portfolio-container portfolio-about_inner">
+      <div class="portfolio-about_heading">
+        <p class="portfolio-kicker">My approach</p><Heading
+          tag="h2"
+          variant="inherit"
+          id="about-title"
+          class="portfolio-section_title"
+          >Design thoughtfully.<br />Build deliberately.<br />Improve
+          continuously.</Heading
+        >
+      </div>
+      <div class="portfolio-about_copy" data-reveal-copy>
+        <p>
+          Good digital work begins with understanding what people need, then
+          removing everything that gets in their way.
+        </p><p>
+          I combine product thinking, interface design, and front-end
+          development so ideas survive the journey from a Figma file to a
+          responsive, accessible, high-performing product.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio-faq_wrap" id="faq" aria-labelledby="faq-title">
+    <div class="portfolio-container portfolio-faq_inner">
+      <div class="portfolio-heading_wrap centered">
+        <p class="portfolio-kicker">The practical details</p><Heading
+          tag="h2"
+          variant="inherit"
+          id="faq-title"
+          class="portfolio-section_title">Common questions</Heading
+        >
+      </div>
+      <Accordion single openFirst class="portfolio-faq_list">
+        <AccordionItem
+          heading="What type of projects do you work on?"
+          headingTag="h3"
+          ><p>
+            I work on business websites, landing pages, portfolios, e-commerce
+            experiences, website redesigns, and UI/UX improvements. I can help
+            with both new projects and existing websites that need a clearer,
+            more modern, or more responsive experience.
+          </p></AccordionItem
+        >
+        <AccordionItem
+          heading="Can you handle both the design and development?"
+          headingTag="h3"
+          ><p>
+            Yes. I can take a project from initial ideas and interface design
+            through front-end implementation, responsive behavior, interaction
+            details, and final delivery. This keeps the visual direction and the
+            finished website consistent throughout the project.
+          </p></AccordionItem
+        >
+        <AccordionItem
+          heading="How long does a website usually take?"
+          headingTag="h3"
+          ><p>
+            Timelines depend on the size and complexity of the project. A
+            focused landing page can often be completed faster, while a larger
+            website with multiple pages, custom interactions, or content
+            management will require more time. After reviewing the requirements,
+            I provide a clear estimated timeline before development begins.
+          </p></AccordionItem
+        >
+        <AccordionItem
+          heading="Can you redesign or improve an existing website?"
+          headingTag="h3"
+          ><p>
+            Yes. I can improve an existing website’s visual hierarchy,
+            usability, responsive behavior, mobile experience, performance, and
+            overall presentation without necessarily rebuilding everything from
+            scratch.
+          </p></AccordionItem
+        >
+        <AccordionItem
+          heading="Will the website work well on mobile devices?"
+          headingTag="h3"
+          ><p>
+            Yes. Responsive behavior is considered from the beginning. The final
+            website is tested across mobile, tablet, and desktop layouts so the
+            experience remains clear and usable at different screen sizes.
+          </p></AccordionItem
+        >
+        <AccordionItem
+          heading="Do you provide SEO optimization?"
+          headingTag="h3"
+          ><p>
+            Yes. I can implement essential technical and on-page SEO foundations
+            such as semantic structure, metadata, page titles, descriptions,
+            performance improvements, responsive behavior, accessibility
+            considerations, and search-friendly page organization.
+          </p></AccordionItem
+        >
+        <AccordionItem heading="How do we start a project?" headingTag="h3"
+          ><p>
+            Start by sending a message through the contact form or scheduling a
+            call. We can discuss your goals, the type of website you need, your
+            current materials, expected features, timeline, and any references
+            you already have.
+          </p></AccordionItem
+        >
+      </Accordion>
+    </div>
+  </section>
+
+  <section
+    class="portfolio-contact_wrap"
+    id="contact"
+    aria-labelledby="contact-title"
+  >
+    <div class="portfolio-contact_inner">
+      <div class="portfolio-contact_copy">
+        <p class="portfolio-kicker">Start a conversation</p>
+        <Heading
+          tag="h2"
+          variant="inherit"
+          id="contact-title"
+          class="portfolio-contact_title"
+          >Tell me about your next project.</Heading
+        >
+        <p class="portfolio-contact_text">
+          Share what you are building, improving, or trying to clarify. I will
+          review the details and get back to you with a practical next step.
+        </p>
+      </div>
+      <form class="portfolio-contact_form" id="contact-form" novalidate>
+        <div class="portfolio-contact_field">
+          <label for="first-name">First Name</label><input
+            id="first-name"
+            name="firstName"
+            autocomplete="given-name"
+            required
+            aria-describedby="first-name-error"
+          /><span class="portfolio-contact_error" id="first-name-error"></span>
+        </div>
+        <div class="portfolio-contact_field">
+          <label for="last-name">Last Name</label><input
+            id="last-name"
+            name="lastName"
+            autocomplete="family-name"
+            required
+            aria-describedby="last-name-error"
+          /><span class="portfolio-contact_error" id="last-name-error"></span>
+        </div>
+        <div class="portfolio-contact_field wide">
+          <label for="email">Email</label><input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            aria-describedby="email-error"
+          /><span class="portfolio-contact_error" id="email-error"></span>
+        </div>
+        <div class="portfolio-contact_field wide">
+          <label for="subject">Subject</label><input
+            id="subject"
+            name="subject"
+            required
+            aria-describedby="subject-error"
+          /><span class="portfolio-contact_error" id="subject-error"></span>
+        </div>
+        <div class="portfolio-contact_field wide">
+          <label for="message">Message</label><textarea
+            id="message"
+            name="message"
+            rows="6"
+            required
+            aria-describedby="message-error"></textarea><span
+            class="portfolio-contact_error"
+            id="message-error"></span>
+        </div>
+        <div class="portfolio-contact_submit wide">
+          <button type="submit"
+            >Send Message <i class="ph ph-paper-plane-tilt" aria-hidden="true"
+            ></i></button
+          >
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.UnicornStudio) {
+        if (!window.UnicornStudio.isInitialized) {
+          window.UnicornStudio.init();
+          window.UnicornStudio.isInitialized = true;
+        }
+        return;
+      }
+      window.UnicornStudio = { isInitialized: false };
+      const script = document.createElement("script");
+      script.src =
+        "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
+      script.onload = () => {
+        if (!window.UnicornStudio.isInitialized) {
+          window.UnicornStudio.init();
+          window.UnicornStudio.isInitialized = true;
+        }
+      };
+      (document.head || document.body).appendChild(script);
+    })();
+  </script>
+
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.utils
+        .toArray<HTMLElement>(".portfolio-project_media")
+        .forEach((media) =>
+          gsap.fromTo(
+            media,
+            { scale: 0.88, opacity: 0.45 },
+            {
+              scale: 1,
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: media,
+                start: "top 88%",
+                end: "center 52%",
+                scrub: 0.7,
+              },
+            },
+          ),
+        );
+      const copy = document.querySelector<HTMLElement>("[data-reveal-copy]");
+      if (copy) {
+        const words = copy.innerText.trim().split(/\s+/);
+        copy.innerHTML = words.map((word) => `<span>${word}</span>`).join(" ");
+        gsap.fromTo(
+          copy.querySelectorAll("span"),
+          { opacity: 0.12 },
+          {
+            opacity: 1,
+            stagger: 0.05,
+            ease: "none",
+            scrollTrigger: {
+              trigger: copy,
+              start: "top 82%",
+              end: "bottom 45%",
+              scrub: 0.6,
+            },
+          },
+        );
+      }
+    }
+    document
+      .querySelectorAll<HTMLElement>(".portfolio-service_item")
+      .forEach((item) => {
+        const activate = () => {
+          document
+            .querySelectorAll(".portfolio-service_item")
+            .forEach((row) => row.classList.remove("is-active"));
+          item.classList.add("is-active");
+        };
+        item.addEventListener("mouseenter", activate);
+        item.addEventListener("focus", activate);
+        item.addEventListener("click", activate);
+      });
+
+    const contactForm =
+      document.querySelector<HTMLFormElement>("#contact-form");
+    if (contactForm) {
+      const messages: Record<string, string> = {
+        firstName: "Please enter your first name.",
+        lastName: "Please enter your last name.",
+        email: "Please enter a valid email address.",
+        subject: "Please add a subject.",
+        message: "Please tell me a little about your project.",
+      };
+      const validate = (field: HTMLInputElement | HTMLTextAreaElement) => {
+        const error = contactForm.querySelector<HTMLElement>(
+          `#${field.id}-error`,
+        );
+        const invalid = !field.validity.valid;
+        field.setAttribute("aria-invalid", String(invalid));
+        if (error) error.textContent = invalid ? messages[field.name] : "";
+        return !invalid;
+      };
+      contactForm
+        .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+          "input, textarea",
+        )
+        .forEach((field) => {
+          field.addEventListener("blur", () => validate(field));
+          field.addEventListener("input", () => {
+            if (field.getAttribute("aria-invalid") === "true") validate(field);
+          });
+        });
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const fields = [
+          ...contactForm.querySelectorAll<
+            HTMLInputElement | HTMLTextAreaElement
+          >("input, textarea"),
+        ];
+        const valid = fields.map(validate).every(Boolean);
+        if (!valid) {
+          fields.find((field) => !field.validity.valid)?.focus();
+          return;
+        }
+      });
+    }
+  </script>
+
+  <style is:global>
+    @layer components {
+      .portfolio_wrap {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+        background: var(--background);
+        color: var(--text);
+      }
+      .portfolio-container {
+        width: min(calc(100% - 2.5rem), 80rem);
+        margin-inline: auto;
+      }
+    .portfolio-kicker {
+      margin: 0;
+      color: var(--accent);
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .portfolio-heading_wrap {
+        display: grid;
+        gap: 1.4rem;
+      }
+      .portfolio-heading_wrap.centered {
+        justify-items: center;
+        text-align: center;
+      }
+      .portfolio-section_title {
+        max-width: 13ch;
+        margin: 0;
+        color: var(--text);
+      font-size: clamp(2.75rem, 6vw, 5.5rem);
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      }
+      .portfolio-hero_wrap {
+        position: relative;
+        min-height: calc(100svh - 1.5rem);
+        display: grid;
+        align-items: center;
+        padding: 9rem max(1.25rem, calc((100% - 87.5rem) / 2)) 5rem;
+        overflow: hidden;
+        isolation: isolate;
+        scroll-margin-top: 6.5rem;
+      }
+      .portfolio-hero_unicorn {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.62;
+        pointer-events: none;
+        filter: saturate(0.5) contrast(1.05);
+      }
+      .portfolio-hero_ambient {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        background:
+          radial-gradient(
+            circle at 73% 44%,
+            color-mix(in srgb, var(--accent-strong) 35%, transparent) 0,
+            transparent 29%
+          ),
+          linear-gradient(
+            115deg,
+            transparent 55%,
+            color-mix(in srgb, var(--surface) 70%, transparent)
+          );
+      }
+      .portfolio-hero_inner {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 8fr) minmax(18rem, 4fr);
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+      }
+      .portfolio-hero_copy {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        justify-items: start;
+        gap: 2rem;
+      }
+      .portfolio-hero_title {
+        max-width: 70rem;
+        margin: 0;
+        color: var(--text);
+      font-size: clamp(3rem, 6.25vw, 6rem);
+      font-weight: 500;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+        text-wrap: balance;
+      }
+      .portfolio-hero_text {
+      max-width: 37rem;
+      margin: 0;
+      color: var(--text-2);
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      font-weight: 400;
+      line-height: 1.6;
+      }
+      .portfolio-hero_actions,
+      .portfolio-contact_actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .portfolio-hero_actions .button_wrap,
+      .portfolio-contact_actions .button_wrap {
+        min-height: 2.75rem;
+        border-radius: var(--button-radius);
+      }
+      .portfolio-hero_portrait {
+        position: relative;
+        align-self: end;
+        display: grid;
+        place-items: end center;
+        min-height: 34rem;
+      }
+      .portfolio-hero_portrait img {
+        position: relative;
+        z-index: 1;
+        width: min(31rem, 130%);
+        max-width: none;
+        height: auto;
+        filter: saturate(0.72) contrast(1.08);
+        transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .portfolio-hero_portrait:hover img {
+        transform: scale(1.025);
+      }
+      .portfolio-hero_orbit {
+        position: absolute;
+        width: 27rem;
+        aspect-ratio: 1;
+        border: 0.0625rem solid var(--border);
+        border-radius: 50%;
+      }
+      .portfolio-hero_scroll {
+        position: absolute;
+        bottom: 1.5rem;
+        left: max(1.25rem, calc((100% - 87.5rem) / 2));
+        color: var(--text-2);
+        font-size: 0.75rem;
+        text-decoration: none;
+        z-index: 2;
+      }
+      [data-theme="dark"] .portfolio-hero_ambient {
+        background:
+          radial-gradient(
+            circle at 73% 44%,
+            rgba(65, 90, 119, 0.42) 0,
+            transparent 32%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(13, 27, 42, 0.1) 0%,
+            rgba(13, 27, 42, 0.38) 58%,
+            #0d1b2a 100%
+          );
+      }
+      [data-theme="light"] .portfolio-hero_unicorn {
+        opacity: 0.36;
+        filter: saturate(0.35) contrast(0.9);
+      }
+      [data-theme="light"] .portfolio-hero_ambient {
+        background:
+          radial-gradient(
+            circle at 73% 44%,
+            rgba(119, 141, 169, 0.2) 0,
+            transparent 34%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(224, 225, 221, 0.18) 0%,
+            rgba(224, 225, 221, 0.5) 62%,
+            #e0e1dd 100%
+          );
+      }
+      .portfolio-tech_wrap {
+        padding-block: 1.5rem;
+        border-block: 0.0625rem solid var(--border);
+      }
+      .portfolio-tech_marquee {
+        width: min(calc(100% - 2.5rem), 87.5rem);
+        margin-inline: auto;
+      }
+      .portfolio-tech_marquee .marquee_toggle {
+        display: none;
+      }
+      .portfolio-tech_marquee .marquee_panel {
+        gap: 3rem;
+      }
+      .portfolio-tech_item {
+        display: inline-flex;
+        align-items: center;
+        gap: 3rem;
+        color: var(--text-2);
+        font-family: var(--label-family);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .portfolio-tech_item::after {
+        content: "";
+        width: 0.25rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .portfolio-services_wrap,
+      .portfolio-work_wrap,
+      .portfolio-about_wrap,
+      .portfolio-faq_wrap {
+        padding-block: clamp(6rem, 12vw, 10rem);
+        scroll-margin-top: 6.5rem;
+      }
+      .portfolio-services_list {
+        margin-top: clamp(3.5rem, 7vw, 5rem);
+      }
+      .portfolio-service_item {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 6fr) minmax(8rem, 3fr) 3rem;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 2rem 1rem;
+        border-bottom: 0.0625rem solid var(--border);
+        border-radius: 0;
+        outline: none;
+        transition:
+          padding 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+          background-color 0.35s,
+          border-radius 0.35s;
+      }
+      .portfolio-service_item.is-active {
+        padding: 2.5rem 2rem;
+        background: var(--surface);
+        border-radius: 1.25rem;
+        border-color: transparent;
+      }
+      .portfolio-service_item:focus-visible {
+        outline: 0.125rem solid var(--accent);
+        outline-offset: 0.25rem;
+      }
+      .portfolio-service_number {
+        align-self: start;
+        padding-top: 0.45rem;
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.8rem;
+      }
+      .portfolio-service_copy {
+        display: grid;
+        gap: 1rem;
+      }
+    .portfolio-service_title {
+      margin: 0;
+      font-size: clamp(2rem, 3.5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+    .portfolio-service_text {
+      max-width: 55ch;
+      margin: 0;
+      color: var(--text-2);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.6;
+      }
+      .portfolio-service_reveal {
+        overflow: hidden;
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(0.5rem);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+      .portfolio-service_item.is-active .portfolio-service_reveal {
+        opacity: 1;
+        transform: none;
+      }
+      .portfolio-service_arrow {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        aspect-ratio: 1;
+        border: 0.0625rem solid var(--border);
+        border-radius: 50%;
+        transition:
+          transform 0.3s,
+          background 0.3s,
+          color 0.3s;
+      }
+      .portfolio-service_item.is-active .portfolio-service_arrow {
+        transform: rotate(45deg);
+        background: var(--text);
+        color: var(--background);
+      }
+      .portfolio-work_wrap {
+        background: var(--surface-secondary);
+        color: var(--text);
+        border-radius: clamp(2rem, 5vw, 4rem);
+      }
+      .portfolio-work_wrap .portfolio-kicker {
+        color: var(--accent-strong);
+      }
+      .portfolio-work_wrap .portfolio-section_title {
+        color: var(--text);
+      }
+      .portfolio-work_inner {
+        display: grid;
+        gap: 4.5rem;
+      }
+      .portfolio-work_slider .slider_list {
+        gap: 1rem;
+      }
+      .portfolio-work_slider .portfolio-project_wrap {
+        min-width: 100%;
+      }
+      .portfolio-project_wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        min-height: 34rem;
+        overflow: hidden;
+        background: var(--surface);
+        color: var(--text);
+        border: 0.0625rem solid var(--border);
+        border-radius: clamp(1.75rem, 4vw, 2.5rem);
+      }
+      .portfolio-project_media {
+        min-height: 100%;
+        overflow: hidden;
+        background: var(--accent-strong);
+        transform-origin: center bottom;
+      }
+      .portfolio-project_media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.15);
+        transition:
+          transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+          filter 0.7s;
+      }
+      .portfolio-project_wrap:hover .portfolio-project_media img {
+        transform: scale(1.03);
+        filter: grayscale(0.4) contrast(1.08);
+      }
+      .portfolio-project_content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: clamp(2rem, 5vw, 4.5rem);
+      }
+    .portfolio-project_category {
+      margin: 0;
+      color: var(--accent);
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .portfolio-project_title {
+        max-width: 10ch;
+        margin: 0;
+      font-size: clamp(2rem, 3.5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+    .portfolio-project_text {
+      max-width: 48ch;
+      margin: 0;
+      color: var(--text-2);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.6;
+      }
+      .portfolio-project_meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        margin: 0.75rem 0;
+        padding-block: 1.25rem;
+        border-block: 0.0625rem solid var(--border);
+      }
+      .portfolio-project_meta div {
+        display: grid;
+        gap: 0.45rem;
+      }
+    .portfolio-project_meta dt {
+      color: var(--accent);
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .portfolio-project_meta dd {
+        margin: 0;
+        font-size: 0.82rem;
+      }
+      .portfolio-work_slider .slider_controls {
+        justify-content: center;
+      }
+      .portfolio-about_inner {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
+        gap: 4rem;
+        align-items: end;
+      }
+      .portfolio-about_wrap {
+        padding-top: clamp(10rem, 16vw, 15rem);
+      }
+      .portfolio-about_heading {
+        display: grid;
+        gap: 1.5rem;
+      }
+      .portfolio-about_copy {
+        max-width: 34rem;
+        color: var(--text);
+        font-size: clamp(1.35rem, 2.1vw, 2rem);
+        line-height: 1.45;
+        letter-spacing: -0.025em;
+      }
+      .portfolio-about_copy p {
+        margin: 0;
+      }
+      .portfolio-about_copy p + p {
+        margin-top: 1.5rem;
+      }
+      .portfolio-about_copy span {
+        opacity: 0.12;
+      }
+      .portfolio-faq_inner {
+        display: grid;
+        gap: 4.5rem;
+      }
+      .portfolio-faq_list {
+        max-width: 62rem;
+        margin-inline: auto;
+      }
+      .portfolio-faq_list .accordion_item {
+        margin-top: 0.5rem;
+        padding-inline: 1.5rem;
+        background: var(--surface);
+        border: 0.0625rem solid var(--border);
+        border-radius: 1.125rem;
+      }
+      .portfolio-faq_list .accordion_item[open] {
+        border-color: var(--accent);
+      }
+    .portfolio-faq_list .accordion_title {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .portfolio-faq_list .accordion_body {
+      max-width: 48rem;
+      color: var(--text-2);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.65;
+      letter-spacing: 0;
+      }
+      .portfolio-contact_wrap {
+        margin: 1.25rem;
+        padding: clamp(6rem, 12vw, 10rem) 1.25rem;
+        background: var(--surface);
+        border-radius: clamp(2rem, 5vw, 4rem);
+        scroll-margin-top: 6.5rem;
+      }
+      .portfolio-contact_inner {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(28rem, 7fr);
+        align-items: start;
+        gap: clamp(3rem, 7vw, 7rem);
+        width: min(100%, 78rem);
+        margin-inline: auto;
+      }
+      .portfolio-contact_wrap .portfolio-kicker {
+        color: var(--accent);
+      }
+      .portfolio-contact_copy {
+        display: grid;
+        gap: clamp(2rem, 3vw, 2.75rem);
+      }
+      .portfolio-contact_title {
+        max-width: 10ch;
+        margin: 0;
+      font-size: clamp(3rem, 6vw, 4.75rem);
+      font-weight: 500;
+      line-height: 0.88;
+      letter-spacing: -0.04em;
+      }
+      .portfolio-contact_text {
+        max-width: 38ch;
+      color: var(--text-2);
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      font-weight: 400;
+      line-height: 1.6;
+      }
+      .portfolio-contact_form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+      .portfolio-contact_field {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .portfolio-contact_field.wide,
+      .portfolio-contact_submit.wide {
+        grid-column: 1 / -1;
+      }
+      .portfolio-contact_field label {
+        color: var(--text-2);
+        font-family: var(--label-family);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .portfolio-contact_field input,
+      .portfolio-contact_field textarea {
+        width: 100%;
+        padding: 0.95rem 1rem;
+        color: var(--text);
+        background: color-mix(
+          in srgb,
+          var(--surface-secondary) 55%,
+          transparent
+        );
+        border: 0.0625rem solid var(--border);
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      .portfolio-contact_field textarea {
+        min-height: 11.25rem;
+        resize: none;
+      }
+      .portfolio-contact_field input:focus,
+      .portfolio-contact_field textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.1875rem
+          color-mix(in srgb, var(--accent) 22%, transparent);
+      }
+      .portfolio-contact_field [aria-invalid="true"] {
+        border-color: var(--accent-strong);
+      }
+      .portfolio-contact_error {
+        min-height: 1rem;
+        color: var(--text-2);
+        font-size: 0.72rem;
+      }
+      .portfolio-contact_submit {
+        display: block;
+        width: 100%;
+      }
+      .portfolio-contact_submit button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        width: 100%;
+        min-height: 3rem;
+        padding-inline: 1.4rem;
+        color: var(--button-text);
+        background: var(--button-background);
+        border-radius: var(--button-radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      }
+      @media (width < 64rem) {
+        .portfolio-hero_wrap {
+          min-height: 50rem;
+          padding-top: 7.5rem;
+          text-align: center;
+        }
+        .portfolio-hero_inner {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+        .portfolio-hero_copy {
+          justify-items: center;
+        }
+      .portfolio-hero_title {
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+      }
+      .portfolio-contact_title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+      }
+        .portfolio-hero_portrait {
+          grid-row: 1;
+          min-height: auto;
+          margin-bottom: -1rem;
+        }
+        .portfolio-hero_portrait img {
+          width: 13rem;
+        }
+        .portfolio-hero_orbit {
+          width: 12rem;
+        }
+        .portfolio-hero_scroll {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .portfolio-hero_unicorn {
+          display: none;
+        }
+      }
+    @media (width < 48rem) {
+      .portfolio-hero_title {
+        font-size: clamp(2rem, 9vw, 2.5rem);
+      }
+        .portfolio-service_item,
+        .portfolio-service_item.is-active {
+          grid-template-columns: 2.5rem minmax(0, 1fr) 3rem;
+          gap: 1rem;
+          padding: 1.75rem 1rem;
+        }
+        .portfolio-service_reveal {
+          grid-column: 2 / -1;
+        }
+        .portfolio-project_wrap {
+          grid-template-columns: 1fr;
+        }
+        .portfolio-project_media {
+          min-height: 20rem;
+        }
+        .portfolio-project_content {
+          padding: 2rem 1.5rem;
+        }
+        .portfolio-project_meta {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+        .portfolio-about_inner {
+          grid-template-columns: 1fr;
+        }
+        .portfolio-contact_wrap {
+          margin: 0.75rem;
+        }
+        .portfolio-contact_inner,
+        .portfolio-contact_form {
+          grid-template-columns: 1fr;
+        }
+        .portfolio-contact_field.wide,
+      .portfolio-contact_submit.wide {
+        grid-column: auto;
+      }
+    }
+    @media (48rem <= width < 64rem) {
+      .portfolio-contact_title {
+        font-size: 2rem;
+      }
+    }
+    }
+  </style>
+</div>

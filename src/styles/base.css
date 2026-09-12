@@ -1,17 +1,23 @@
 /* 1. Design tokens */
 :root {
   /* Swatches */
-  --light-100: #ffffff;
-  --light-200: #ebebeb;
-  --light-300: #d9d9d9;
-  --dark-700: #453e42;
-  --dark-800: #2f2b2d;
-  --dark-900: #1f1d1e;
-  --brand-500: #c6fb50;
-  --brand-text: var(--dark-900);
+  --navy-950: #0d1b2a;
+  --navy-900: #1b263b;
+  --blue-700: #415a77;
+  --blue-500: #778da9;
+  --off-white: #e0e1dd;
+  --light-100: #f5f5f2;
+  --light-200: #e9eae6;
+  --light-300: var(--off-white);
+  --dark-700: var(--blue-700);
+  --dark-800: var(--navy-900);
+  --dark-900: var(--navy-950);
+  --brand-500: var(--blue-500);
+  --brand-text: var(--navy-950);
 
   /* Typography primitives */
-  --primary-family: var(--font-inter, system-ui, sans-serif);
+  --primary-family: BlinkMacSystemFont, -apple-system, "Segoe UI", sans-serif;
+  --label-family: "JetBrains Mono", monospace;
   --primary-regular: 400;
   --primary-medium: 500;
   --primary-bold: 700;
@@ -19,7 +25,7 @@
   --primary-trim-bottom: 0.38em;
 
   /* Letter spacing */
-  --letter-spacing-tight: -0.03em;
+  --letter-spacing-tight: -0.04em;
   --letter-spacing-normal: 0em;
 
   /* Line height */
@@ -35,8 +41,8 @@
   --focus-offset-inner: calc(var(--focus-width) * -1);
 
   /* Hover motion */
-  --hover-duration: 200ms;
-  --hover-ease: ease;
+  --hover-duration: 280ms;
+  --hover-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* Opening motion */
   --open-duration: var(--hover-duration);
@@ -45,6 +51,7 @@
   /* Radius */
   --radius-small: 0.5rem;
   --radius-main: 1rem;
+  --button-radius: 0.75rem;
   --radius-round: 100vw;
 
   /* Fluid scale range */
@@ -63,7 +70,7 @@
   --display: clamp(var(--display-min) / 16 * 1rem, ((var(--display-min) - ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--display-max) / 16 * 1rem);
   --display-min: 64;
   --display-max: 112;
-  --display-line-height: var(--line-height-small);
+  --display-line-height: 0.85;
   --display-letter-spacing: var(--letter-spacing-tight);
   --display-text-transform: none;
   --display-margin-top: var(--space-7);
@@ -77,8 +84,8 @@
   --h1: clamp(var(--h1-min) / 16 * 1rem, ((var(--h1-min) - ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h1-max) / 16 * 1rem);
   --h1-min: 48;
   --h1-max: 80;
-  --h1-line-height: var(--line-height-small);
-  --h1-letter-spacing: var(--letter-spacing-tight);
+  --h1-line-height: 0.9;
+  --h1-letter-spacing: -0.04em;
   --h1-text-transform: none;
   --h1-margin-top: var(--space-7);
   --h1-margin-bottom: var(--space-6);
@@ -91,8 +98,8 @@
   --h2: clamp(var(--h2-min) / 16 * 1rem, ((var(--h2-min) - ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h2-max) / 16 * 1rem);
   --h2-min: 40;
   --h2-max: 64;
-  --h2-line-height: var(--line-height-small);
-  --h2-letter-spacing: var(--letter-spacing-tight);
+  --h2-line-height: 0.9;
+  --h2-letter-spacing: -0.035em;
   --h2-text-transform: none;
   --h2-margin-top: var(--space-7);
   --h2-margin-bottom: var(--space-5);
@@ -105,8 +112,8 @@
   --h3: clamp(var(--h3-min) / 16 * 1rem, ((var(--h3-min) - ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h3-max) / 16 * 1rem);
   --h3-min: 36;
   --h3-max: 48;
-  --h3-line-height: var(--line-height-medium);
-  --h3-letter-spacing: var(--letter-spacing-tight);
+  --h3-line-height: 0.95;
+  --h3-letter-spacing: -0.03em;
   --h3-text-transform: none;
   --h3-margin-top: var(--space-6);
   --h3-margin-bottom: var(--space-5);
@@ -161,7 +168,7 @@
   --text-large: clamp(var(--text-large-min) / 16 * 1rem, ((var(--text-large-min) - ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--text-large-max) / 16 * 1rem);
   --text-large-min: 18;
   --text-large-max: 20;
-  --text-large-line-height: var(--line-height-large);
+  --text-large-line-height: 1.6;
   --text-large-letter-spacing: var(--letter-spacing-normal);
   --text-large-text-transform: none;
   --text-large-margin-top: var(--space-4);
@@ -175,7 +182,7 @@
   --text-main: clamp(var(--text-main-min) / 16 * 1rem, ((var(--text-main-min) - ((var(--text-main-max) - var(--text-main-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--text-main-max) - var(--text-main-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--text-main-max) / 16 * 1rem);
   --text-main-min: 16;
   --text-main-max: 18;
-  --text-main-line-height: var(--line-height-huge);
+  --text-main-line-height: 1.6;
   --text-main-letter-spacing: var(--letter-spacing-normal);
   --text-main-text-transform: none;
   --text-main-margin-top: var(--space-4);
@@ -367,6 +374,50 @@
   color: var(--text);
 }
 
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0d1b2a;
+  --background-2: #1b263b;
+  --background-3: #162435;
+  --surface: #1b263b;
+  --surface-secondary: #162435;
+  --text: #e0e1dd;
+  --text-2: rgba(224, 225, 221, 0.7);
+  --text-primary: #e0e1dd;
+  --text-secondary: rgba(224, 225, 221, 0.7);
+  --accent: #778da9;
+  --accent-strong: #415a77;
+  --border: rgba(224, 225, 221, 0.14);
+  --button-background: #e0e1dd;
+  --button-border: #e0e1dd;
+  --button-text: #0d1b2a;
+  --button-background-hover: #778da9;
+  --button-border-hover: #778da9;
+  --button-text-hover: #0d1b2a;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #e0e1dd;
+  --background-2: #f4f5f2;
+  --background-3: #ffffff;
+  --surface: #f4f5f2;
+  --surface-secondary: #ffffff;
+  --text: #0d1b2a;
+  --text-2: rgba(13, 27, 42, 0.68);
+  --text-primary: #0d1b2a;
+  --text-secondary: rgba(13, 27, 42, 0.68);
+  --accent: #415a77;
+  --accent-strong: #1b263b;
+  --border: rgba(13, 27, 42, 0.14);
+  --button-background: #0d1b2a;
+  --button-border: #0d1b2a;
+  --button-text: #e0e1dd;
+  --button-background-hover: #415a77;
+  --button-border-hover: #415a77;
+  --button-text-hover: #e0e1dd;
+}
+
 /* 3. Reset & base */
 *,
 ::before,
@@ -390,6 +441,33 @@ body {
     flex-direction: column;
     flex-grow: 1;
   }
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+nav,
+section,
+article,
+footer,
+button,
+input,
+textarea {
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease;
 }
 
 a {
@@ -436,6 +514,10 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+label {
+  font-family: var(--label-family);
 }
 
 ul,

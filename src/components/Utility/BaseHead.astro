@@ -1,8 +1,8 @@
 ---
-import { Font } from "astro:assets";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/consts.ts";
 import { isNoindexRoute } from "@/utils/seo.ts";
 import type { SeoProps } from "@/types.ts";
+import favicon from "@/assets/logo/favicon.webp";
 
 type Props = SeoProps;
 
@@ -26,7 +26,14 @@ const socialImage = new URL(image, Astro.site);
   @layer base, patterns, components, utilities;
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<Font cssVariable="--font-inter" preload />
+<script is:inline>
+  (() => {
+    const saved = localStorage.getItem("kigudev-theme");
+    const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme =
+      saved || (systemDark ? "dark" : "light");
+  })();
+</script>
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
@@ -44,6 +51,5 @@ const socialImage = new URL(image, Astro.site);
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={socialImage} />
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" type="image/webp" href={favicon.src} />
 <meta name="generator" content={Astro.generator} />

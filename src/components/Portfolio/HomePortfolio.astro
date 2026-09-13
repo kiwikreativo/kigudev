@@ -11,32 +11,37 @@ import comic from "@/assets/logo/comic.png";
 import projectOne from "@/assets/logo/1.webp";
 import projectTwo from "@/assets/logo/2.webp";
 import projectThree from "@/assets/logo/3.webp";
+import projectFour from "@/assets/logo/4.webp";
 
 const services = [
-  [
-    "01",
-    "UI/UX Design",
-    "Clear and thoughtful interfaces designed around real users and business goals.",
-    "Research · user flows · design systems",
-  ],
-  [
-    "02",
-    "Web Development",
-    "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
-    "Business sites · landing pages · e-commerce",
-  ],
-  [
-    "03",
-    "Mobile Enhancement",
-    "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
-    "Responsive redesign · usability · accessibility",
-  ],
-  [
-    "04",
-    "SEO",
-    "Building a stronger technical and content foundation so search engines and users can better understand the site.",
-    "Structure · performance · discoverability",
-  ],
+  {
+    number: "01",
+    title: "UI/UX Design",
+    copy: "Clear and thoughtful interfaces designed around real users and business goals.",
+    detail: "Research · user flows · design systems",
+    image: projectOne,
+  },
+  {
+    number: "02",
+    title: "Web Development",
+    copy: "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
+    detail: "Business sites · landing pages · e-commerce",
+    image: projectTwo,
+  },
+  {
+    number: "03",
+    title: "Mobile Enhancement",
+    copy: "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
+    detail: "Responsive redesign · usability · accessibility",
+    image: projectThree,
+  },
+  {
+    number: "04",
+    title: "SEO",
+    copy: "Building a stronger technical and content foundation so search engines and users can better understand the site.",
+    detail: "Structure · performance · discoverability",
+    image: projectFour,
+  },
 ];
 
 const projects = [
@@ -72,51 +77,46 @@ const projects = [
 
 <div class="portfolio_wrap">
   <section class="portfolio-hero_wrap" aria-labelledby="hero-title">
-    <div
-      class="portfolio-hero_unicorn"
-      data-us-project="qF3qXhdiOxdUeQYH8wCK"
-      aria-hidden="true"
-    >
-    </div>
     <div class="portfolio-hero_ambient" aria-hidden="true"></div>
-    <div class="portfolio-hero_inner">
-      <div class="portfolio-hero_copy">
-        <p class="portfolio-kicker">Design + development</p>
-        <Heading
-          tag="h1"
-          variant="inherit"
-          id="hero-title"
-          class="portfolio-hero_title"
-          >Thoughtful digital experiences, designed and built.</Heading
-        >
-        <Paragraph variant="large" class="portfolio-hero_text"
-          >I design and build thoughtful digital experiences with a focus on
-          usability, performance, and clarity.</Paragraph
-        >
-        <div class="portfolio-hero_actions">
-          <Button element="link" href="#work"
-            >View my work <i class="ph ph-arrow-up-right" aria-hidden="true"
-            ></i></Button
-          >
-          <Button element="link" href="#contact" emphasis="secondary"
-            >Start a project</Button
-          >
-        </div>
-      </div>
+    <div class="portfolio-hero_circles" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <Heading
+      tag="h1"
+      variant="inherit"
+      id="hero-title"
+      class="portfolio-hero_title">KIGUDEV</Heading
+    >
+    <div class="portfolio-hero_stage">
       <div class="portfolio-hero_portrait">
-        <div class="portfolio-hero_orbit" aria-hidden="true"></div>
         <Image
           src={comic}
           alt="Illustrated portrait of Kigudev"
           widths={[320, 480, 640]}
-          sizes="(max-width: 48rem) 13rem, 24rem"
+          sizes="(max-width: 48rem) 95vw, (max-width: 64rem) 37rem, 43rem"
           loading="eager"
         />
       </div>
     </div>
-    <a class="portfolio-hero_scroll" href="#services"
-      >Scroll to explore <i class="ph ph-arrow-down" aria-hidden="true"></i></a
-    >
+    <div class="portfolio-hero_left">
+      <p class="portfolio-hero_role">Software engineer + UI/UX</p>
+      <Paragraph class="portfolio-hero_text"
+        >I design and build thoughtful digital experiences with a focus on
+        usability, performance, and clarity.</Paragraph
+      >
+    </div>
+    <div class="portfolio-hero_right">
+      <Paragraph class="portfolio-hero_text"
+        >Merging design thinking with software engineering to create digital
+        experiences that are intuitive, efficient, and thoughtfully built.</Paragraph
+      >
+      <Button element="link" href="#contact" class="portfolio-hero_cta"
+        >Start a project <span
+          class="portfolio-hero_cta-mark"
+          aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span
+        ></Button
+      >
+    </div>
   </section>
 
   <section class="portfolio-tech_wrap" aria-label="Services">
@@ -136,56 +136,6 @@ const projects = [
         ].map((item) => <span class="portfolio-tech_item">{item}</span>)
       }
     </Marquee>
-  </section>
-
-  <section
-    class="portfolio-services_wrap"
-    id="services"
-    aria-labelledby="services-title"
-  >
-    <div class="portfolio-container">
-      <div class="portfolio-heading_wrap">
-        <p class="portfolio-kicker">Services</p><Heading
-          tag="h2"
-          variant="inherit"
-          id="services-title"
-          class="portfolio-section_title">I can help you with</Heading
-        >
-      </div>
-      <div class="portfolio-services_list">
-        {
-          services.map(([number, title, copy, detail], index) => (
-            <article
-              class:list={[
-                "portfolio-service_item",
-                index === 0 && "is-active",
-              ]}
-              tabindex="0"
-            >
-              <span class="portfolio-service_number">{number}</span>
-              <div class="portfolio-service_copy">
-                <>
-                  <Heading
-                    tag="h3"
-                    variant="inherit"
-                    class="portfolio-service_title"
-                  >
-                    {title}
-                  </Heading>
-                  <Paragraph class="portfolio-service_text">{copy}</Paragraph>
-                </>
-              </div>
-              <div class="portfolio-service_reveal">
-                <span>{detail}</span>
-              </div>
-              <span class="portfolio-service_arrow" aria-hidden="true">
-                <i class="ph ph-arrow-up-right" />
-              </span>
-            </article>
-          ))
-        }
-      </div>
-    </div>
   </section>
 
   <section class="portfolio-work_wrap" id="work" aria-labelledby="work-title">
@@ -259,6 +209,48 @@ const projects = [
           ))
         }
       </Slider>
+    </div>
+  </section>
+
+  <section
+    class="portfolio-services_wrap"
+    id="services"
+    aria-labelledby="services-title"
+  >
+    <div class="portfolio-services_inner">
+      <Heading
+        tag="h2"
+        variant="inherit"
+        id="services-title"
+        class="portfolio-services_title">Services</Heading
+      >
+      <div class="portfolio-services_list">
+        {
+          services.map(({ number, title, copy, detail, image }) => (
+            <article class="portfolio-service_item">
+              <span class="portfolio-service_number">{number}</span>
+              <Heading
+                tag="h3"
+                variant="inherit"
+                class="portfolio-service_title"
+              >
+                {title}
+              </Heading>
+              <p class="portfolio-service_meta">{detail}</p>
+              <Paragraph class="portfolio-service_text">{copy}</Paragraph>
+              <div class="portfolio-service_media">
+                <Image
+                  src={image}
+                  alt={`${title} project preview`}
+                  widths={[240, 360, 480]}
+                  sizes="(max-width: 48rem) 100vw, 18vw"
+                  loading="lazy"
+                />
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -451,37 +443,35 @@ const projects = [
     </div>
   </section>
 
-  <script is:inline>
-    (() => {
-      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      if (window.UnicornStudio) {
-        if (!window.UnicornStudio.isInitialized) {
-          window.UnicornStudio.init();
-          window.UnicornStudio.isInitialized = true;
-        }
-        return;
-      }
-      window.UnicornStudio = { isInitialized: false };
-      const script = document.createElement("script");
-      script.src =
-        "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
-      script.onload = () => {
-        if (!window.UnicornStudio.isInitialized) {
-          window.UnicornStudio.init();
-          window.UnicornStudio.isInitialized = true;
-        }
-      };
-      (document.head || document.body).appendChild(script);
-    })();
-  </script>
-
   <script>
     import gsap from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.fromTo(
+        [
+          ".portfolio-hero_title",
+          ".portfolio-hero_left",
+          ".portfolio-hero_right",
+        ],
+        { y: 14, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+      );
+      gsap.fromTo(
+        ".portfolio-hero_portrait",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+      );
       gsap.utils
-        .toArray<HTMLElement>(".portfolio-project_media")
+        .toArray<HTMLElement>(
+          ".portfolio-project_media, .portfolio-service_media",
+        )
         .forEach((media) =>
           gsap.fromTo(
             media,
@@ -520,20 +510,6 @@ const projects = [
         );
       }
     }
-    document
-      .querySelectorAll<HTMLElement>(".portfolio-service_item")
-      .forEach((item) => {
-        const activate = () => {
-          document
-            .querySelectorAll(".portfolio-service_item")
-            .forEach((row) => row.classList.remove("is-active"));
-          item.classList.add("is-active");
-        };
-        item.addEventListener("mouseenter", activate);
-        item.addEventListener("focus", activate);
-        item.addEventListener("click", activate);
-      });
-
     const contactForm =
       document.querySelector<HTMLFormElement>("#contact-form");
     if (contactForm) {
@@ -592,14 +568,14 @@ const projects = [
         width: min(calc(100% - 2.5rem), 80rem);
         margin-inline: auto;
       }
-    .portfolio-kicker {
-      margin: 0;
-      color: var(--accent);
-      font-family: var(--label-family);
-      font-size: 0.75rem;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: 0.12em;
+      .portfolio-kicker {
+        margin: 0;
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
       .portfolio-heading_wrap {
@@ -614,160 +590,167 @@ const projects = [
         max-width: 13ch;
         margin: 0;
         color: var(--text);
-      font-size: clamp(2.75rem, 6vw, 5.5rem);
-      font-weight: 500;
-      line-height: 0.9;
-      letter-spacing: -0.035em;
+        font-family: var(--display-family);
+        font-size: clamp(2.75rem, 6vw, 5.5rem);
+        font-weight: 500;
+        line-height: 0.9;
+        letter-spacing: -0.035em;
       }
       .portfolio-hero_wrap {
         position: relative;
-        min-height: calc(100svh - 1.5rem);
-        display: grid;
-        align-items: center;
-        padding: 9rem max(1.25rem, calc((100% - 87.5rem) / 2)) 5rem;
+        min-height: max(45rem, 100svh);
         overflow: hidden;
         isolation: isolate;
         scroll-margin-top: 6.5rem;
-      }
-      .portfolio-hero_unicorn {
-        position: absolute;
-        z-index: 0;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        opacity: 0.62;
-        pointer-events: none;
-        filter: saturate(0.5) contrast(1.05);
+        color: #ffffff;
+        background: #001827;
       }
       .portfolio-hero_ambient {
         position: absolute;
         inset: 0;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
         background:
-          radial-gradient(
-            circle at 73% 44%,
-            color-mix(in srgb, var(--accent-strong) 35%, transparent) 0,
-            transparent 29%
-          ),
-          linear-gradient(
-            115deg,
-            transparent 55%,
-            color-mix(in srgb, var(--surface) 70%, transparent)
-          );
+          radial-gradient(circle at 50% 50%, #01497c 0, transparent 36%),
+          radial-gradient(circle at 12% 24%, #013a63 0, transparent 34%),
+          linear-gradient(100deg, #00131f 0%, #012a4a 48%, #001018 100%);
       }
-      .portfolio-hero_inner {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        grid-template-columns: minmax(0, 8fr) minmax(18rem, 4fr);
-        align-items: center;
-        gap: 2rem;
-        width: 100%;
+      .portfolio-hero_ambient::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        opacity: 0.14;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+        mix-blend-mode: soft-light;
       }
-      .portfolio-hero_copy {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        justify-items: start;
-        gap: 2rem;
+      .portfolio-hero_circles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+      .portfolio-hero_circles span {
+        position: absolute;
+        top: 49%;
+        left: 50%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .portfolio-hero_circles span:nth-child(1) {
+        width: clamp(30rem, 54vw, 51rem);
+        background: rgba(1, 73, 124, 0.2);
+      }
+      .portfolio-hero_circles span:nth-child(2) {
+        width: clamp(24rem, 43vw, 41rem);
+        background: rgba(44, 125, 160, 0.13);
+      }
+      .portfolio-hero_circles span:nth-child(3) {
+        width: clamp(18rem, 32vw, 31rem);
+        background: rgba(70, 143, 175, 0.12);
       }
       .portfolio-hero_title {
-        max-width: 70rem;
+        position: absolute;
+        z-index: 2;
+        top: clamp(7.5rem, 12vh, 9.5rem);
+        left: 50%;
+        width: min(100% - 2rem, 96rem);
+        max-width: 96rem;
         margin: 0;
-        color: var(--text);
-      font-size: clamp(3rem, 6.25vw, 6rem);
-      font-weight: 500;
-      line-height: 0.85;
-      letter-spacing: -0.04em;
-        text-wrap: balance;
+        color: #ffffff;
+        font-family: var(--display-family);
+        font-size: clamp(7rem, 15.2vw, 15rem);
+        font-weight: 600;
+        line-height: 0.78;
+        letter-spacing: -0.065em;
+        text-align: center;
+        white-space: nowrap;
+        transform: translateX(-50%);
       }
-      .portfolio-hero_text {
-      max-width: 37rem;
-      margin: 0;
-      color: var(--text-2);
-      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-      font-weight: 400;
-      line-height: 1.6;
-      }
-      .portfolio-hero_actions,
-      .portfolio-contact_actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
-      .portfolio-hero_actions .button_wrap,
-      .portfolio-contact_actions .button_wrap {
-        min-height: 2.75rem;
-        border-radius: var(--button-radius);
+      .portfolio-hero_stage {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        pointer-events: none;
       }
       .portfolio-hero_portrait {
-        position: relative;
-        align-self: end;
-        display: grid;
-        place-items: end center;
-        min-height: 34rem;
+        position: absolute;
+        bottom: -7.5rem;
+        left: 50%;
+        width: clamp(30rem, 47vw, 43rem);
+        transform: translateX(-50%);
       }
       .portfolio-hero_portrait img {
-        position: relative;
-        z-index: 1;
-        width: min(31rem, 130%);
-        max-width: none;
+        width: 100%;
         height: auto;
-        filter: saturate(0.72) contrast(1.08);
+        filter: contrast(1.08) drop-shadow(0 2rem 4rem rgba(0, 16, 24, 0.5));
         transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
       .portfolio-hero_portrait:hover img {
         transform: scale(1.025);
       }
-      .portfolio-hero_orbit {
+      .portfolio-hero_left,
+      .portfolio-hero_right {
         position: absolute;
-        width: 27rem;
+        z-index: 4;
+        width: min(17rem, 22vw);
+      }
+      .portfolio-hero_left {
+        top: 52%;
+        left: max(1.5rem, calc((100% - 87.5rem) / 2));
+      }
+      .portfolio-hero_right {
+        top: 64%;
+        right: max(1.5rem, calc((100% - 87.5rem) / 2));
+      }
+      .portfolio-hero_role {
+        margin: 0 0 1rem;
+        color: #61a5c2;
+        font-family: var(--label-family);
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .portfolio-hero_text {
+        margin: 0;
+        color: #a9d6e5;
+        font-size: clamp(0.76rem, 0.9vw, 0.9rem);
+        font-weight: 400;
+        line-height: 1.48;
+      }
+      .portfolio-hero_cta.button_wrap {
+        gap: 0.8rem;
+        min-height: 2.75rem;
+        margin-top: 1rem;
+        padding: 0.35rem 0.4rem 0.35rem 1.1rem;
+        border-radius: 999rem;
+        --button-background: #89c2d9;
+        --button-text: #012a4a;
+        --button-border: #89c2d9;
+        --button-background-hover: #ffffff;
+        --button-text-hover: #012a4a;
+        --button-border-hover: #ffffff;
+      }
+      .portfolio-hero_cta .button_text {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        white-space: nowrap;
+      }
+      .portfolio-hero_cta-mark {
+        display: grid;
+        place-items: center;
+        width: 2rem;
         aspect-ratio: 1;
-        border: 0.0625rem solid var(--border);
+        color: #012a4a;
         border-radius: 50%;
+        background: #ffffff;
+        transition: transform 0.22s ease-out;
       }
-      .portfolio-hero_scroll {
-        position: absolute;
-        bottom: 1.5rem;
-        left: max(1.25rem, calc((100% - 87.5rem) / 2));
-        color: var(--text-2);
-        font-size: 0.75rem;
-        text-decoration: none;
-        z-index: 2;
-      }
-      [data-theme="dark"] .portfolio-hero_ambient {
-        background:
-          radial-gradient(
-            circle at 73% 44%,
-            rgba(65, 90, 119, 0.42) 0,
-            transparent 32%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(13, 27, 42, 0.1) 0%,
-            rgba(13, 27, 42, 0.38) 58%,
-            #0d1b2a 100%
-          );
-      }
-      [data-theme="light"] .portfolio-hero_unicorn {
-        opacity: 0.36;
-        filter: saturate(0.35) contrast(0.9);
-      }
-      [data-theme="light"] .portfolio-hero_ambient {
-        background:
-          radial-gradient(
-            circle at 73% 44%,
-            rgba(119, 141, 169, 0.2) 0,
-            transparent 34%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(224, 225, 221, 0.18) 0%,
-            rgba(224, 225, 221, 0.5) 62%,
-            #e0e1dd 100%
-          );
+      .portfolio-hero_cta:hover .portfolio-hero_cta-mark {
+        transform: translate(0.15rem, -0.15rem);
       }
       .portfolio-tech_wrap {
         padding-block: 1.5rem;
@@ -808,92 +791,110 @@ const projects = [
         padding-block: clamp(6rem, 12vw, 10rem);
         scroll-margin-top: 6.5rem;
       }
+      .portfolio-services_wrap,
+      .portfolio-about_wrap,
+      .portfolio-faq_wrap {
+        background: var(--background);
+        color: var(--text);
+      }
+      .portfolio-services_wrap {
+        padding: clamp(5rem, 8vw, 8rem) clamp(0.5rem, 1.5vw, 1.5rem)
+          clamp(6rem, 10vw, 9rem);
+        overflow: hidden;
+      }
+      .portfolio-services_inner {
+        width: 100%;
+      }
+      .portfolio-services_title {
+        margin: 0;
+        color: var(--text);
+        font-family: var(--display-family);
+        font-size: clamp(5.25rem, 12vw, 11.5rem);
+        font-weight: 600;
+        line-height: 0.76;
+        letter-spacing: -0.075em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
       .portfolio-services_list {
-        margin-top: clamp(3.5rem, 7vw, 5rem);
+        margin-top: clamp(4rem, 8vw, 7rem);
+        border-top: 0.0625rem solid var(--border);
       }
       .portfolio-service_item {
         display: grid;
-        grid-template-columns: 4rem minmax(0, 6fr) minmax(8rem, 3fr) 3rem;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 2rem 1rem;
+        grid-template-columns:
+          minmax(2.5rem, 0.3fr) minmax(12rem, 1.6fr) minmax(7rem, 0.8fr)
+          minmax(14rem, 1.7fr) minmax(10rem, 1fr);
+        align-items: start;
+        gap: clamp(1rem, 2vw, 2.5rem);
+        min-height: 10rem;
+        padding-block: clamp(1rem, 1.5vw, 1.5rem);
         border-bottom: 0.0625rem solid var(--border);
-        border-radius: 0;
-        outline: none;
         transition:
-          padding 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-          background-color 0.35s,
-          border-radius 0.35s;
+          background-color 0.3s ease-out,
+          border-color 0.3s ease-out;
       }
-      .portfolio-service_item.is-active {
-        padding: 2.5rem 2rem;
-        background: var(--surface);
-        border-radius: 1.25rem;
-        border-color: transparent;
-      }
-      .portfolio-service_item:focus-visible {
-        outline: 0.125rem solid var(--accent);
-        outline-offset: 0.25rem;
+      .portfolio-service_item:hover {
+        background: color-mix(in srgb, var(--surface) 42%, transparent);
+        border-color: var(--accent);
       }
       .portfolio-service_number {
-        align-self: start;
-        padding-top: 0.45rem;
+        padding-top: 0.3rem;
         color: var(--accent);
         font-family: var(--label-family);
-        font-size: 0.8rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        line-height: 1;
       }
-      .portfolio-service_copy {
-        display: grid;
-        gap: 1rem;
+      .portfolio-service_title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.25rem, 3.6vw, 4rem);
+        font-weight: 400;
+        line-height: 0.9;
+        letter-spacing: -0.055em;
+        transition: transform 0.3s ease-out;
       }
-    .portfolio-service_title {
-      margin: 0;
-      font-size: clamp(2rem, 3.5vw, 3.75rem);
-      font-weight: 500;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-    }
-    .portfolio-service_text {
-      max-width: 55ch;
-      margin: 0;
-      color: var(--text-2);
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.6;
+      .portfolio-service_item:hover .portfolio-service_title {
+        transform: translateX(0.35rem);
       }
-      .portfolio-service_reveal {
-        overflow: hidden;
-        color: var(--accent);
+      .portfolio-service_meta {
+        max-width: 15ch;
+        margin: 0;
+        padding-top: 0.25rem;
+        color: var(--accent-strong);
         font-family: var(--label-family);
-        font-size: 0.78rem;
-        letter-spacing: 0.05em;
+        font-size: 0.58rem;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
-        opacity: 0;
-        transform: translateY(0.5rem);
+      }
+      .portfolio-service_text {
+        max-width: 38ch;
+        margin: 0;
+        color: var(--text-2);
+        font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+      .portfolio-service_media {
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        background: var(--surface-secondary);
+      }
+      .portfolio-service_media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.78) contrast(1.08);
         transition:
-          opacity 0.3s,
-          transform 0.3s;
+          transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+          filter 0.3s ease-out;
       }
-      .portfolio-service_item.is-active .portfolio-service_reveal {
-        opacity: 1;
-        transform: none;
-      }
-      .portfolio-service_arrow {
-        display: grid;
-        place-items: center;
-        width: 3rem;
-        aspect-ratio: 1;
-        border: 0.0625rem solid var(--border);
-        border-radius: 50%;
-        transition:
-          transform 0.3s,
-          background 0.3s,
-          color 0.3s;
-      }
-      .portfolio-service_item.is-active .portfolio-service_arrow {
-        transform: rotate(45deg);
-        background: var(--text);
-        color: var(--background);
+      .portfolio-service_item:hover .portfolio-service_media img {
+        transform: scale(1.04);
+        filter: saturate(1) contrast(1.04);
       }
       .portfolio-work_wrap {
         background: var(--surface-secondary);
@@ -953,31 +954,32 @@ const projects = [
         gap: 1.5rem;
         padding: clamp(2rem, 5vw, 4.5rem);
       }
-    .portfolio-project_category {
-      margin: 0;
-      color: var(--accent);
-      font-family: var(--label-family);
-      font-size: 0.75rem;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: 0.12em;
+      .portfolio-project_category {
+        margin: 0;
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
       .portfolio-project_title {
         max-width: 10ch;
         margin: 0;
-      font-size: clamp(2rem, 3.5vw, 3.75rem);
-      font-weight: 500;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-    }
-    .portfolio-project_text {
-      max-width: 48ch;
-      margin: 0;
-      color: var(--text-2);
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.6;
+        font-size: clamp(2rem, 3.5vw, 3.75rem);
+        font-weight: 500;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+      }
+      .portfolio-project_text {
+        max-width: 48ch;
+        margin: 0;
+        font-family: var(--primary-family);
+        color: var(--text-2);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
       }
       .portfolio-project_meta {
         display: grid;
@@ -991,13 +993,13 @@ const projects = [
         display: grid;
         gap: 0.45rem;
       }
-    .portfolio-project_meta dt {
-      color: var(--accent);
-      font-family: var(--label-family);
-      font-size: 0.75rem;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: 0.12em;
+      .portfolio-project_meta dt {
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
       .portfolio-project_meta dd {
@@ -1054,19 +1056,20 @@ const projects = [
       .portfolio-faq_list .accordion_item[open] {
         border-color: var(--accent);
       }
-    .portfolio-faq_list .accordion_title {
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-      font-weight: 500;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-    }
-    .portfolio-faq_list .accordion_body {
-      max-width: 48rem;
-      color: var(--text-2);
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.65;
-      letter-spacing: 0;
+      .portfolio-faq_list .accordion_title {
+        font-family: var(--display-family);
+        font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+        font-weight: 500;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .portfolio-faq_list .accordion_body {
+        max-width: 48rem;
+        color: var(--text-2);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.65;
+        letter-spacing: 0;
       }
       .portfolio-contact_wrap {
         margin: 1.25rem;
@@ -1093,17 +1096,18 @@ const projects = [
       .portfolio-contact_title {
         max-width: 10ch;
         margin: 0;
-      font-size: clamp(3rem, 6vw, 4.75rem);
-      font-weight: 500;
-      line-height: 0.88;
-      letter-spacing: -0.04em;
+        font-family: var(--display-family);
+        font-size: clamp(3rem, 6vw, 4.75rem);
+        font-weight: 500;
+        line-height: 0.88;
+        letter-spacing: -0.04em;
       }
       .portfolio-contact_text {
         max-width: 38ch;
-      color: var(--text-2);
-      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-      font-weight: 400;
-      line-height: 1.6;
+        color: var(--text-2);
+        font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+        font-weight: 400;
+        line-height: 1.6;
       }
       .portfolio-contact_form {
         display: grid;
@@ -1175,62 +1179,127 @@ const projects = [
         color: var(--button-text);
         background: var(--button-background);
         border-radius: var(--button-radius);
-      font-size: 0.95rem;
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: -0.01em;
+        font-family: var(--display-family);
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
       }
       @media (width < 64rem) {
         .portfolio-hero_wrap {
-          min-height: 50rem;
-          padding-top: 7.5rem;
-          text-align: center;
+          min-height: max(42rem, 100svh);
         }
-        .portfolio-hero_inner {
-          grid-template-columns: 1fr;
-          gap: 0;
+        .portfolio-hero_title {
+          top: clamp(7.5rem, 15vh, 9rem);
+          width: calc(100% - 2rem);
+          font-size: clamp(6rem, 15vw, 9.5rem);
         }
-        .portfolio-hero_copy {
-          justify-items: center;
+        .portfolio-contact_title {
+          font-size: clamp(2.5rem, 5vw, 3.5rem);
         }
-      .portfolio-hero_title {
-        font-size: clamp(2.5rem, 8vw, 4.5rem);
-      }
-      .portfolio-contact_title {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
-      }
         .portfolio-hero_portrait {
-          grid-row: 1;
+          bottom: -5.5rem;
+          width: min(58vw, 37rem);
+        }
+        .portfolio-hero_left,
+        .portfolio-hero_right {
+          width: min(14rem, 25vw);
+        }
+        .portfolio-hero_left {
+          top: 48%;
+          left: 1.5rem;
+        }
+        .portfolio-hero_right {
+          top: 63%;
+          right: 1.5rem;
+        }
+      }
+      @media (width < 48rem) {
+        .portfolio-hero_wrap {
+          display: grid;
+          grid-template-rows: auto auto auto auto;
           min-height: auto;
-          margin-bottom: -1rem;
+          padding: 7.5rem 1.5rem 4rem;
         }
-        .portfolio-hero_portrait img {
-          width: 13rem;
+        .portfolio-hero_title {
+          position: relative;
+          top: auto;
+          left: auto;
+          z-index: 2;
+          width: calc(100% + 1.25rem);
+          font-size: clamp(4.2rem, 21vw, 7rem);
+          line-height: 0.82;
+          text-align: left;
+          transform: none;
         }
-        .portfolio-hero_orbit {
-          width: 12rem;
+        .portfolio-hero_stage {
+          position: relative;
+          inset: auto;
+          height: clamp(22rem, 105vw, 30rem);
+          margin: -0.5rem -1.5rem 0;
         }
-        .portfolio-hero_scroll {
-          display: none;
+        .portfolio-hero_portrait {
+          bottom: -3.5rem;
+          width: min(95vw, 31rem);
         }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .portfolio-hero_unicorn {
-          display: none;
+        .portfolio-hero_circles span {
+          top: 44%;
         }
-      }
-    @media (width < 48rem) {
-      .portfolio-hero_title {
-        font-size: clamp(2rem, 9vw, 2.5rem);
-      }
-        .portfolio-service_item,
-        .portfolio-service_item.is-active {
-          grid-template-columns: 2.5rem minmax(0, 1fr) 3rem;
-          gap: 1rem;
-          padding: 1.75rem 1rem;
+        .portfolio-hero_circles span:nth-child(1) {
+          width: 118vw;
         }
-        .portfolio-service_reveal {
-          grid-column: 2 / -1;
+        .portfolio-hero_circles span:nth-child(2) {
+          width: 94vw;
+        }
+        .portfolio-hero_circles span:nth-child(3) {
+          width: 70vw;
+        }
+        .portfolio-hero_left,
+        .portfolio-hero_right {
+          position: relative;
+          top: auto;
+          right: auto;
+          left: auto;
+          width: 100%;
+          max-width: 25rem;
+        }
+        .portfolio-hero_left {
+          margin-top: 1.5rem;
+        }
+        .portfolio-hero_right {
+          margin-top: 2rem;
+        }
+        .portfolio-hero_text {
+          font-size: 0.9rem;
+        }
+        .portfolio-hero_cta.button_wrap {
+          width: max-content;
+        }
+        .portfolio-services_wrap {
+          padding-inline: 0.75rem;
+        }
+        .portfolio-services_title {
+          font-size: clamp(3.5rem, 14.5vw, 5.25rem);
+        }
+        .portfolio-services_list {
+          margin-top: 3rem;
+        }
+        .portfolio-service_item {
+          grid-template-columns: 2.25rem minmax(0, 1fr);
+          gap: 0.9rem 1rem;
+          padding-block: 1.5rem;
+        }
+        .portfolio-service_title {
+          font-size: clamp(2.5rem, 12vw, 4rem);
+        }
+        .portfolio-service_meta,
+        .portfolio-service_text {
+          grid-column: 2;
+          max-width: 34rem;
+        }
+        .portfolio-service_media {
+          grid-column: 1 / -1;
+          margin-top: 0.5rem;
         }
         .portfolio-project_wrap {
           grid-template-columns: 1fr;
@@ -1256,15 +1325,15 @@ const projects = [
           grid-template-columns: 1fr;
         }
         .portfolio-contact_field.wide,
-      .portfolio-contact_submit.wide {
-        grid-column: auto;
+        .portfolio-contact_submit.wide {
+          grid-column: auto;
+        }
       }
-    }
-    @media (48rem <= width < 64rem) {
-      .portfolio-contact_title {
-        font-size: 2rem;
+      @media (48rem <= width < 64rem) {
+        .portfolio-contact_title {
+          font-size: 2rem;
+        }
       }
-    }
     }
   </style>
 </div>

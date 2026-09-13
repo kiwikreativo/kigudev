@@ -1,22 +1,23 @@
 /* 1. Design tokens */
 :root {
   /* Swatches */
-  --navy-950: #0d1b2a;
-  --navy-900: #1b263b;
-  --blue-700: #415a77;
-  --blue-500: #778da9;
-  --off-white: #e0e1dd;
-  --light-100: #f5f5f2;
-  --light-200: #e9eae6;
+  --navy-950: #030712;
+  --navy-900: #111827;
+  --blue-700: #4f46e5;
+  --blue-500: #06b6d4;
+  --off-white: #f7f8ff;
+  --light-100: #ffffff;
+  --light-200: #f1f3ff;
   --light-300: var(--off-white);
   --dark-700: var(--blue-700);
   --dark-800: var(--navy-900);
   --dark-900: var(--navy-950);
   --brand-500: var(--blue-500);
-  --brand-text: var(--navy-950);
+  --brand-text: #ffffff;
 
   /* Typography primitives */
-  --primary-family: BlinkMacSystemFont, -apple-system, "Segoe UI", sans-serif;
+  --primary-family: "Geist", sans-serif;
+  --display-family: "Geist", sans-serif;
   --label-family: "JetBrains Mono", monospace;
   --primary-regular: 400;
   --primary-medium: 500;
@@ -75,7 +76,7 @@
   --display-text-transform: none;
   --display-margin-top: var(--space-7);
   --display-margin-bottom: var(--space-6);
-  --display-font-family: var(--primary-family);
+  --display-font-family: var(--display-family);
   --display-font-weight: var(--primary-medium);
   --display-trim-top: var(--primary-trim-top);
   --display-trim-bottom: var(--primary-trim-bottom);
@@ -89,7 +90,7 @@
   --h1-text-transform: none;
   --h1-margin-top: var(--space-7);
   --h1-margin-bottom: var(--space-6);
-  --h1-font-family: var(--primary-family);
+  --h1-font-family: var(--display-family);
   --h1-font-weight: var(--primary-medium);
   --h1-trim-top: var(--primary-trim-top);
   --h1-trim-bottom: var(--primary-trim-bottom);
@@ -103,7 +104,7 @@
   --h2-text-transform: none;
   --h2-margin-top: var(--space-7);
   --h2-margin-bottom: var(--space-5);
-  --h2-font-family: var(--primary-family);
+  --h2-font-family: var(--display-family);
   --h2-font-weight: var(--primary-medium);
   --h2-trim-top: var(--primary-trim-top);
   --h2-trim-bottom: var(--primary-trim-bottom);
@@ -117,7 +118,7 @@
   --h3-text-transform: none;
   --h3-margin-top: var(--space-6);
   --h3-margin-bottom: var(--space-5);
-  --h3-font-family: var(--primary-family);
+  --h3-font-family: var(--display-family);
   --h3-font-weight: var(--primary-medium);
   --h3-trim-top: var(--primary-trim-top);
   --h3-trim-bottom: var(--primary-trim-bottom);
@@ -131,7 +132,7 @@
   --h4-text-transform: none;
   --h4-margin-top: var(--space-6);
   --h4-margin-bottom: var(--space-4);
-  --h4-font-family: var(--primary-family);
+  --h4-font-family: var(--display-family);
   --h4-font-weight: var(--primary-medium);
   --h4-trim-top: var(--primary-trim-top);
   --h4-trim-bottom: var(--primary-trim-bottom);
@@ -145,7 +146,7 @@
   --h5-text-transform: none;
   --h5-margin-top: var(--space-5);
   --h5-margin-bottom: var(--space-4);
-  --h5-font-family: var(--primary-family);
+  --h5-font-family: var(--display-family);
   --h5-font-weight: var(--primary-medium);
   --h5-trim-top: var(--primary-trim-top);
   --h5-trim-bottom: var(--primary-trim-bottom);
@@ -159,7 +160,7 @@
   --h6-text-transform: none;
   --h6-margin-top: var(--space-5);
   --h6-margin-bottom: var(--space-3);
-  --h6-font-family: var(--primary-family);
+  --h6-font-family: var(--display-family);
   --h6-font-weight: var(--primary-medium);
   --h6-trim-top: var(--primary-trim-top);
   --h6-trim-bottom: var(--primary-trim-bottom);
@@ -376,46 +377,46 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --background: #0d1b2a;
-  --background-2: #1b263b;
-  --background-3: #162435;
-  --surface: #1b263b;
-  --surface-secondary: #162435;
-  --text: #e0e1dd;
-  --text-2: rgba(224, 225, 221, 0.7);
-  --text-primary: #e0e1dd;
-  --text-secondary: rgba(224, 225, 221, 0.7);
-  --accent: #778da9;
-  --accent-strong: #415a77;
-  --border: rgba(224, 225, 221, 0.14);
-  --button-background: #e0e1dd;
-  --button-border: #e0e1dd;
-  --button-text: #0d1b2a;
-  --button-background-hover: #778da9;
-  --button-border-hover: #778da9;
-  --button-text-hover: #0d1b2a;
+  --background: #030712;
+  --background-2: #111827;
+  --background-3: #18181b;
+  --surface: #18181b;
+  --surface-secondary: #111827;
+  --text: #ffffff;
+  --text-2: #a1a1aa;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --accent: #06b6d4;
+  --accent-strong: #4f46e5;
+  --border: #27272a;
+  --button-background: #4f46e5;
+  --button-border: #4f46e5;
+  --button-text: #ffffff;
+  --button-background-hover: #06b6d4;
+  --button-border-hover: #06b6d4;
+  --button-text-hover: #030712;
 }
 
 [data-theme="light"] {
   color-scheme: light;
-  --background: #e0e1dd;
-  --background-2: #f4f5f2;
-  --background-3: #ffffff;
-  --surface: #f4f5f2;
-  --surface-secondary: #ffffff;
-  --text: #0d1b2a;
-  --text-2: rgba(13, 27, 42, 0.68);
-  --text-primary: #0d1b2a;
-  --text-secondary: rgba(13, 27, 42, 0.68);
-  --accent: #415a77;
-  --accent-strong: #1b263b;
-  --border: rgba(13, 27, 42, 0.14);
-  --button-background: #0d1b2a;
-  --button-border: #0d1b2a;
-  --button-text: #e0e1dd;
-  --button-background-hover: #415a77;
-  --button-border-hover: #415a77;
-  --button-text-hover: #e0e1dd;
+  --background: #f7f8ff;
+  --background-2: #ffffff;
+  --background-3: #eef1ff;
+  --surface: #ffffff;
+  --surface-secondary: #eef1ff;
+  --text: #111827;
+  --text-2: rgba(17, 24, 39, 0.68);
+  --text-primary: #111827;
+  --text-secondary: rgba(17, 24, 39, 0.68);
+  --accent: #4338ca;
+  --accent-strong: #0891b2;
+  --border: rgba(79, 70, 229, 0.16);
+  --button-background: #4f46e5;
+  --button-border: #4f46e5;
+  --button-text: #ffffff;
+  --button-background-hover: #0891b2;
+  --button-border-hover: #0891b2;
+  --button-text-hover: #ffffff;
 }
 
 /* 3. Reset & base */
@@ -449,7 +450,7 @@ button,
 input,
 textarea,
 select {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--primary-family);
 }
 
 html {

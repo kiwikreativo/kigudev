@@ -3,44 +3,77 @@ import { Image } from "astro:assets";
 import Button from "@/components/Button.astro";
 import Heading from "@/components/Typography/Heading.astro";
 import Paragraph from "@/components/Typography/Paragraph.astro";
-import Accordion from "@/components/Interactive/Accordion.astro";
-import AccordionItem from "@/components/Interactive/AccordionItem.astro";
 import Slider from "@/components/Interactive/Slider.astro";
 import Marquee from "@/components/Interactive/Marquee.astro";
+import UnicornBackground from "@/components/Media/UnicornBackground.astro";
 import comic from "@/assets/logo/comic.png";
 import projectOne from "@/assets/logo/1.webp";
 import projectTwo from "@/assets/logo/2.webp";
 import projectThree from "@/assets/logo/3.webp";
-import projectFour from "@/assets/logo/4.webp";
 
 const services = [
+  [
+    "01",
+    "UI/UX Design",
+    "Clear and thoughtful interfaces designed around real users and business goals.",
+    "Research · user flows · design systems",
+  ],
+  [
+    "02",
+    "Web Development",
+    "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
+    "Business sites · landing pages · e-commerce",
+  ],
+  [
+    "03",
+    "Mobile Enhancement",
+    "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
+    "Responsive redesign · usability · accessibility",
+  ],
+  [
+    "04",
+    "SEO",
+    "Building a stronger technical and content foundation so search engines and users can better understand the site.",
+    "Structure · performance · discoverability",
+  ],
+];
+
+const processSteps = [
   {
-    number: "01",
-    title: "UI/UX Design",
-    copy: "Clear and thoughtful interfaces designed around real users and business goals.",
-    detail: "Research · user flows · design systems",
-    image: projectOne,
+    title: "Discovery",
+    description:
+      "Understanding the project, business goals, requirements, and the problem that needs to be solved.",
+    icon: "ph-eye",
   },
   {
-    number: "02",
-    title: "Web Development",
-    copy: "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
-    detail: "Business sites · landing pages · e-commerce",
-    image: projectTwo,
+    title: "Research",
+    description:
+      "Understanding users, references, competitors, and the context surrounding the product.",
+    icon: "ph-magnifying-glass",
   },
   {
-    number: "03",
-    title: "Mobile Enhancement",
-    copy: "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
-    detail: "Responsive redesign · usability · accessibility",
-    image: projectThree,
+    title: "Structure",
+    description:
+      "Turning requirements into clear information architecture, user flows, and interface structure.",
+    icon: "ph-tree-structure",
   },
   {
-    number: "04",
-    title: "SEO",
-    copy: "Building a stronger technical and content foundation so search engines and users can better understand the site.",
-    detail: "Structure · performance · discoverability",
-    image: projectFour,
+    title: "Design",
+    description:
+      "Exploring layouts, wireframes, interaction patterns, and prototypes before implementation.",
+    icon: "ph-pencil-ruler",
+  },
+  {
+    title: "Development",
+    description:
+      "Building the approved experience into a responsive, accessible, and performant interface.",
+    icon: "ph-code",
+  },
+  {
+    title: "Delivery",
+    description:
+      "Testing, refining, documenting, and preparing the final product for a reliable launch.",
+    icon: "ph-rocket-launch",
   },
 ];
 
@@ -119,7 +152,10 @@ const projects = [
     </div>
   </section>
 
-  <section class="portfolio-tech_wrap" aria-label="Services">
+  <div class="portfolio-post-hero_wrap">
+    <UnicornBackground />
+    <div class="portfolio-post-hero_content">
+      <section class="portfolio-tech_wrap" aria-label="Services">
     <Marquee label="Services" class="portfolio-tech_marquee">
       {
         [
@@ -136,9 +172,13 @@ const projects = [
         ].map((item) => <span class="portfolio-tech_item">{item}</span>)
       }
     </Marquee>
-  </section>
+      </section>
 
-  <section class="portfolio-work_wrap" id="work" aria-labelledby="work-title">
+      <section
+        class="portfolio-work_wrap"
+        id="work"
+        aria-labelledby="work-title"
+      >
     <div class="portfolio-container portfolio-work_inner">
       <div class="portfolio-heading_wrap centered">
         <p class="portfolio-kicker">Selected projects</p><Heading
@@ -210,167 +250,112 @@ const projects = [
         }
       </Slider>
     </div>
-  </section>
+      </section>
 
-  <section
-    class="portfolio-services_wrap"
-    id="services"
-    aria-labelledby="services-title"
-  >
-    <div class="portfolio-services_inner">
-      <Heading
-        tag="h2"
-        variant="inherit"
-        id="services-title"
-        class="portfolio-services_title">Services</Heading
+      <section
+        class="portfolio-services_wrap"
+        id="services"
+        aria-labelledby="services-title"
       >
+    <div class="portfolio-container">
+      <div class="portfolio-heading_wrap">
+        <p class="portfolio-kicker">Services</p>
+        <Heading
+          tag="h2"
+          variant="inherit"
+          id="services-title"
+          class="portfolio-section_title">I can help you with</Heading
+        >
+      </div>
       <div class="portfolio-services_list">
         {
-          services.map(({ number, title, copy, detail, image }) => (
-            <article class="portfolio-service_item">
+          services.map(([number, title, copy, detail], index) => (
+            <article
+              class:list={[
+                "portfolio-service_item",
+                index === 3 && "is-active",
+              ]}
+              tabindex="0"
+            >
               <span class="portfolio-service_number">{number}</span>
-              <Heading
-                tag="h3"
-                variant="inherit"
-                class="portfolio-service_title"
-              >
-                {title}
-              </Heading>
-              <p class="portfolio-service_meta">{detail}</p>
-              <Paragraph class="portfolio-service_text">{copy}</Paragraph>
-              <div class="portfolio-service_media">
-                <Image
-                  src={image}
-                  alt={`${title} project preview`}
-                  widths={[240, 360, 480]}
-                  sizes="(max-width: 48rem) 100vw, 18vw"
-                  loading="lazy"
-                />
+              <div class="portfolio-service_copy">
+                <Heading
+                  tag="h3"
+                  variant="inherit"
+                  class="portfolio-service_title"
+                >
+                  {title}
+                </Heading>
+                <Paragraph class="portfolio-service_text">{copy}</Paragraph>
               </div>
+              <div class="portfolio-service_reveal">
+                <span>{detail}</span>
+              </div>
+              <span class="portfolio-service_arrow" aria-hidden="true">
+                <i class="ph ph-arrow-up-right" />
+              </span>
             </article>
           ))
         }
       </div>
     </div>
-  </section>
+      </section>
 
-  <section
-    class="portfolio-about_wrap"
-    id="about"
-    aria-labelledby="about-title"
-  >
+      <section
+        class="portfolio-about_wrap"
+        id="about"
+        aria-labelledby="about-title"
+      >
     <div class="portfolio-container portfolio-about_inner">
-      <div class="portfolio-about_heading">
-        <p class="portfolio-kicker">My approach</p><Heading
+      <header class="portfolio-about_header">
+        <span class="portfolio-about_index">02</span>
+        <span class="portfolio-about_label">My approach</span>
+        <span class="portfolio-about_direction" aria-hidden="true"
+          >&gt;&gt;&gt;</span
+        >
+      </header>
+      <div class="portfolio-about_intro">
+        <Heading
           tag="h2"
           variant="inherit"
           id="about-title"
-          class="portfolio-section_title"
-          >Design thoughtfully.<br />Build deliberately.<br />Improve
-          continuously.</Heading
+          class="portfolio-about_title"
+          >Designing<br />a Better<br />Experience</Heading
         >
-      </div>
-      <div class="portfolio-about_copy" data-reveal-copy>
-        <p>
-          Good digital work begins with understanding what people need, then
-          removing everything that gets in their way.
-        </p><p>
-          I combine product thinking, interface design, and front-end
-          development so ideas survive the journey from a Figma file to a
-          responsive, accessible, high-performing product.
+        <p class="portfolio-about_annotation">
+          For thoughtful<br />digital experiences<br />built around<br />real
+          people
         </p>
       </div>
-    </div>
-  </section>
-
-  <section class="portfolio-faq_wrap" id="faq" aria-labelledby="faq-title">
-    <div class="portfolio-container portfolio-faq_inner">
-      <div class="portfolio-heading_wrap centered">
-        <p class="portfolio-kicker">The practical details</p><Heading
-          tag="h2"
-          variant="inherit"
-          id="faq-title"
-          class="portfolio-section_title">Common questions</Heading
-        >
+      <div class="portfolio-process_wrap">
+        <ol class="portfolio-process_list">
+          {
+            processSteps.map((step, index) => (
+              <li class="portfolio-process_item">
+                <div class="portfolio-process_heading">
+                  <i class={`ph ${step.icon}`} aria-hidden="true" />
+                  <h3>
+                    <span>{String(index + 1).padStart(2, "0")}.</span>{" "}
+                    {step.title}
+                  </h3>
+                </div>
+                <p>{step.description}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="portfolio-process_connector" aria-hidden="true">
+          {processSteps.map(() => <span />)}
+        </div>
       </div>
-      <Accordion single openFirst class="portfolio-faq_list">
-        <AccordionItem
-          heading="What type of projects do you work on?"
-          headingTag="h3"
-          ><p>
-            I work on business websites, landing pages, portfolios, e-commerce
-            experiences, website redesigns, and UI/UX improvements. I can help
-            with both new projects and existing websites that need a clearer,
-            more modern, or more responsive experience.
-          </p></AccordionItem
-        >
-        <AccordionItem
-          heading="Can you handle both the design and development?"
-          headingTag="h3"
-          ><p>
-            Yes. I can take a project from initial ideas and interface design
-            through front-end implementation, responsive behavior, interaction
-            details, and final delivery. This keeps the visual direction and the
-            finished website consistent throughout the project.
-          </p></AccordionItem
-        >
-        <AccordionItem
-          heading="How long does a website usually take?"
-          headingTag="h3"
-          ><p>
-            Timelines depend on the size and complexity of the project. A
-            focused landing page can often be completed faster, while a larger
-            website with multiple pages, custom interactions, or content
-            management will require more time. After reviewing the requirements,
-            I provide a clear estimated timeline before development begins.
-          </p></AccordionItem
-        >
-        <AccordionItem
-          heading="Can you redesign or improve an existing website?"
-          headingTag="h3"
-          ><p>
-            Yes. I can improve an existing website’s visual hierarchy,
-            usability, responsive behavior, mobile experience, performance, and
-            overall presentation without necessarily rebuilding everything from
-            scratch.
-          </p></AccordionItem
-        >
-        <AccordionItem
-          heading="Will the website work well on mobile devices?"
-          headingTag="h3"
-          ><p>
-            Yes. Responsive behavior is considered from the beginning. The final
-            website is tested across mobile, tablet, and desktop layouts so the
-            experience remains clear and usable at different screen sizes.
-          </p></AccordionItem
-        >
-        <AccordionItem
-          heading="Do you provide SEO optimization?"
-          headingTag="h3"
-          ><p>
-            Yes. I can implement essential technical and on-page SEO foundations
-            such as semantic structure, metadata, page titles, descriptions,
-            performance improvements, responsive behavior, accessibility
-            considerations, and search-friendly page organization.
-          </p></AccordionItem
-        >
-        <AccordionItem heading="How do we start a project?" headingTag="h3"
-          ><p>
-            Start by sending a message through the contact form or scheduling a
-            call. We can discuss your goals, the type of website you need, your
-            current materials, expected features, timeline, and any references
-            you already have.
-          </p></AccordionItem
-        >
-      </Accordion>
     </div>
-  </section>
+      </section>
 
-  <section
-    class="portfolio-contact_wrap"
-    id="contact"
-    aria-labelledby="contact-title"
-  >
+      <section
+        class="portfolio-contact_wrap"
+        id="contact"
+        aria-labelledby="contact-title"
+      >
     <div class="portfolio-contact_inner">
       <div class="portfolio-contact_copy">
         <p class="portfolio-kicker">Start a conversation</p>
@@ -441,7 +426,9 @@ const projects = [
         </div>
       </form>
     </div>
-  </section>
+      </section>
+    </div>
+  </div>
 
   <script>
     import gsap from "gsap";
@@ -469,9 +456,7 @@ const projects = [
         { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
       );
       gsap.utils
-        .toArray<HTMLElement>(
-          ".portfolio-project_media, .portfolio-service_media",
-        )
+        .toArray<HTMLElement>(".portfolio-project_media")
         .forEach((media) =>
           gsap.fromTo(
             media,
@@ -489,27 +474,41 @@ const projects = [
             },
           ),
         );
-      const copy = document.querySelector<HTMLElement>("[data-reveal-copy]");
-      if (copy) {
-        const words = copy.innerText.trim().split(/\s+/);
-        copy.innerHTML = words.map((word) => `<span>${word}</span>`).join(" ");
+      const processSection = document.querySelector<HTMLElement>(
+        ".portfolio-about_wrap",
+      );
+      if (processSection) {
         gsap.fromTo(
-          copy.querySelectorAll("span"),
-          { opacity: 0.12 },
+          processSection.querySelectorAll(".portfolio-process_item"),
+          { y: 16, opacity: 0 },
           {
+            y: 0,
             opacity: 1,
-            stagger: 0.05,
-            ease: "none",
+            duration: 0.48,
+            stagger: 0.065,
+            ease: "power2.out",
             scrollTrigger: {
-              trigger: copy,
-              start: "top 82%",
-              end: "bottom 45%",
-              scrub: 0.6,
+              trigger: processSection.querySelector(".portfolio-process_list"),
+              start: "top 84%",
+              once: true,
             },
           },
         );
       }
     }
+    document
+      .querySelectorAll<HTMLElement>(".portfolio-service_item")
+      .forEach((item) => {
+        const activate = () => {
+          document
+            .querySelectorAll(".portfolio-service_item")
+            .forEach((row) => row.classList.remove("is-active"));
+          item.classList.add("is-active");
+        };
+        item.addEventListener("mouseenter", activate);
+        item.addEventListener("focus", activate);
+        item.addEventListener("click", activate);
+      });
     const contactForm =
       document.querySelector<HTMLFormElement>("#contact-form");
     if (contactForm) {
@@ -567,6 +566,28 @@ const projects = [
       .portfolio-container {
         width: min(calc(100% - 2.5rem), 80rem);
         margin-inline: auto;
+      }
+      .portfolio-post-hero_wrap {
+        position: relative;
+        isolation: isolate;
+        overflow: clip;
+        background: var(--background);
+      }
+      .portfolio-post-hero_content {
+        position: relative;
+        z-index: 1;
+      }
+      .portfolio-post-hero_content .portfolio-tech_wrap,
+      .portfolio-post-hero_content .portfolio-services_wrap,
+      .portfolio-post-hero_content .portfolio-about_wrap {
+        background: transparent;
+      }
+      .portfolio-post-hero_content .portfolio-work_wrap {
+        background: color-mix(
+          in srgb,
+          var(--surface-secondary) 82%,
+          transparent
+        );
       }
       .portfolio-kicker {
         margin: 0;
@@ -786,120 +807,106 @@ const projects = [
       }
       .portfolio-services_wrap,
       .portfolio-work_wrap,
-      .portfolio-about_wrap,
-      .portfolio-faq_wrap {
+      .portfolio-about_wrap {
         padding-block: clamp(6rem, 12vw, 10rem);
         scroll-margin-top: 6.5rem;
       }
       .portfolio-services_wrap,
-      .portfolio-about_wrap,
-      .portfolio-faq_wrap {
+      .portfolio-about_wrap {
         background: var(--background);
         color: var(--text);
       }
-      .portfolio-services_wrap {
-        padding: clamp(5rem, 8vw, 8rem) clamp(0.5rem, 1.5vw, 1.5rem)
-          clamp(6rem, 10vw, 9rem);
-        overflow: hidden;
-      }
-      .portfolio-services_inner {
-        width: 100%;
-      }
-      .portfolio-services_title {
-        margin: 0;
-        color: var(--text);
-        font-family: var(--display-family);
-        font-size: clamp(5.25rem, 12vw, 11.5rem);
-        font-weight: 600;
-        line-height: 0.76;
-        letter-spacing: -0.075em;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
       .portfolio-services_list {
-        margin-top: clamp(4rem, 8vw, 7rem);
-        border-top: 0.0625rem solid var(--border);
+        margin-top: clamp(3.5rem, 7vw, 5rem);
       }
       .portfolio-service_item {
         display: grid;
-        grid-template-columns:
-          minmax(2.5rem, 0.3fr) minmax(12rem, 1.6fr) minmax(7rem, 0.8fr)
-          minmax(14rem, 1.7fr) minmax(10rem, 1fr);
-        align-items: start;
-        gap: clamp(1rem, 2vw, 2.5rem);
-        min-height: 10rem;
-        padding-block: clamp(1rem, 1.5vw, 1.5rem);
+        grid-template-columns: 4rem minmax(0, 6fr) minmax(8rem, 3fr) 3rem;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 2rem 1rem;
         border-bottom: 0.0625rem solid var(--border);
+        border-radius: 0;
+        outline: none;
         transition:
-          background-color 0.3s ease-out,
-          border-color 0.3s ease-out;
+          padding 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+          background-color 0.35s,
+          border-radius 0.35s;
       }
-      .portfolio-service_item:hover {
-        background: color-mix(in srgb, var(--surface) 42%, transparent);
-        border-color: var(--accent);
+      .portfolio-service_item.is-active {
+        padding: 2.5rem 2rem;
+        background: var(--surface);
+        border-color: transparent;
+        border-radius: 1.25rem;
+      }
+      .portfolio-service_item:focus-visible {
+        outline: 0.125rem solid var(--accent);
+        outline-offset: 0.25rem;
       }
       .portfolio-service_number {
-        padding-top: 0.3rem;
+        align-self: start;
+        padding-top: 0.45rem;
         color: var(--accent);
         font-family: var(--label-family);
-        font-size: 0.72rem;
-        font-weight: 600;
-        line-height: 1;
+        font-size: 0.8rem;
+      }
+      .portfolio-service_copy {
+        display: grid;
+        gap: 1rem;
       }
       .portfolio-service_title {
         margin: 0;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(2.25rem, 3.6vw, 4rem);
-        font-weight: 400;
-        line-height: 0.9;
-        letter-spacing: -0.055em;
-        transition: transform 0.3s ease-out;
-      }
-      .portfolio-service_item:hover .portfolio-service_title {
-        transform: translateX(0.35rem);
-      }
-      .portfolio-service_meta {
-        max-width: 15ch;
-        margin: 0;
-        padding-top: 0.25rem;
-        color: var(--accent-strong);
-        font-family: var(--label-family);
-        font-size: 0.58rem;
-        font-weight: 600;
-        line-height: 1.25;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
+        font-family: var(--display-family);
+        font-size: clamp(2rem, 3.5vw, 3.75rem);
+        font-weight: 500;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
       }
       .portfolio-service_text {
-        max-width: 38ch;
+        max-width: 55ch;
         margin: 0;
         color: var(--text-2);
-        font-size: clamp(0.78rem, 0.9vw, 0.9rem);
-        font-weight: 500;
-        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
       }
-      .portfolio-service_media {
+      .portfolio-service_reveal {
         overflow: hidden;
-        aspect-ratio: 4 / 3;
-        background: var(--surface-secondary);
-      }
-      .portfolio-service_media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: saturate(0.78) contrast(1.08);
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(0.5rem);
         transition:
-          transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-          filter 0.3s ease-out;
+          opacity 0.3s,
+          transform 0.3s;
       }
-      .portfolio-service_item:hover .portfolio-service_media img {
-        transform: scale(1.04);
-        filter: saturate(1) contrast(1.04);
+      .portfolio-service_item.is-active .portfolio-service_reveal {
+        opacity: 1;
+        transform: none;
+      }
+      .portfolio-service_arrow {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        aspect-ratio: 1;
+        border: 0.0625rem solid var(--border);
+        border-radius: 50%;
+        transition:
+          transform 0.3s,
+          background 0.3s,
+          color 0.3s;
+      }
+      .portfolio-service_item.is-active .portfolio-service_arrow {
+        color: var(--background);
+        background: var(--text);
+        transform: rotate(45deg);
       }
       .portfolio-work_wrap {
         background: var(--surface-secondary);
         color: var(--text);
-        border-radius: clamp(2rem, 5vw, 4rem);
       }
       .portfolio-work_wrap .portfolio-kicker {
         color: var(--accent-strong);
@@ -1011,71 +1018,177 @@ const projects = [
       }
       .portfolio-about_inner {
         display: grid;
-        grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
-        gap: 4rem;
-        align-items: end;
+        gap: clamp(3.5rem, 6vw, 5.5rem);
       }
       .portfolio-about_wrap {
         padding-top: clamp(10rem, 16vw, 15rem);
       }
-      .portfolio-about_heading {
-        display: grid;
-        gap: 1.5rem;
+      .portfolio-about_header {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 2.5rem;
+        padding-block: 0.65rem;
+        border-block: 0.0625rem solid var(--border);
       }
-      .portfolio-about_copy {
-        max-width: 34rem;
+      .portfolio-about_index,
+      .portfolio-about_direction,
+      .portfolio-about_label {
+        font-family: var(--label-family);
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .portfolio-about_index {
+        color: var(--accent);
+      }
+      .portfolio-about_label {
+        padding: 0.35rem 0.65rem;
         color: var(--text);
-        font-size: clamp(1.35rem, 2.1vw, 2rem);
-        line-height: 1.45;
-        letter-spacing: -0.025em;
-      }
-      .portfolio-about_copy p {
-        margin: 0;
-      }
-      .portfolio-about_copy p + p {
-        margin-top: 1.5rem;
-      }
-      .portfolio-about_copy span {
-        opacity: 0.12;
-      }
-      .portfolio-faq_inner {
-        display: grid;
-        gap: 4.5rem;
-      }
-      .portfolio-faq_list {
-        max-width: 62rem;
-        margin-inline: auto;
-      }
-      .portfolio-faq_list .accordion_item {
-        margin-top: 0.5rem;
-        padding-inline: 1.5rem;
+        border: 0.0625rem solid var(--border);
+        border-radius: 999rem;
         background: var(--surface);
+      }
+      .portfolio-about_direction {
+        margin-left: auto;
+        color: var(--text-2);
+        letter-spacing: 0.03em;
+      }
+      .portfolio-about_intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.72fr);
+        align-items: start;
+        gap: clamp(2rem, 5vw, 5rem);
+        max-width: 60rem;
+      }
+      .portfolio-about_title {
+        margin: 0;
+        color: var(--text);
+        font-family: var(--display-family);
+        font-size: clamp(4.5rem, 4vw, 6.5rem);
+        font-weight: bold;
+        line-height: 0.88;
+        letter-spacing: -0.040em;
+        text-transform: uppercase;
+      }
+      .portfolio-about_annotation {
+        margin: 1rem 0 0;
+        color: var(--text);
+        font-family: var(--label-family);
+        font-size: clamp(0.65rem, 0.78vw, 0.76rem);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+      .portfolio-process_wrap {
+        position: relative;
+        padding-bottom: 2.25rem;
+      }
+      .portfolio-process_list {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-flow: dense;
+        gap: 0.75rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .portfolio-process_item {
+        display: flex;
+        min-width: 0;
+        min-height: clamp(15rem, 19vw, 17.5rem);
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 1.25rem;
         border: 0.0625rem solid var(--border);
         border-radius: 1.125rem;
+        background: var(--surface);
+        transition:
+          border-color 0.22s ease-out,
+          background-color 0.22s ease-out;
       }
-      .portfolio-faq_list .accordion_item[open] {
-        border-color: var(--accent);
+      .portfolio-process_item:hover {
+        border-color: color-mix(in srgb, var(--accent) 46%, var(--border));
+        background: color-mix(in srgb, var(--surface) 92%, var(--accent));
       }
-      .portfolio-faq_list .accordion_title {
+      .portfolio-process_heading {
+        display: grid;
+        gap: 0.9rem;
+      }
+      .portfolio-process_heading i {
+        width: max-content;
+        color: var(--accent);
+        font-size: 1.25rem;
+        transition: transform 0.22s ease-out;
+      }
+      .portfolio-process_item:hover .portfolio-process_heading i {
+        transform: translateY(-0.125rem);
+      }
+      .portfolio-process_heading h3 {
+        margin: 0;
+        color: var(--text);
         font-family: var(--display-family);
-        font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-        font-weight: 500;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
+        font-size: clamp(0.82rem, 1vw, 0.95rem);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
       }
-      .portfolio-faq_list .accordion_body {
-        max-width: 48rem;
+      .portfolio-process_heading h3 span {
+        color: var(--accent);
+        font-family: var(--label-family);
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+      }
+      .portfolio-process_item p {
+        margin: 0;
         color: var(--text-2);
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.65;
-        letter-spacing: 0;
+        font-size: clamp(0.69rem, 0.78vw, 0.78rem);
+        line-height: 1.4;
+      }
+      .portfolio-process_connector {
+        position: absolute;
+        z-index: 0;
+        right: calc(8.333% - 0.375rem);
+        bottom: 0.7rem;
+        left: calc(8.333% - 0.375rem);
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        height: 1.8rem;
+        border-bottom: 0.0625rem solid
+          color-mix(in srgb, var(--accent) 55%, transparent);
+      }
+      .portfolio-process_connector span {
+        position: relative;
+      }
+      .portfolio-process_connector span::before {
+        position: absolute;
+        top: -0.35rem;
+        left: 50%;
+        width: 0.0625rem;
+        height: 2.2rem;
+        content: "";
+        background: color-mix(in srgb, var(--accent) 55%, transparent);
+      }
+      .portfolio-process_connector span:not(:last-child)::after {
+        position: absolute;
+        bottom: -0.2rem;
+        left: calc(100% - 0.25rem);
+        width: 0.45rem;
+        aspect-ratio: 1;
+        content: "";
+        border-top: 0.0625rem solid var(--accent);
+        border-right: 0.0625rem solid var(--accent);
+        transform: rotate(45deg);
       }
       .portfolio-contact_wrap {
-        margin: 1.25rem;
         padding: clamp(6rem, 12vw, 10rem) 1.25rem;
         background: var(--surface);
-        border-radius: clamp(2rem, 5vw, 4rem);
         scroll-margin-top: 6.5rem;
       }
       .portfolio-contact_inner {
@@ -1213,6 +1326,18 @@ const projects = [
           top: 63%;
           right: 1.5rem;
         }
+        .portfolio-process_list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .portfolio-process_item {
+          min-height: 14rem;
+        }
+        .portfolio-process_connector {
+          display: none;
+        }
+        .portfolio-process_wrap {
+          padding-bottom: 0;
+        }
       }
       @media (width < 48rem) {
         .portfolio-hero_wrap {
@@ -1275,31 +1400,14 @@ const projects = [
         .portfolio-hero_cta.button_wrap {
           width: max-content;
         }
-        .portfolio-services_wrap {
-          padding-inline: 0.75rem;
+        .portfolio-service_item,
+        .portfolio-service_item.is-active {
+          grid-template-columns: 2.5rem minmax(0, 1fr) 3rem;
+          gap: 1rem;
+          padding: 1.75rem 1rem;
         }
-        .portfolio-services_title {
-          font-size: clamp(3.5rem, 14.5vw, 5.25rem);
-        }
-        .portfolio-services_list {
-          margin-top: 3rem;
-        }
-        .portfolio-service_item {
-          grid-template-columns: 2.25rem minmax(0, 1fr);
-          gap: 0.9rem 1rem;
-          padding-block: 1.5rem;
-        }
-        .portfolio-service_title {
-          font-size: clamp(2.5rem, 12vw, 4rem);
-        }
-        .portfolio-service_meta,
-        .portfolio-service_text {
-          grid-column: 2;
-          max-width: 34rem;
-        }
-        .portfolio-service_media {
-          grid-column: 1 / -1;
-          margin-top: 0.5rem;
+        .portfolio-service_reveal {
+          grid-column: 2 / -1;
         }
         .portfolio-project_wrap {
           grid-template-columns: 1fr;
@@ -1315,10 +1423,46 @@ const projects = [
           gap: 1.25rem;
         }
         .portfolio-about_inner {
-          grid-template-columns: 1fr;
+          gap: 3rem;
         }
-        .portfolio-contact_wrap {
-          margin: 0.75rem;
+        .portfolio-about_intro {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .portfolio-about_title {
+          font-size: clamp(3.5rem, 15vw, 5rem);
+        }
+        .portfolio-about_annotation {
+          margin-top: 0;
+        }
+        .portfolio-process_list {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+          padding-left: 1.5rem;
+        }
+        .portfolio-process_list::before {
+          position: absolute;
+          top: 1.5rem;
+          bottom: 1.5rem;
+          left: 0.35rem;
+          width: 0.0625rem;
+          content: "";
+          background: color-mix(in srgb, var(--accent) 55%, transparent);
+        }
+        .portfolio-process_item {
+          position: relative;
+          min-height: 12rem;
+        }
+        .portfolio-process_item::before {
+          position: absolute;
+          top: 1.5rem;
+          left: -1.45rem;
+          width: 0.7rem;
+          aspect-ratio: 1;
+          content: "";
+          border: 0.125rem solid var(--background);
+          border-radius: 50%;
+          background: var(--accent);
         }
         .portfolio-contact_inner,
         .portfolio-contact_form {
@@ -1332,6 +1476,12 @@ const projects = [
       @media (48rem <= width < 64rem) {
         .portfolio-contact_title {
           font-size: 2rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .portfolio-process_item,
+        .portfolio-process_heading i {
+          transition: none;
         }
       }
     }

@@ -12,10 +12,9 @@ interface Props {
 
 const { render = true, overlap = false } = Astro.props;
 const links = [
-  ["Work", "#work"],
-  ["Services", "#services"],
-  ["About", "#about"],
-  ["FAQ", "#faq"],
+  ["Work", "/#work"],
+  ["Services", "/#services"],
+  ["About", "/#about"],
 ];
 const scheduleExternal = SCHEDULE_URL.startsWith("http");
 ---
@@ -55,7 +54,7 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
               ))}
               <li class="nav_mobile_contact">
                 <>
-                  <span class="nav_index">05</span>
+                  <span class="nav_index">04</span>
                   <a
                     class="nav_link"
                     href={SCHEDULE_URL}

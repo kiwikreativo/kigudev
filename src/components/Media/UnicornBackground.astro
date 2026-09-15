@@ -1,0 +1,263 @@
+---
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+---
+
+{
+  render && (
+    <div class="unicorn-background_wrap" aria-hidden="true">
+      <div class="unicorn-background_viewport">
+        <div
+          class="unicorn-background_scene"
+          data-us-project="qF3qXhdiOxdUeQYH8wCK"
+          data-us-production="true"
+          data-us-lazyload="true"
+          data-us-scale="0.6"
+          data-us-dpi="1"
+          data-us-fps="30"
+        />
+        <div class="unicorn-background_palette" />
+      </div>
+    </div>
+  )
+}
+
+<script>
+  type UnicornStudioApi = {
+    isInitialized?: boolean;
+    init: () => Promise<unknown> | unknown;
+    destroy?: () => void;
+  };
+
+  declare global {
+    interface Window {
+      UnicornStudio?: UnicornStudioApi;
+      unicornStudioSdk?: Promise<UnicornStudioApi>;
+    }
+
+    interface Navigator {
+      deviceMemory?: number;
+      connection?: { saveData?: boolean };
+    }
+  }
+
+  const sdkUrl =
+    "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
+
+  const loadSdk = () => {
+    if (window.UnicornStudio?.init) {
+      return Promise.resolve(window.UnicornStudio);
+    }
+    if (window.unicornStudioSdk) return window.unicornStudioSdk;
+
+    window.unicornStudioSdk = new Promise<UnicornStudioApi>(
+      (resolve, reject) => {
+        const existing = document.querySelector<HTMLScriptElement>(
+          `script[src="${sdkUrl}"]`,
+        );
+        const script = existing ?? document.createElement("script");
+
+        const handleLoad = () => {
+          if (window.UnicornStudio?.init) resolve(window.UnicornStudio);
+          else reject(new Error("Unicorn Studio SDK did not initialize."));
+        };
+        const handleError = () =>
+          reject(new Error("Unicorn Studio SDK failed to load."));
+
+        script.addEventListener("load", handleLoad, { once: true });
+        script.addEventListener("error", handleError, { once: true });
+
+        if (!existing) {
+          script.src = sdkUrl;
+          script.async = true;
+          script.crossOrigin = "anonymous";
+          document.head.appendChild(script);
+        }
+      },
+    ).catch((error) => {
+      delete window.unicornStudioSdk;
+      throw error;
+    });
+
+    return window.unicornStudioSdk;
+  };
+
+  const initializeBackgrounds = () => {
+    const backgrounds = document.querySelectorAll<HTMLElement>(
+      ".unicorn-background_wrap:not([data-unicorn-ready])",
+    );
+
+    for (const background of backgrounds) {
+      background.dataset.unicornReady = "true";
+
+      const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+      const constrained =
+        reducedMotion.matches ||
+        navigator.connection?.saveData === true ||
+        (navigator.deviceMemory !== undefined && navigator.deviceMemory <= 4) ||
+        navigator.hardwareConcurrency <= 4;
+
+      if (constrained) {
+        background.dataset.unicornFallback = "true";
+        continue;
+      }
+
+      let disposed = false;
+      let initialized = false;
+
+      const observer = new IntersectionObserver(
+        async ([entry]) => {
+          if (!entry.isIntersecting || disposed || initialized) return;
+          initialized = true;
+          observer.disconnect();
+
+          try {
+            const studio = await loadSdk();
+            if (disposed) return;
+            if (!studio.isInitialized) {
+              await studio.init();
+              studio.isInitialized = true;
+            }
+            background.dataset.unicornLoaded = "true";
+          } catch (error) {
+            background.dataset.unicornFallback = "true";
+            console.warn("[unicorn-background] Using static fallback.", error);
+          }
+        },
+        { rootMargin: "200px 0px" },
+      );
+
+      const dispose = () => {
+        if (disposed) return;
+        disposed = true;
+        observer.disconnect();
+
+        if (initialized && window.UnicornStudio?.isInitialized) {
+          window.UnicornStudio.destroy?.();
+          window.UnicornStudio.isInitialized = false;
+        }
+        delete background.dataset.unicornReady;
+      };
+
+      observer.observe(background);
+      document.addEventListener("astro:before-swap", dispose, { once: true });
+      window.addEventListener("pagehide", dispose, { once: true });
+    }
+  };
+
+  initializeBackgrounds();
+  document.addEventListener("astro:page-load", initializeBackgrounds);
+</script>
+
+<style is:global>
+  @layer components {
+    .unicorn-background_wrap {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 18% 20%,
+          rgb(79 70 229 / 34%),
+          transparent 36%
+        ),
+        radial-gradient(
+          circle at 82% 62%,
+          rgb(6 182 212 / 24%),
+          transparent 42%
+        ),
+        linear-gradient(145deg, #030712 12%, #111827 54%, #030712 100%);
+    }
+    .unicorn-background_viewport {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+    .unicorn-background_scene,
+    .unicorn-background_palette {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .unicorn-background_scene {
+      opacity: 0;
+      filter: saturate(0.85) contrast(1.05);
+      transition: opacity 600ms ease;
+    }
+    .unicorn-background_wrap[data-unicorn-loaded="true"]
+      .unicorn-background_scene {
+      opacity: 0.68;
+    }
+    .unicorn-background_palette {
+      background:
+        radial-gradient(
+          circle at 22% 28%,
+          rgb(6 182 212 / 46%),
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at 76% 58%,
+          rgb(79 70 229 / 58%),
+          transparent 46%
+        ),
+        linear-gradient(rgb(3 7 18 / 18%), rgb(3 7 18 / 64%));
+      mix-blend-mode: color;
+      opacity: 0.78;
+    }
+    [data-theme="light"] .unicorn-background_wrap {
+      background:
+        radial-gradient(
+          circle at 18% 20%,
+          rgb(79 70 229 / 16%),
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at 82% 62%,
+          rgb(6 182 212 / 14%),
+          transparent 44%
+        ),
+        linear-gradient(145deg, #f7f8ff 12%, #eef1ff 54%, #ffffff 100%);
+    }
+    [data-theme="light"] .unicorn-background_scene {
+      filter: saturate(0.5) contrast(0.78) brightness(1.55);
+    }
+    [data-theme="light"]
+      .unicorn-background_wrap[data-unicorn-loaded="true"]
+      .unicorn-background_scene {
+      opacity: 0.22;
+    }
+    [data-theme="light"] .unicorn-background_palette {
+      background:
+        radial-gradient(
+          circle at 22% 28%,
+          rgb(6 182 212 / 22%),
+          transparent 40%
+        ),
+        radial-gradient(
+          circle at 76% 58%,
+          rgb(79 70 229 / 20%),
+          transparent 48%
+        ),
+        linear-gradient(rgb(255 255 255 / 42%), rgb(247 248 255 / 68%));
+      mix-blend-mode: screen;
+      opacity: 0.9;
+    }
+    .unicorn-background_wrap[data-unicorn-fallback="true"]
+      .unicorn-background_scene {
+      display: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .unicorn-background_scene {
+        display: none;
+      }
+    }
+  }
+</style>

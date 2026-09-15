@@ -1,0 +1,168 @@
+---
+import Section from "@/components/Wrapper/Section.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Eyebrow from "@/components/Typography/Eyebrow.astro";
+import Accordion from "@/components/Interactive/Accordion.astro";
+import AccordionItem from "@/components/Interactive/AccordionItem.astro";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+---
+
+{
+  render && (
+    <Section
+      class="faq-main_wrap"
+      paddingTop="navoverlap"
+      paddingBottom="large"
+      gap="large"
+      align="center"
+      aria-labelledby="faq-title"
+    >
+      <div class="faq-main_heading">
+        <Eyebrow>The practical details</Eyebrow>
+        <Heading
+          tag="h1"
+          variant="inherit"
+          id="faq-title"
+          class="faq-main_title"
+        >
+          Common questions
+        </Heading>
+      </div>
+      <Accordion single openFirst class="faq-main_list">
+        <AccordionItem
+          heading="What type of projects do you work on?"
+          headingTag="h2"
+        >
+          <p>
+            I work on business websites, landing pages, portfolios, e-commerce
+            experiences, website redesigns, and UI/UX improvements. I can help
+            with both new projects and existing websites that need a clearer,
+            more modern, or more responsive experience.
+          </p>
+        </AccordionItem>
+        <AccordionItem
+          heading="Can you handle both the design and development?"
+          headingTag="h2"
+        >
+          <p>
+            Yes. I can take a project from initial ideas and interface design
+            through front-end implementation, responsive behavior, interaction
+            details, and final delivery. This keeps the visual direction and the
+            finished website consistent throughout the project.
+          </p>
+        </AccordionItem>
+        <AccordionItem
+          heading="How long does a website usually take?"
+          headingTag="h2"
+        >
+          <p>
+            Timelines depend on the size and complexity of the project. A
+            focused landing page can often be completed faster, while a larger
+            website with multiple pages, custom interactions, or content
+            management will require more time. After reviewing the requirements,
+            I provide a clear estimated timeline before development begins.
+          </p>
+        </AccordionItem>
+        <AccordionItem
+          heading="Can you redesign or improve an existing website?"
+          headingTag="h2"
+        >
+          <p>
+            Yes. I can improve an existing website’s visual hierarchy,
+            usability, responsive behavior, mobile experience, performance, and
+            overall presentation without necessarily rebuilding everything from
+            scratch.
+          </p>
+        </AccordionItem>
+        <AccordionItem
+          heading="Will the website work well on mobile devices?"
+          headingTag="h2"
+        >
+          <p>
+            Yes. Responsive behavior is considered from the beginning. The final
+            website is tested across mobile, tablet, and desktop layouts so the
+            experience remains clear and usable at different screen sizes.
+          </p>
+        </AccordionItem>
+        <AccordionItem
+          heading="Do you provide SEO optimization?"
+          headingTag="h2"
+        >
+          <p>
+            Yes. I can implement essential technical and on-page SEO foundations
+            such as semantic structure, metadata, page titles, descriptions,
+            performance improvements, responsive behavior, accessibility
+            considerations, and search-friendly page organization.
+          </p>
+        </AccordionItem>
+        <AccordionItem heading="How do we start a project?" headingTag="h2">
+          <p>
+            Start by sending a message through the contact form or scheduling a
+            call. We can discuss your goals, the type of website you need, your
+            current materials, expected features, timeline, and any references
+            you already have.
+          </p>
+        </AccordionItem>
+      </Accordion>
+    </Section>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .faq-main_wrap {
+      min-height: calc(100svh - 8rem);
+    }
+    .faq-main_heading {
+      display: grid;
+      justify-items: center;
+      gap: 1.4rem;
+      text-align: center;
+    }
+    .faq-main_title {
+      max-width: 13ch;
+      margin: 0;
+      color: var(--text);
+      font-family: var(--display-family);
+      font-size: clamp(2.75rem, 6vw, 5.5rem);
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+    }
+    .faq-main_list {
+      width: min(100%, 62rem);
+      margin-inline: auto;
+    }
+    .faq-main_list .accordion_item {
+      margin-top: 0.5rem;
+      padding-inline: 1.5rem;
+      background: var(--surface);
+      border: 0.0625rem solid var(--border);
+      border-radius: 1.125rem;
+    }
+    .faq-main_list .accordion_item[open] {
+      border-color: var(--accent);
+    }
+    .faq-main_list .accordion_title {
+      font-family: var(--display-family);
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .faq-main_list .accordion_body {
+      max-width: 48rem;
+      color: var(--text-2);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+  }
+</style>

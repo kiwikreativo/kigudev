@@ -434,68 +434,168 @@ const projects = [
     import gsap from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.fromTo(
-        [
-          ".portfolio-hero_title",
-          ".portfolio-hero_left",
-          ".portfolio-hero_right",
-        ],
-        { y: 14, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power2.out",
-        },
-      );
-      gsap.fromTo(
-        ".portfolio-hero_portrait",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-      );
-      gsap.utils
-        .toArray<HTMLElement>(".portfolio-project_media")
-        .forEach((media) =>
+
+    let motionContext: gsap.Context | undefined;
+
+    const initializePortfolioMotion = () => {
+      const portfolio = document.querySelector<HTMLElement>(".portfolio_wrap");
+      if (
+        !portfolio ||
+        portfolio.dataset.motionReady ||
+        matchMedia("(prefers-reduced-motion: reduce)").matches
+      )
+        return;
+
+      portfolio.dataset.motionReady = "true";
+      motionContext = gsap.context(() => {
+        const reveal = (
+          trigger: gsap.DOMTarget,
+          targets: gsap.TweenTarget,
+          stagger = 0.06,
+          y = 18,
+        ) =>
           gsap.fromTo(
-            media,
-            { scale: 0.88, opacity: 0.45 },
+            targets,
+            { y, opacity: 0 },
             {
-              scale: 1,
+              y: 0,
               opacity: 1,
-              ease: "none",
+              duration: 0.62,
+              stagger,
+              ease: "power2.out",
               scrollTrigger: {
-                trigger: media,
-                start: "top 88%",
-                end: "center 52%",
-                scrub: 0.7,
+                trigger,
+                start: "top 84%",
+                once: true,
               },
             },
-          ),
-        );
-      const processSection = document.querySelector<HTMLElement>(
-        ".portfolio-about_wrap",
-      );
-      if (processSection) {
+          );
+
         gsap.fromTo(
-          processSection.querySelectorAll(".portfolio-process_item"),
-          { y: 16, opacity: 0 },
+          ".nav_wrap",
+          { y: -12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, ease: "power2.out" },
+        );
+        gsap.fromTo(
+          [
+            ".portfolio-hero_title",
+            ".portfolio-hero_left",
+            ".portfolio-hero_right",
+          ],
+          { y: 14, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.48,
-            stagger: 0.065,
+            duration: 0.7,
+            stagger: 0.08,
             ease: "power2.out",
-            scrollTrigger: {
-              trigger: processSection.querySelector(".portfolio-process_list"),
-              start: "top 84%",
-              once: true,
-            },
           },
         );
-      }
-    }
+        gsap.fromTo(
+          ".portfolio-hero_portrait",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+        );
+
+        reveal(
+          ".portfolio-tech_wrap",
+          ".portfolio-tech_marquee",
+          0,
+          12,
+        );
+        reveal(
+          ".portfolio-work_wrap",
+          ".portfolio-work_wrap .portfolio-heading_wrap > *",
+        );
+        reveal(
+          ".portfolio-work_slider",
+          [
+            ".portfolio-project_content > *",
+            ".portfolio-work_slider .slider_controls",
+          ],
+          0.05,
+          16,
+        );
+        gsap.utils
+          .toArray<HTMLElement>(".portfolio-project_media")
+          .forEach((media) =>
+            gsap.fromTo(
+              media,
+              { scale: 0.88, opacity: 0.45 },
+              {
+                scale: 1,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: media,
+                  start: "top 88%",
+                  end: "center 52%",
+                  scrub: 0.7,
+                },
+              },
+            ),
+          );
+
+        reveal(
+          ".portfolio-services_wrap",
+          ".portfolio-services_wrap .portfolio-heading_wrap > *",
+        );
+        reveal(
+          ".portfolio-services_list",
+          ".portfolio-service_item",
+          0.07,
+          16,
+        );
+        reveal(
+          ".portfolio-about_wrap",
+          [
+            ".portfolio-about_header",
+            ".portfolio-about_intro > *",
+          ],
+          0.07,
+        );
+        reveal(
+          ".portfolio-process_list",
+          ".portfolio-process_item",
+          0.065,
+          16,
+        );
+        reveal(
+          ".portfolio-contact_wrap",
+          ".portfolio-contact_copy > *",
+          0.06,
+        );
+        reveal(
+          ".portfolio-contact_form",
+          [
+            ".portfolio-contact_field",
+            ".portfolio-contact_submit",
+          ],
+          0.055,
+          14,
+        );
+        reveal(
+          ".footer_wrap",
+          [".footer_top > *", ".footer_bottom"],
+          0.07,
+          14,
+        );
+      }, document.body);
+    };
+
+    const cleanupPortfolioMotion = () => {
+      motionContext?.revert();
+      motionContext = undefined;
+      document
+        .querySelector<HTMLElement>(".portfolio_wrap")
+        ?.removeAttribute("data-motion-ready");
+    };
+
+    initializePortfolioMotion();
+    document.addEventListener("astro:page-load", initializePortfolioMotion);
+    document.addEventListener("astro:before-swap", cleanupPortfolioMotion);
+    window.addEventListener("pagehide", cleanupPortfolioMotion, { once: true });
+
     document
       .querySelectorAll<HTMLElement>(".portfolio-service_item")
       .forEach((item) => {

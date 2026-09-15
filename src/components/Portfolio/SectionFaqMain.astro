@@ -114,6 +114,90 @@ const { render = true } = Astro.props;
   )
 }
 
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let motionContext: gsap.Context | undefined;
+
+  const initializeFaqMotion = () => {
+    const faq = document.querySelector<HTMLElement>(".faq-main_wrap");
+    if (
+      !faq ||
+      faq.dataset.motionReady ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+
+    faq.dataset.motionReady = "true";
+    motionContext = gsap.context(() => {
+      gsap.fromTo(
+        ".nav_wrap",
+        { y: -12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: "power2.out" },
+      );
+      gsap.fromTo(
+        ".faq-main_heading > *",
+        { y: 18, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.62,
+          stagger: 0.07,
+          ease: "power2.out",
+        },
+      );
+      gsap.fromTo(
+        ".faq-main_list .accordion_item",
+        { y: 16, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.56,
+          stagger: 0.065,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".faq-main_list",
+            start: "top 84%",
+            once: true,
+          },
+        },
+      );
+      gsap.fromTo(
+        [".footer_top > *", ".footer_bottom"],
+        { y: 14, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.58,
+          stagger: 0.07,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".footer_wrap",
+            start: "top 90%",
+            once: true,
+          },
+        },
+      );
+    }, document.body);
+  };
+
+  const cleanupFaqMotion = () => {
+    motionContext?.revert();
+    motionContext = undefined;
+    document
+      .querySelector<HTMLElement>(".faq-main_wrap")
+      ?.removeAttribute("data-motion-ready");
+  };
+
+  initializeFaqMotion();
+  document.addEventListener("astro:page-load", initializeFaqMotion);
+  document.addEventListener("astro:before-swap", cleanupFaqMotion);
+  window.addEventListener("pagehide", cleanupFaqMotion, { once: true });
+</script>
+
 <style is:global>
   @layer components {
     .faq-main_wrap {

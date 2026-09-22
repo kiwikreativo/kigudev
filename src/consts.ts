@@ -8,7 +8,7 @@ export const SITE_URL = "https://kigudev.com";
 /** BCP 47 locale tag used to format dates and numbers. */
 export const SITE_LOCALE = "en-US";
 /** Canonical client scheduling destination used by every booking CTA. */
-export const SCHEDULE_URL = "https://calendly.com/guillermo-obandoc/30min";
+export const SCHEDULE_URL = "https://calendly.com/guillermo-obandoc/45min";
 /**
  * Routes kept out of search results. Each is excluded from the sitemap and
  * served with a `robots: noindex, nofollow` tag, so the two can't disagree.

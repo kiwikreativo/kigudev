@@ -61,7 +61,7 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
                     target={scheduleExternal ? "_blank" : undefined}
                     rel={scheduleExternal ? "noopener noreferrer" : undefined}
                   >
-                    Schedule a Call
+                    Schedule a Free Call
                   </a>
                 </>
               </li>
@@ -92,7 +92,7 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
           target={scheduleExternal ? "_blank" : undefined}
           rel={scheduleExternal ? "noopener noreferrer" : undefined}
         >
-          <i class="ph ph-calendar-dots" aria-hidden="true" /> Schedule a Call
+          <i class="ph ph-calendar-dots" aria-hidden="true" /> Schedule a Free Call
         </a>
       </div>
     </header>
@@ -407,6 +407,197 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
       }
       .nav_links .nav_mobile_contact {
         display: flex;
+      }
+    }
+
+    .nav_wrap {
+      top: 0;
+      width: 100%;
+      min-height: 5rem;
+      padding: 1rem clamp(1.5rem, 4vw, 4rem);
+      color: var(--nav-foreground);
+      background: var(--nav-background);
+      border: 0;
+      border-bottom: 0.0625rem solid var(--nav-border);
+      border-radius: 0;
+      backdrop-filter: none;
+    }
+    .nav_inner {
+      width: 100%;
+      max-width: 82rem;
+      margin-inline: auto;
+    }
+    .nav_logo-mark {
+      display: none;
+    }
+    .nav_logo-wordmark {
+      color: var(--nav-foreground);
+      font-family: "Satoshi", "Geist", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .nav_links {
+      gap: clamp(1rem, 2.5vw, 2.5rem);
+    }
+    .nav_link,
+    .nav_cta {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav_link {
+      color: var(--nav-foreground-muted);
+    }
+    .nav_link:hover {
+      color: var(--accent);
+    }
+    .nav_theme {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav_theme button {
+      width: 2.75rem;
+      min-height: 2.75rem;
+      color: var(--nav-foreground-muted);
+      border-radius: 50%;
+    }
+    .nav_theme button[aria-pressed="true"] {
+      color: var(--nav-background);
+      background: var(--nav-foreground);
+    }
+    .nav_cta {
+      min-height: 2.75rem;
+      padding-inline: 1rem;
+      color: var(--nav-background);
+      background: var(--nav-foreground);
+      border-color: var(--nav-foreground);
+      border-radius: 99rem;
+    }
+    .nav_cta:hover {
+      color: #071821;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    @media (width < 48rem) {
+      .nav_wrap {
+        width: 100%;
+        min-height: 4.5rem;
+        padding: 0.9rem 1rem;
+        transform: none !important;
+      }
+      .nav_toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: 4rem;
+        min-height: 2.75rem;
+        color: var(--nav-foreground);
+        font-family: "JetBrains Mono", monospace;
+      }
+      .nav_toggle::after {
+        content: "MENU";
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
+      }
+      .nav_toggle i {
+        display: none;
+      }
+      .nav_menu {
+        position: fixed;
+        top: 0;
+        inset: 0;
+        z-index: 110;
+        display: grid;
+        grid-template-rows: 1fr;
+        align-items: stretch;
+        visibility: hidden;
+        overflow-y: auto;
+        margin: 0;
+        padding: 6rem 1.5rem 2rem;
+        color: var(--nav-foreground);
+        isolation: isolate;
+        background: var(--nav-background);
+        border: 0;
+        border-radius: 0;
+        opacity: 0;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+      }
+      .nav_wrap.open .nav_menu {
+        grid-template-rows: 1fr;
+        visibility: visible;
+        opacity: 1;
+      }
+      .nav_menu::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        background: var(--nav-background);
+      }
+      .nav_wrap.open .nav_toggle::after {
+        content: "CLOSE";
+      }
+      .nav_logo,
+      .nav_theme,
+      .nav_toggle {
+        position: relative;
+        z-index: 111;
+      }
+      .nav_links {
+        display: grid;
+        gap: 0;
+        padding: 0;
+      }
+      .nav_menu_inner {
+        display: grid;
+        align-items: center;
+        min-height: 100%;
+        overflow: visible;
+      }
+      .nav_links li {
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        align-items: start;
+        padding-block: 1rem;
+        border-bottom: 0.0625rem solid var(--nav-border);
+      }
+      .nav_index {
+        display: block;
+        color: var(--accent);
+        font-size: 0.65rem;
+      }
+      .nav_link {
+        color: var(--nav-foreground);
+        font-family: "Satoshi", "Geist", sans-serif;
+        font-size: clamp(2.6rem, 14vw, 5rem);
+        line-height: 0.88;
+        letter-spacing: -0.055em;
+      }
+      .nav_links .nav_mobile_contact {
+        display: grid;
+      }
+      .nav_cta {
+        display: none;
+      }
+      .nav_theme {
+        order: 2;
+        display: flex;
+        margin-left: auto;
+      }
+      .nav_theme button {
+        width: 2.25rem;
+        min-height: 2.75rem;
+      }
+      .nav_toggle {
+        order: 3;
       }
     }
   }

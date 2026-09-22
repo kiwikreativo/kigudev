@@ -148,41 +148,43 @@ const projects = [
     <div class="portfolio-hero_circles" aria-hidden="true">
       <span></span><span></span><span></span>
     </div>
-    <Heading
-      tag="h1"
-      variant="inherit"
-      id="hero-title"
-      class="portfolio-hero_title">KIGUDEV</Heading
-    >
-    <div class="portfolio-hero_stage">
-      <div class="portfolio-hero_portrait">
-        <Image
-          src={comic}
-          alt="Illustrated portrait of Kigudev"
-          widths={[320, 480, 640]}
-          sizes="(max-width: 48rem) 95vw, (max-width: 64rem) 37rem, 43rem"
-          loading="eager"
-        />
+    <div class="portfolio-hero_layout">
+      <Heading
+        tag="h1"
+        variant="inherit"
+        id="hero-title"
+        class="portfolio-hero_title">KIGUDEV</Heading
+      >
+      <div class="portfolio-hero_stage">
+        <div class="portfolio-hero_portrait">
+          <Image
+            src={comic}
+            alt="Illustrated portrait of Kigudev"
+            widths={[320, 480, 640]}
+            sizes="(max-width: 48rem) 95vw, (max-width: 64rem) 37rem, 43rem"
+            loading="eager"
+          />
+        </div>
       </div>
-    </div>
-    <div class="portfolio-hero_left">
-      <p class="portfolio-hero_role">Software engineer + UI/UX</p>
-      <Paragraph class="portfolio-hero_text"
-        >I design and build thoughtful digital experiences with a focus on
-        usability, performance, and clarity.</Paragraph
-      >
-    </div>
-    <div class="portfolio-hero_right">
-      <Paragraph class="portfolio-hero_text"
-        >Merging design thinking with software engineering to create digital
-        experiences that are intuitive, efficient, and thoughtfully built.</Paragraph
-      >
-      <Button element="link" href="#contact" class="portfolio-hero_cta"
-        >Start a project <span
-          class="portfolio-hero_cta-mark"
-          aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span
-        ></Button
-      >
+      <div class="portfolio-hero_left">
+        <p class="portfolio-hero_role">Software engineer + UI/UX</p>
+        <Paragraph class="portfolio-hero_text"
+          >I design and build thoughtful digital experiences with a focus on
+          usability, performance, and clarity.</Paragraph
+        >
+      </div>
+      <div class="portfolio-hero_right">
+        <Paragraph class="portfolio-hero_text"
+          >Merging design thinking with software engineering to create digital
+          experiences that are intuitive, efficient, and thoughtfully built.</Paragraph
+        >
+        <Button element="link" href="#contact" class="portfolio-hero_cta"
+          >Start a project <span
+            class="portfolio-hero_cta-mark"
+            aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span
+          ></Button
+        >
+      </div>
     </div>
   </section>
 
@@ -2953,6 +2955,150 @@ const projects = [
         }
         .portfolio-contact_wrap {
           padding-block: 8rem;
+        }
+      }
+
+      .portfolio-hero_wrap {
+        min-height: max(55rem, 100svh);
+      }
+      .portfolio-hero_layout {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        column-gap: clamp(1.25rem, 3vw, 4rem);
+        align-items: center;
+        width: min(calc(100% - clamp(3rem, 8vw, 10rem)), 90rem);
+        min-height: inherit;
+        margin-inline: auto;
+        padding-block: clamp(8rem, 14vh, 10.5rem) clamp(1rem, 3vh, 2rem);
+      }
+      .portfolio-hero_title {
+        position: relative;
+        inset: auto;
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-self: center;
+        width: 100%;
+        max-width: none;
+        font-size: clamp(6rem, 14vw, 14.5rem);
+        text-align: center;
+        white-space: nowrap;
+        overflow-wrap: normal;
+        transform: none;
+      }
+      .portfolio-hero_stage {
+        position: relative;
+        inset: auto;
+        grid-column: 2;
+        grid-row: 2;
+        display: grid;
+        place-items: end center;
+        align-self: stretch;
+        min-height: clamp(29rem, 50vh, 39rem);
+        margin-top: clamp(2rem, 4vh, 3rem);
+      }
+      .portfolio-hero_portrait {
+        position: relative;
+        inset: auto;
+        width: min(100%, clamp(20rem, 31vw, 33rem));
+        transform: none;
+      }
+      .portfolio-hero_left,
+      .portfolio-hero_right {
+        position: relative;
+        inset: auto;
+        grid-row: 2;
+        align-self: center;
+        width: 100%;
+        max-width: 16rem;
+      }
+      .portfolio-hero_left {
+        grid-column: 1;
+      }
+      .portfolio-hero_right {
+        grid-column: 3;
+        justify-self: end;
+        margin-top: clamp(2rem, 5vw, 5rem);
+      }
+      .portfolio-hero_circles span {
+        top: 58%;
+      }
+      @media (width <= 64rem) {
+        .portfolio-hero_wrap {
+          min-height: max(44rem, 85svh);
+        }
+        .portfolio-hero_layout {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+          column-gap: 1rem;
+          width: calc(100% - 3rem);
+          padding-top: 8rem;
+        }
+        .portfolio-hero_title {
+          font-size: clamp(5.25rem, 13vw, 8rem);
+        }
+        .portfolio-hero_stage {
+          place-items: center;
+          min-height: 26rem;
+          margin-top: 1.5rem;
+        }
+        .portfolio-hero_portrait {
+          width: min(100%, 25rem);
+        }
+        .portfolio-hero_left,
+        .portfolio-hero_right {
+          max-width: 13.5rem;
+        }
+      }
+      @media (width < 48rem) {
+        .portfolio-hero_wrap {
+          display: block;
+          min-height: 0;
+          padding: 0;
+        }
+        .portfolio-hero_layout {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+          width: calc(100% - 2.5rem);
+          min-height: 0;
+          padding-block: 7rem 4rem;
+        }
+        .portfolio-hero_title {
+          grid-column: 1;
+          font-size: clamp(3rem, 12.3vw, 5.5rem);
+          line-height: 0.8;
+          text-align: center;
+          white-space: nowrap;
+          overflow-wrap: normal;
+        }
+        .portfolio-hero_stage {
+          grid-column: 1;
+          grid-row: 2;
+          width: min(78vw, 23rem);
+          min-height: 0;
+          height: auto;
+          margin: 2.5rem auto 0;
+        }
+        .portfolio-hero_portrait {
+          width: 100%;
+        }
+        .portfolio-hero_left,
+        .portfolio-hero_right {
+          grid-column: 1;
+          justify-self: start;
+          max-width: 30rem;
+        }
+        .portfolio-hero_left {
+          grid-row: 3;
+          margin-top: 1rem;
+        }
+        .portfolio-hero_right {
+          grid-row: 4;
+          margin-top: 1.75rem;
+        }
+        .portfolio-hero_circles span {
+          top: 34%;
         }
       }
     }

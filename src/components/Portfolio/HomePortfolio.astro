@@ -7,38 +7,8 @@ import Slider from "@/components/Interactive/Slider.astro";
 import Marquee from "@/components/Interactive/Marquee.astro";
 import UnicornBackground from "@/components/Media/UnicornBackground.astro";
 import comic from "@/assets/logo/comic.png";
-import decorazonjoss from "@/assets/projects/decorazonjoss.webp";
-import meguis from "@/assets/projects/meguis.webp";
-import StackCheff from "@/assets/projects/stack-chef.webp";
-import eghee from "@/assets/projects/eghee.webp";
-import chainpeek from "@/assets/projects/chainpeek.webp";
-
-const services = [
-  [
-    "01",
-    "UI/UX Design",
-    "Clear and thoughtful interfaces designed around real users and business goals.",
-    "Research · user flows · design systems",
-  ],
-  [
-    "02",
-    "Web Development",
-    "Responsive, polished websites built to turn approved designs into reliable digital experiences.",
-    "Business sites · landing pages · e-commerce",
-  ],
-  [
-    "03",
-    "Mobile Enhancement",
-    "Improving layouts and interactions so websites remain clear, usable, and comfortable on smaller screens.",
-    "Responsive redesign · usability · accessibility",
-  ],
-  [
-    "04",
-    "SEO",
-    "Building a stronger technical and content foundation so search engines and users can better understand the site.",
-    "Structure · performance · discoverability",
-  ],
-];
+import { services } from "@/data/services.ts";
+import { projects } from "@/data/projects.ts";
 
 const processSteps = [
   {
@@ -73,73 +43,6 @@ const processSteps = [
   },
 ];
 
-const projects = [
-  {
-    image: decorazonjoss,
-    title: "DeCorazonJoss",
-    category: "Event decoration website",
-    copy: "Business website for Decorazon Joss, an event decoration company, built with Astro.",
-    role: "Design & Astro development",
-    focus: "Brand presence & inquiries",
-    timeline: "4 weeks",
-    button: { label: "View Project", href: "/customer/corazonjoss" },
-    imageAlt: "Representative photo of an elegantly decorated event reception",
-    photoCredit: "Jonathan Borba",
-    photoUrl: "https://www.pexels.com/photo/elegant-indoor-wedding-reception-setup-35985211/",
-  },
-  {
-    image: meguis,
-    title: "Meguis Import&Export",
-    category: "Corporate logistics website",
-    copy: "A responsive corporate website for Meguis Logistics, showcasing customs and logistics consulting services.",
-    role: "UI/UX & front-end",
-    focus: "Services & lead generation",
-    timeline: "5 weeks",
-    button: { label: "View Project", href: "/customer/meguisImport" },
-    imageAlt: "Representative photo of a container ship at a cargo terminal",
-    photoCredit: "Wolfgang Weiser",
-    photoUrl: "https://www.pexels.com/photo/container-ship-at-terminal-burchardkai-in-hamburg-21234960/",
-  },
-  {
-    image: StackCheff,
-    title: "Stack Chef",
-    category: "AI developer tool",
-    copy: "An AI-powered application that scaffolds and generates development boilerplates to accelerate project creation.",
-    role: "Product design & development",
-    focus: "Scaffolding workflows",
-    timeline: "6 weeks",
-    button: { label: "View Project", href: "/customer/cheff-stack" },
-    imageAlt: "Representative photo of a developer facing a screen of code",
-    photoCredit: "Ron Lach",
-    photoUrl: "https://www.pexels.com/photo/person-facing-a-big-screen-with-numbers-9783346/",
-  },
-  {
-    image: eghee,
-    title: "Eghee",
-    category: "Product landing page",
-    copy: "A modern landing page designed to showcase premium ghee and egg bread products while encouraging customer engagement.",
-    role: "Landing page design",
-    focus: "Product storytelling",
-    timeline: "3 weeks",
-    button: { label: "View Project", href: "/customer/eghee" },
-    imageAlt: "Representative photo of bread and butter on a serving board",
-    photoCredit: "eat kubba",
-    photoUrl: "https://www.pexels.com/photo/bread-slices-on-brown-wooden-chopping-board-11842180/",
-  },
-  {
-    image: chainpeek,
-    title: "ChainPeek",
-    category: "Web3 wallet dApp",
-    copy: "A Web3 dApp for connecting a MetaMask wallet, checking balances, and sending funds through a lightweight wallet interface.",
-    role: "UI/UX & front-end",
-    focus: "Wallet flows",
-    timeline: "5 weeks",
-    button: { label: "View Project", href: "/customer/chainpeek" },
-    imageAlt: "Representative photo of a cryptocurrency interface on a phone",
-    photoCredit: "Leeloo The First",
-    photoUrl: "https://www.pexels.com/photo/white-smartphone-on-gray-laptop-8358145/",
-  },
-];
 ---
 
 <div class="portfolio_wrap">
@@ -234,15 +137,16 @@ const projects = [
             label="Selected Kigudev projects"
           >
             {
-              projects.map((project) => (
+              projects.map((project, index) => (
                 <article class="portfolio-project_wrap">
                   <div class="portfolio-project_media">
                     <Image
                       src={project.image}
                       alt={project.imageAlt}
-                      widths={[480, 720, 960]}
-                      sizes="(max-width: 48rem) 100vw, 45vw"
-                      loading="lazy"
+                      widths={[480, 720, 960, 1280, 1600]}
+                      sizes="(max-width: 48rem) 100vw, 62vw"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchpriority={index === 0 ? "high" : "auto"}
                     />
                   </div>
                   <div class="portfolio-project_content">
@@ -255,7 +159,7 @@ const projects = [
                       {project.title}
                     </Heading>
                     <Paragraph class="portfolio-project_text">
-                      {project.copy}
+                      {project.shortDescription}
                     </Paragraph>
                     <dl class="portfolio-project_meta">
                       <>
@@ -274,13 +178,13 @@ const projects = [
                         <div>
                           <>
                             <dt>Timeline</dt>
-                            <dd>{project.timeline}</dd>
+                            <dd>{project.duration}</dd>
                           </>
                         </div>
                       </>
                     </dl>
-                    <Button element="link" href={project.button.href} emphasis="secondary">
-                      {project.button.label}{" "}
+                    <Button element="link" href={`/projects/${project.slug}`} emphasis="secondary">
+                      View Project{" "}
                       <i class="ph ph-arrow-up-right" aria-hidden="true" />
                     </Button>
                     <p class="portfolio-project_credit">
@@ -315,32 +219,34 @@ const projects = [
           </div>
           <div class="portfolio-services_list">
             {
-              services.map(([number, title, copy, detail], index) => (
-                <article
+              services.map((service, index) => (
+                <a
+                  href={`/services/${service.slug}`}
                   class:list={[
                     "portfolio-service_item",
                     index === 3 && "is-active",
                   ]}
-                  tabindex="0"
                 >
-                  <span class="portfolio-service_number">{number}</span>
+                  <span class="portfolio-service_number">{service.number}</span>
                   <div class="portfolio-service_copy">
                     <Heading
                       tag="h3"
                       variant="inherit"
                       class="portfolio-service_title"
                     >
-                      {title}
+                      {service.title}
                     </Heading>
-                    <Paragraph class="portfolio-service_text">{copy}</Paragraph>
+                    <Paragraph class="portfolio-service_text">
+                      {service.homepageCopy}
+                    </Paragraph>
                   </div>
                   <div class="portfolio-service_reveal">
-                    <span>{detail}</span>
+                    <span>{service.homepageDetail}</span>
                   </div>
                   <span class="portfolio-service_arrow" aria-hidden="true">
                     <i class="ph ph-arrow-up-right" />
                   </span>
-                </article>
+                </a>
               ))
             }
           </div>
@@ -1137,6 +1043,8 @@ const projects = [
         border-radius: 0;
         outline: none;
         isolation: isolate;
+        color: inherit;
+        text-decoration: none;
         transition:
           padding 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
           background-color 0.35s,
@@ -2418,44 +2326,33 @@ const projects = [
         overflow: visible;
       }
       .portfolio-work_slider .slider_list {
-        gap: clamp(6rem, 9vw, 9rem);
+        gap: clamp(8rem, 12vw, 11rem);
       }
       .portfolio-work_slider .portfolio-project_wrap {
         position: relative;
         top: auto;
         min-height: 0;
-        padding: 0;
+        padding: clamp(1.5rem, 2.5vw, 2.5rem) 0 clamp(4rem, 7vw, 7rem);
         color: var(--portfolio-foreground);
         background: transparent;
         border-top-color: var(--portfolio-border);
         box-shadow: none;
       }
       .portfolio-project_media {
-        grid-column: 1 / span 7;
-        min-height: clamp(28rem, 48vw, 42rem);
+        grid-column: 1 / span 8;
+        min-height: clamp(30rem, 49vw, 44rem);
         overflow: hidden;
       }
       .portfolio-project_media::after {
-        position: absolute;
-        right: -0.65rem;
-        bottom: 2rem;
-        z-index: 2;
-        display: grid;
-        width: 2.8rem;
-        aspect-ratio: 1;
-        place-items: center;
-        content: "✦";
-        color: var(--portfolio-on-accent);
-        background: var(--portfolio-accent);
-        font-size: 0.8rem;
-        transform: rotate(9deg);
-      }
-      .portfolio-project_wrap:not(:first-child)
-        .portfolio-project_media::after {
         display: none;
       }
       .portfolio-project_media img {
-        min-height: clamp(28rem, 48vw, 42rem);
+        min-height: clamp(30rem, 49vw, 44rem);
+        filter: none;
+      }
+      .portfolio-project_wrap:hover .portfolio-project_media img {
+        filter: none;
+        transform: scale(1.025);
       }
       .portfolio-project_content {
         grid-column: 7 / -1;
@@ -2463,24 +2360,33 @@ const projects = [
         z-index: 2;
         align-self: center;
         min-height: 0;
-        margin-left: clamp(-1rem, -1vw, -0.5rem);
+        margin-left: 0;
         padding: clamp(2rem, 4vw, 4rem);
         background: var(--portfolio-raised-surface);
-        border-top: 0.0625rem solid var(--portfolio-border);
+        border-block: 0.0625rem solid var(--portfolio-border);
       }
       .portfolio-project_category,
       .portfolio-project_meta dt {
         color: var(--portfolio-accent);
       }
       .portfolio-project_title {
-        max-width: none;
+        max-width: 100%;
         color: var(--portfolio-foreground);
-        font-size: clamp(1.25rem, 3.5vw, 4rem);
+        font-size: clamp(2.5rem, 4.5vw, 5rem);
         font-weight: bold;
+        line-height: 0.84;
+        letter-spacing: -0.055em;
+        overflow-wrap: anywhere;
+        text-transform: uppercase;
       }
       .portfolio-project_text,
       .portfolio-project_meta dd {
         color: var(--portfolio-muted);
+      }
+      .portfolio-project_text {
+        max-width: 44ch;
+        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        line-height: 1.55;
       }
       .portfolio-project_credit {
         margin-top: 1rem;
@@ -2498,12 +2404,17 @@ const projects = [
         outline-offset: 0.2rem;
       }
       .portfolio-project_meta {
+        gap: clamp(0.75rem, 1.5vw, 1.5rem);
         border-color: var(--portfolio-border);
+      }
+      .portfolio-project_meta dd {
+        line-height: 1.4;
       }
       .portfolio-project_content .button_wrap {
         color: var(--portfolio-raised-surface);
         background: var(--portfolio-foreground);
         border-color: var(--portfolio-foreground);
+        border-radius: 0;
       }
       .portfolio-project_content .button_wrap:hover {
         color: var(--portfolio-on-accent);
@@ -2853,9 +2764,15 @@ const projects = [
         background: var(--portfolio-accent);
       }
       @media (width < 64rem) {
+        .portfolio-project_media {
+          grid-column: 1 / span 8;
+        }
         .portfolio-project_content {
           grid-column: 7 / -1;
-          padding: 2rem;
+          padding: clamp(1.75rem, 3vw, 2.5rem);
+        }
+        .portfolio-project_title {
+          font-size: clamp(2.25rem, 5vw, 3.75rem);
         }
         .portfolio-service_item,
         .portfolio-service_item.is-active,
@@ -2889,7 +2806,7 @@ const projects = [
           right: 1.25rem;
         }
         .portfolio-work_slider .slider_list {
-          gap: 6rem;
+          gap: 7rem;
         }
         .portfolio-project_media,
         .portfolio-project_content {
@@ -2900,8 +2817,23 @@ const projects = [
         }
         .portfolio-project_content {
           grid-row: 2;
-          margin: -2rem 0 0 1.5rem;
-          padding: 2rem 0 0 1.25rem;
+          width: calc(100% - 1rem);
+          margin: -3rem 0 0 auto;
+          padding: 2rem 1rem 0 1.25rem;
+          background: var(--portfolio-raised-surface);
+          border-block: 0;
+          border-top: 0.0625rem solid var(--portfolio-border);
+        }
+        .portfolio-project_media,
+        .portfolio-project_media img {
+          min-height: clamp(22rem, 110vw, 34rem);
+        }
+        .portfolio-project_meta {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
+        .portfolio-project_meta dd {
+          font-size: 0.72rem;
         }
         .portfolio-service_item,
         .portfolio-service_item.is-active,

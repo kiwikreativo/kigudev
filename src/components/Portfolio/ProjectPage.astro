@@ -1,0 +1,938 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import type { Project } from "@/data/projects.ts";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Project content rendered by the shared dynamic case-study template. */
+  project: Project;
+  /** Project shown after the current case study. */
+  nextProject: Project;
+}
+
+const { render = true, project, nextProject } = Astro.props;
+const words = project.shortDescription.split(" ");
+const metadata = [
+  ["Role", project.role],
+  ["Focus", project.focus],
+  ["Duration", project.duration],
+].filter((entry) => entry[1]);
+const hasCapabilities =
+  project.services.length > 0 || project.technologies?.length;
+---
+
+{
+  render && (
+    <article class="project-page_wrap">
+      <header class="project-page_hero" aria-labelledby="project-title">
+        <div class="project-page_container project-page_hero-layout">
+          <nav class="project-page_breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true">/</span>
+            <a href="/#work">Work</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{project.title}</span>
+          </nav>
+
+          <div class="project-page_heading">
+            <p class="project-page_eyebrow">
+              {project.number} / Selected Project
+            </p>
+            <Heading
+              tag="h1"
+              variant="inherit"
+              id="project-title"
+              class="project-page_title"
+            >
+              {project.titleLines.map((line) => (
+                <span>{line}</span>
+              ))}
+            </Heading>
+          </div>
+
+          <div class="project-page_hero-detail">
+            <p class="project-page_category">{project.category}</p>
+            <p class="project-page_lede" aria-label={project.shortDescription}>
+              {words.map((word, index) => (
+                <span class="project-page_word" aria-hidden="true">
+                  {word}
+                  {index < words.length - 1 ? " " : ""}
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <section class="project-page_overview" aria-labelledby="overview-title">
+        <div class="project-page_container project-page_overview-layout">
+          <div class="project-page_section-heading">
+            <p class="project-page_eyebrow">Project Overview</p>
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="overview-title"
+              class="project-page_subtitle"
+            >
+              Work made to be useful.
+            </Heading>
+          </div>
+          <dl class="project-page_metadata">
+            {metadata.map(([label, value]) => (
+              <div>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <figure
+        class="project-page_visual project-page_reveal-media"
+        id="project-visual"
+      >
+        <div class="project-page_container">
+          <Image
+            src={project.image}
+            alt={project.imageAlt}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(max-width: 767px) 100vw, 90vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <figcaption>
+            <span>
+              {project.imageKind === "contextual"
+                ? "Contextual imagery"
+                : "Project visual"}
+            </span>
+            <span>
+              Photo by{" "}
+              <a
+                href={project.photoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.photoCredit} on Pexels
+              </a>
+            </span>
+          </figcaption>
+        </div>
+      </figure>
+
+      {project.challenge?.length && (
+        <section class="project-page_story" aria-labelledby="challenge-title">
+          <div class="project-page_container project-page_story-layout">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="challenge-title"
+              class="project-page_subtitle"
+            >
+              The Challenge
+            </Heading>
+            <div class="project-page_story-copy">
+              {project.challenge.map((paragraph) => (
+                <Paragraph>{paragraph}</Paragraph>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.approach?.length && (
+        <section class="project-page_story" aria-labelledby="approach-title">
+          <div class="project-page_container project-page_story-layout">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="approach-title"
+              class="project-page_subtitle"
+            >
+              The Approach
+            </Heading>
+            <div class="project-page_story-copy">
+              {project.approach.map((paragraph) => (
+                <Paragraph>{paragraph}</Paragraph>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.solution?.length && (
+        <section class="project-page_story" aria-labelledby="solution-title">
+          <div class="project-page_container project-page_story-layout">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="solution-title"
+              class="project-page_subtitle"
+            >
+              What I Built
+            </Heading>
+            <div class="project-page_story-copy">
+              {project.solution.map((paragraph) => (
+                <Paragraph>{paragraph}</Paragraph>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.gallery?.length && (
+        <section class="project-page_gallery" aria-labelledby="gallery-title">
+          <div class="project-page_container">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="gallery-title"
+              class="project-page_subtitle"
+            >
+              Project Gallery
+            </Heading>
+            <div class="project-page_gallery-layout">
+              {project.gallery.map((item, index) => (
+                <figure class:list={[index % 3 === 0 && "wide"]}>
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    widths={[640, 960, 1280, 1600]}
+                    sizes={index % 3 === 0 ? "90vw" : "45vw"}
+                    loading="lazy"
+                  />
+                  {item.caption && <figcaption>{item.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.outcome?.length && (
+        <section class="project-page_story" aria-labelledby="outcome-title">
+          <div class="project-page_container project-page_story-layout">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="outcome-title"
+              class="project-page_subtitle"
+            >
+              Outcome
+            </Heading>
+            <div class="project-page_story-copy">
+              {project.outcome.map((paragraph) => (
+                <Paragraph>{paragraph}</Paragraph>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {hasCapabilities && (
+        <section
+          class="project-page_capabilities"
+          aria-labelledby="capabilities-title"
+        >
+          <div class="project-page_container project-page_capabilities-layout">
+            <div class="project-page_section-heading">
+              <p class="project-page_eyebrow">Project Capabilities</p>
+              <Heading
+                tag="h2"
+                variant="inherit"
+                id="capabilities-title"
+                class="project-page_subtitle"
+              >
+                Services &amp; Technology
+              </Heading>
+            </div>
+            <div class="project-page_capability-groups">
+              {project.services.length > 0 && (
+                <div>
+                  <h3>Services</h3>
+                  <ul>
+                    {project.services.map((service) => (
+                      <li>
+                        <a href={`/services/${service.slug}`}>
+                          {service.title}
+                          <i class="ph ph-arrow-up-right" aria-hidden="true" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {project.technologies?.length && (
+                <div>
+                  <h3>Technology</h3>
+                  <ul>
+                    {project.technologies.map((technology) => (
+                      <li>
+                        <span>{technology}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <nav class="project-page_next" aria-labelledby="next-project-title">
+        <a href={`/projects/${nextProject.slug}`}>
+          <div class="project-page_container project-page_next-layout">
+            <div>
+              <p class="project-page_eyebrow">Next Project</p>
+              <Heading
+                tag="h2"
+                variant="inherit"
+              id="next-project-title"
+              class="project-page_next-title"
+            >
+                {nextProject.titleLines.map((line) => (
+                  <span>{line}</span>
+                ))}
+              </Heading>
+            </div>
+            <i class="ph ph-arrow-up-right" aria-hidden="true" />
+          </div>
+        </a>
+      </nav>
+
+      <section class="project-page_cta" aria-labelledby="project-cta-title">
+        <div class="project-page_container project-page_cta-layout">
+          <p class="project-page_eyebrow">Start a Conversation</p>
+          <Heading
+            tag="h2"
+            variant="inherit"
+            id="project-cta-title"
+            class="project-page_cta-title"
+          >
+            Have a project <span>in mind?</span>
+          </Heading>
+          <Paragraph class="project-page_cta-copy">
+            Tell me what you're building and let's figure out the right
+            approach.
+          </Paragraph>
+          <Button
+            element="link"
+            href="/#contact"
+            class="project-page_cta-button"
+          >
+            Start a Project <span aria-hidden="true">↗</span>
+          </Button>
+        </div>
+      </section>
+    </article>
+  )
+}
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  let projectMotion: gsap.Context | undefined;
+
+  const initializeProjectMotion = () => {
+    projectMotion?.revert();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    projectMotion = gsap.context(() => {
+      gsap.fromTo(
+        ".project-page_word",
+        { opacity: 0.5 },
+        {
+          opacity: 1,
+          stagger: 0.04,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".project-page_hero-detail",
+            start: "top 76%",
+            end: "bottom 35%",
+            scrub: 0.7,
+          },
+        },
+      );
+
+      ScrollTrigger.create({
+        trigger: ".project-page_reveal-media",
+        start: "top 90%",
+        once: true,
+        onEnter: () =>
+          gsap.fromTo(
+            ".project-page_reveal-media img",
+            { scale: 0.94, opacity: 0.85 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+          ),
+      });
+    }, document.body);
+  };
+
+  initializeProjectMotion();
+  document.addEventListener("astro:page-load", initializeProjectMotion);
+  document.addEventListener("astro:before-swap", () => projectMotion?.revert());
+</script>
+
+<style is:global>
+  @layer components {
+    .project-page_wrap {
+      --project-surface: var(--editorial-surface-alt);
+      --project-surface-raised: var(--editorial-surface);
+      --project-surface-strong: var(--editorial-surface-raised);
+      --project-surface-deep: var(--editorial-surface-deep);
+      --project-foreground: var(--editorial-foreground);
+      --project-muted: var(--editorial-muted);
+      --project-subtle: var(--editorial-subtle);
+      --project-border: var(--editorial-border);
+      --project-accent: var(--accent);
+      width: 100%;
+      color: var(--project-foreground);
+      background: var(--project-surface);
+      font-family: var(--primary-family);
+    }
+
+    .project-page_container {
+      width: min(calc(100% - clamp(2rem, 8vw, 8rem)), 90rem);
+      margin-inline: auto;
+    }
+
+    .project-page_hero {
+      min-height: min(58rem, 100svh);
+      padding-block: clamp(8rem, 13vw, 11rem) clamp(6rem, 10vw, 9rem);
+      background:
+        radial-gradient(
+          circle at 84% 30%,
+          color-mix(in srgb, var(--project-accent) 10%, transparent),
+          transparent 27rem
+        ),
+        var(--project-surface);
+    }
+
+    .project-page_hero-layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(3rem, 7vw, 7rem) clamp(1rem, 2vw, 2rem);
+      align-items: end;
+    }
+
+    .project-page_breadcrumbs {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      color: var(--project-subtle);
+      font-family: var(--label-family);
+      font-size: 0.68rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .project-page_breadcrumbs a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 200ms ease-out;
+    }
+
+    .project-page_breadcrumbs a:hover,
+    .project-page_breadcrumbs a:focus-visible {
+      color: var(--project-accent);
+    }
+
+    .project-page_heading {
+      grid-column: 1 / 10;
+    }
+
+    .project-page_eyebrow,
+    .project-page_category {
+      margin: 0 0 1.25rem;
+      color: var(--project-accent);
+      font-family: var(--label-family);
+      font-size: 0.7rem;
+      line-height: 1.3;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .project-page_title {
+      max-width: 12ch;
+      margin: 0;
+      color: var(--project-foreground);
+      font-family: "Geist", var(--display-family);
+      font-size: clamp(3.5rem, 7vw, 9rem);
+      font-weight: 700;
+      line-height: 0.8;
+      letter-spacing: -0.065em;
+      overflow-wrap: anywhere;
+      text-transform: uppercase;
+    }
+
+    .project-page_title > span {
+      display: block;
+    }
+
+    .project-page_hero-detail {
+      grid-column: 9 / -1;
+      align-self: end;
+      padding-bottom: 0.5rem;
+    }
+
+    .project-page_lede {
+      max-width: 42ch;
+      margin: 0;
+      color: var(--project-muted);
+      font-size: clamp(1rem, 1.4vw, 1.22rem);
+      line-height: 1.62;
+    }
+
+    .project-page_word {
+      opacity: 1;
+    }
+
+    .project-page_overview,
+    .project-page_story,
+    .project-page_gallery,
+    .project-page_capabilities,
+    .project-page_next,
+    .project-page_cta {
+      padding-block: clamp(6rem, 11vw, 10rem);
+    }
+
+    .project-page_overview {
+      background: var(--project-surface-raised);
+    }
+
+    .project-page_overview-layout,
+    .project-page_story-layout,
+    .project-page_capabilities-layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(3rem, 7vw, 8rem) clamp(1rem, 2vw, 2rem);
+      align-items: start;
+    }
+
+    .project-page_section-heading {
+      grid-column: 1 / 9;
+    }
+
+    .project-page_subtitle {
+      max-width: 12ch;
+      margin: 0;
+      font-family: "Geist", var(--display-family);
+      font-size: clamp(3.2rem, 6.5vw, 7rem);
+      font-weight: 600;
+      line-height: 0.86;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+
+    .project-page_metadata {
+      grid-column: 9 / -1;
+      margin: 0;
+      border-top: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_metadata div {
+      display: grid;
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 1rem;
+      padding-block: 1.25rem;
+      border-bottom: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_metadata dt,
+    .project-page_capability-groups h3 {
+      color: var(--project-accent);
+      font-family: var(--label-family);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-page_metadata dd {
+      margin: 0;
+      color: var(--project-muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .project-page_visual {
+      margin: 0;
+      padding-block: clamp(4rem, 8vw, 7rem) clamp(7rem, 13vw, 12rem);
+      overflow: hidden;
+      background: var(--project-surface-deep);
+    }
+
+    .project-page_visual img {
+      display: block;
+      width: 100%;
+      max-height: 52rem;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      transform-origin: center;
+    }
+
+    .project-page_visual figcaption {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 2rem;
+      margin-top: 0.85rem;
+      color: var(--project-subtle);
+      font-family: var(--label-family);
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .project-page_visual figcaption a {
+      color: inherit;
+    }
+
+    .project-page_story {
+      background: var(--project-surface-raised);
+      border-top: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_story .project-page_subtitle {
+      grid-column: 1 / 6;
+    }
+
+    .project-page_story-copy {
+      grid-column: 7 / -1;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .project-page_story-copy .text {
+      max-width: 64ch;
+      margin: 0;
+      color: var(--project-muted);
+      font-size: clamp(1.08rem, 1.8vw, 1.45rem);
+      line-height: 1.6;
+    }
+
+    .project-page_gallery {
+      background: var(--project-surface-deep);
+    }
+
+    .project-page_gallery-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-flow: dense;
+      gap: clamp(1rem, 2vw, 2rem);
+      margin-top: clamp(3rem, 6vw, 6rem);
+    }
+
+    .project-page_gallery-layout figure {
+      margin: 0;
+    }
+
+    .project-page_gallery-layout figure.wide {
+      grid-column: 1 / -1;
+    }
+
+    .project-page_gallery-layout img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_gallery-layout figcaption {
+      margin-top: 0.7rem;
+      color: var(--project-subtle);
+      font-family: var(--label-family);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .project-page_capabilities {
+      background: var(--project-surface-strong);
+    }
+
+    .project-page_capability-groups {
+      grid-column: 9 / -1;
+      display: grid;
+      gap: 3rem;
+    }
+
+    .project-page_capability-groups h3 {
+      margin: 0 0 1rem;
+    }
+
+    .project-page_capability-groups ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      border-top: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_capability-groups li {
+      border-bottom: 0.0625rem solid var(--project-border);
+    }
+
+    .project-page_capability-groups a,
+    .project-page_capability-groups li > span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 4rem;
+      color: var(--project-foreground);
+      font-family: "Geist", var(--display-family);
+      font-size: clamp(1.15rem, 2vw, 1.75rem);
+      letter-spacing: -0.025em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .project-page_capability-groups i {
+      color: var(--project-accent);
+      transition: transform 200ms ease-out;
+    }
+
+    .project-page_capability-groups a:hover i,
+    .project-page_capability-groups a:focus-visible i {
+      transform: translate(0.2rem, -0.2rem);
+    }
+
+    .project-page_next {
+      padding-block: 0;
+      background: var(--project-surface);
+    }
+
+    .project-page_next > a {
+      display: block;
+      padding-block: clamp(6rem, 11vw, 10rem);
+      color: var(--project-foreground);
+      text-decoration: none;
+      border-block: 0.0625rem solid var(--project-border);
+      transition: background-color 200ms ease-out;
+    }
+
+    .project-page_next-layout {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .project-page_next-title {
+      max-width: 14ch;
+      margin: 0;
+      font-family: "Geist", var(--display-family);
+      font-size: clamp(3.5rem, 8vw, 8.5rem);
+      font-weight: 700;
+      line-height: 0.82;
+      letter-spacing: -0.06em;
+      overflow-wrap: anywhere;
+      text-transform: uppercase;
+    }
+
+    .project-page_next-title > span {
+      display: block;
+    }
+
+    .project-page_next-layout > i {
+      flex: 0 0 auto;
+      color: var(--project-accent);
+      font-size: clamp(2rem, 5vw, 5rem);
+      transition: transform 200ms ease-out;
+    }
+
+    .project-page_next > a:hover {
+      background: color-mix(in srgb, var(--project-accent) 7%, transparent);
+    }
+
+    .project-page_next > a:hover .project-page_next-layout > i,
+    .project-page_next > a:focus-visible .project-page_next-layout > i {
+      transform: translate(0.35rem, -0.35rem);
+    }
+
+    .project-page_cta {
+      text-align: center;
+      background: var(--project-surface-deep);
+    }
+
+    .project-page_cta-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .project-page_cta-title {
+      max-width: 11ch;
+      margin: 0;
+      font-family: "Geist", var(--display-family);
+      font-size: clamp(3.75rem, 9vw, 9rem);
+      font-weight: 700;
+      line-height: 0.82;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .project-page_cta-title span {
+      color: var(--project-accent);
+    }
+
+    .project-page_cta-copy {
+      max-width: 43ch;
+      margin: 2rem auto;
+      color: var(--project-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .project-page_cta-button.button_wrap {
+      color: var(--project-surface-deep);
+      background: var(--project-foreground);
+      border-color: var(--project-foreground);
+      border-radius: 0;
+      font-family: var(--label-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .project-page_cta-button.button_wrap:hover {
+      color: var(--project-surface-deep);
+      background: var(--project-accent);
+      border-color: var(--project-accent);
+    }
+
+    .project-page_wrap :where(a, button):focus-visible {
+      outline: 0.125rem solid var(--project-accent);
+      outline-offset: 0.25rem;
+    }
+
+    @media (width < 64rem) {
+      .project-page_hero {
+        min-height: auto;
+      }
+
+      .project-page_heading {
+        grid-column: 1 / 9;
+      }
+
+      .project-page_hero-detail {
+        grid-column: 9 / -1;
+      }
+
+      .project-page_section-heading {
+        grid-column: 1 / 8;
+      }
+
+      .project-page_metadata,
+      .project-page_capability-groups {
+        grid-column: 8 / -1;
+      }
+    }
+
+    @media (width < 48rem) {
+      .project-page_container {
+        width: calc(100% - 2rem);
+      }
+
+      .project-page_hero {
+        padding-block: 7.5rem 5.5rem;
+      }
+
+      .project-page_hero-layout,
+      .project-page_overview-layout,
+      .project-page_story-layout,
+      .project-page_capabilities-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .project-page_hero-layout {
+        gap: 2.5rem;
+      }
+
+      .project-page_title {
+        max-width: 100%;
+        font-size: clamp(3.25rem, 12vw, 5.75rem);
+      }
+
+      .project-page_hero-detail {
+        padding: 0;
+      }
+
+      .project-page_overview-layout,
+      .project-page_capabilities-layout {
+        gap: 3.5rem;
+      }
+
+      .project-page_subtitle {
+        font-size: clamp(3rem, 14vw, 5rem);
+      }
+
+      .project-page_visual {
+        padding-block: 1rem 7rem;
+      }
+
+      .project-page_visual img {
+        aspect-ratio: 4 / 3;
+      }
+
+      .project-page_visual figcaption {
+        flex-direction: column;
+      }
+
+      .project-page_story-layout {
+        gap: 2.5rem;
+      }
+
+      .project-page_gallery-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .project-page_gallery-layout figure.wide {
+        grid-column: auto;
+      }
+
+      .project-page_next-layout {
+        align-items: flex-end;
+      }
+
+      .project-page_next-title {
+        font-size: clamp(2.75rem, 12.5vw, 5rem);
+      }
+
+      .project-page_cta-title {
+        font-size: clamp(3.5rem, 16vw, 5.75rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-page_word {
+        opacity: 1 !important;
+      }
+
+      .project-page_reveal-media img {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .project-page_capability-groups i,
+      .project-page_next-layout > i,
+      .project-page_breadcrumbs a {
+        transition-duration: 0.01ms;
+      }
+    }
+  }
+</style>

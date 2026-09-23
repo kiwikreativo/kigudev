@@ -1,0 +1,664 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import type { Service } from "@/data/services.ts";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Service content rendered by the shared dynamic page template. */
+  service: Service;
+  /** Every service except the current route. */
+  otherServices: Service[];
+}
+
+const { render = true, service, otherServices } = Astro.props;
+---
+
+{
+  render && (
+    <article class="service-page_wrap">
+      <section class="service-page_hero" aria-labelledby="service-title">
+        <div class="service-page_container service-page_hero-layout">
+          <nav class="service-page_breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true">/</span>
+            <a href="/#services">Services</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{service.title}</span>
+          </nav>
+
+          <div class="service-page_heading">
+            <p class="service-page_eyebrow">{service.number} / Service</p>
+            <Heading
+              tag="h1"
+              variant="inherit"
+              id="service-title"
+              class="service-page_title"
+            >
+              {service.titleLines.map((line) => (
+                <span>{line}</span>
+              ))}
+            </Heading>
+          </div>
+
+          <div class="service-page_intro">
+            <Paragraph class="service-page_lede">
+              {service.paragraphs[0]}
+            </Paragraph>
+            <Button
+              element="link"
+              href="/#contact"
+              class="service-page_primary-cta"
+            >
+              Start a Project <span aria-hidden="true">↗</span>
+            </Button>
+          </div>
+
+          <figure class="service-page_visual">
+            <Image
+              src={service.image}
+              alt={service.imageAlt}
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 767px) 100vw, 48vw"
+              loading="eager"
+              fetchpriority="high"
+            />
+            <figcaption>
+              Photo by{" "}
+              <a
+                href={service.photoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {service.photographer} on Pexels
+              </a>
+            </figcaption>
+          </figure>
+        </div>
+        <span class="service-page_hero-mark" aria-hidden="true">
+          +
+        </span>
+      </section>
+
+      <section class="service-page_overview" aria-labelledby="overview-title">
+        <div class="service-page_container service-page_overview-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Service / Overview</p>
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="overview-title"
+              class="service-page_subtitle"
+            >
+              Overview
+            </Heading>
+          </div>
+          <div class="service-page_body">
+            {service.paragraphs.slice(1).map((paragraph) => (
+              <Paragraph>{paragraph}</Paragraph>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="service-page_included" aria-labelledby="included-title">
+        <div class="service-page_container service-page_included-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Scope / 04</p>
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="included-title"
+              class="service-page_subtitle"
+            >
+              What's Included
+            </Heading>
+          </div>
+          <ol class="service-page_included-list">
+            {service.included.map((item, index) => (
+              <li>
+                <span>0{index + 1}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="service-page_related" aria-labelledby="related-title">
+        <div class="service-page_container service-page_related-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Continue Exploring</p>
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="related-title"
+              class="service-page_subtitle"
+            >
+              Other Services
+            </Heading>
+          </div>
+          <nav aria-label="Other services">
+            <ul class="service-page_related-list">
+              {otherServices.map((related) => (
+                <li>
+                  <a href={`/services/${related.slug}`}>
+                    <span class="service-page_related-number">
+                      {related.number}
+                    </span>
+                    <span class="service-page_related-title">
+                      {related.title}
+                    </span>
+                    <i class="ph ph-arrow-up-right" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+      <section class="service-page_cta" aria-labelledby="service-cta-title">
+        <div class="service-page_container service-page_cta-layout">
+          <p class="service-page_eyebrow">Next / Start</p>
+          <Heading
+            tag="h2"
+            variant="inherit"
+            id="service-cta-title"
+            class="service-page_cta-title"
+          >
+            Have a project <span>in mind?</span>
+          </Heading>
+          <Paragraph class="service-page_cta-copy">
+            Tell me what you're building and let's figure out the right
+            approach.
+          </Paragraph>
+          <Button
+            element="link"
+            href="/#contact"
+            class="service-page_primary-cta"
+          >
+            Start a Project <span aria-hidden="true">↗</span>
+          </Button>
+        </div>
+      </section>
+    </article>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .service-page_wrap {
+      --service-surface: var(--editorial-surface-alt);
+      --service-surface-raised: var(--editorial-surface);
+      --service-surface-strong: var(--editorial-surface-raised);
+      --service-foreground: var(--editorial-foreground);
+      --service-muted: var(--editorial-muted);
+      --service-subtle: var(--editorial-subtle);
+      --service-border: var(--editorial-border);
+      --service-accent: var(--accent);
+      width: 100%;
+      color: var(--service-foreground);
+      background: var(--service-surface);
+      font-family: var(--primary-family);
+    }
+
+    .service-page_container {
+      width: min(calc(100% - clamp(2rem, 8vw, 8rem)), 90rem);
+      margin-inline: auto;
+    }
+
+    .service-page_hero {
+      position: relative;
+      min-height: min(60rem, 100svh);
+      padding-block: clamp(8rem, 13vw, 11rem) clamp(5rem, 9vw, 8rem);
+      overflow: clip;
+      background:
+        radial-gradient(
+          circle at 72% 24%,
+          color-mix(in srgb, var(--service-accent) 12%, transparent) 0,
+          transparent 28rem
+        ),
+        var(--service-surface);
+    }
+
+    .service-page_hero::before {
+      position: absolute;
+      top: clamp(8rem, 15vw, 12rem);
+      right: clamp(-10rem, -5vw, -3rem);
+      width: clamp(20rem, 45vw, 46rem);
+      aspect-ratio: 1;
+      content: "";
+      border: 0.0625rem solid var(--service-border);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .service-page_hero-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 4rem) clamp(1rem, 2vw, 2rem);
+      align-items: end;
+    }
+
+    .service-page_breadcrumbs {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      color: var(--service-subtle);
+      font-family: var(--label-family);
+      font-size: 0.7rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .service-page_breadcrumbs a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 200ms ease-out;
+    }
+
+    .service-page_breadcrumbs a:hover,
+    .service-page_breadcrumbs a:focus-visible {
+      color: var(--service-accent);
+    }
+
+    .service-page_heading {
+      grid-column: 1 / 8;
+      align-self: start;
+    }
+
+    .service-page_eyebrow {
+      margin: 0 0 1.25rem;
+      color: var(--service-accent);
+      font-family: var(--label-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .service-page_title {
+      margin: 0;
+      color: var(--service-foreground);
+      font-family: "Satoshi", var(--display-family);
+      font-size: clamp(4rem, 9vw, 9rem);
+      font-weight: 700;
+      line-height: 0.8;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .service-page_title span {
+      display: block;
+    }
+
+    .service-page_intro {
+      grid-column: 8 / -1;
+      align-self: end;
+      padding-bottom: 0.5rem;
+    }
+
+    .service-page_lede {
+      max-width: 41ch;
+      margin: 0 0 2rem;
+      color: var(--service-muted);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+      line-height: 1.65;
+    }
+
+    .service-page_primary-cta.button_wrap {
+      color: var(--service-surface);
+      background: var(--service-foreground);
+      border-color: var(--service-foreground);
+      border-radius: 0;
+      font-family: var(--label-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .service-page_primary-cta.button_wrap:hover {
+      color: var(--service-surface);
+      background: var(--service-accent);
+      border-color: var(--service-accent);
+    }
+
+    .service-page_primary-cta span[aria-hidden="true"] {
+      color: var(--service-accent);
+    }
+
+    .service-page_primary-cta:hover span[aria-hidden="true"] {
+      color: currentColor;
+    }
+
+    .service-page_visual {
+      grid-column: 3 / -1;
+      margin: clamp(1rem, 3vw, 3rem) 0 0;
+    }
+
+    .service-page_visual img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 8;
+      object-fit: cover;
+      filter: saturate(0.75) contrast(1.04);
+    }
+
+    .service-page_visual figcaption {
+      margin-top: 0.7rem;
+      color: var(--service-subtle);
+      font-family: var(--label-family);
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .service-page_visual figcaption a {
+      color: inherit;
+    }
+
+    .service-page_hero-mark {
+      position: absolute;
+      bottom: 4rem;
+      left: clamp(1rem, 4vw, 4rem);
+      color: var(--service-accent);
+      font-family: var(--label-family);
+      font-size: 1.2rem;
+    }
+
+    .service-page_overview,
+    .service-page_included,
+    .service-page_related,
+    .service-page_cta {
+      width: 100%;
+      padding-block: clamp(5.5rem, 10vw, 9rem);
+    }
+
+    .service-page_overview {
+      background: var(--service-surface-raised);
+    }
+
+    .service-page_overview-layout,
+    .service-page_included-layout,
+    .service-page_related-layout {
+      display: grid;
+      grid-template-columns: minmax(14rem, 4fr) minmax(0, 7fr);
+      gap: clamp(3rem, 8vw, 9rem);
+      align-items: start;
+    }
+
+    .service-page_section-heading {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .service-page_subtitle {
+      max-width: 8ch;
+      margin: 0;
+      font-family: "Satoshi", var(--display-family);
+      font-size: clamp(3.25rem, 4.5vw, 5rem);
+      font-weight: 600;
+      line-height: 0.86;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+
+    .service-page_body {
+      display: grid;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      padding-top: 2.1rem;
+    }
+
+    .service-page_body .text {
+      max-width: 64ch;
+      margin: 0;
+      color: var(--service-muted);
+      font-size: clamp(1.15rem, 2vw, 1.65rem);
+      line-height: 1.55;
+      letter-spacing: -0.018em;
+    }
+
+    .service-page_included {
+      background: var(--service-surface-strong);
+    }
+
+    .service-page_included-list,
+    .service-page_related-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      border-top: 0.0625rem solid var(--service-border);
+    }
+
+    .service-page_included-list li {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+      padding-block: clamp(1.5rem, 3vw, 2.25rem);
+      border-bottom: 0.0625rem solid var(--service-border);
+    }
+
+    .service-page_included-list span,
+    .service-page_related-number {
+      padding-top: 0.35rem;
+      color: var(--service-accent);
+      font-family: var(--label-family);
+      font-size: 0.7rem;
+    }
+
+    .service-page_included-list p {
+      max-width: 34ch;
+      margin: 0;
+      color: var(--service-foreground);
+      font-family: "Satoshi", var(--display-family);
+      font-size: clamp(1.5rem, 3vw, 2.75rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .service-page_related {
+      background: var(--service-surface);
+    }
+
+    .service-page_related-list a {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr) 2rem;
+      gap: 1.5rem;
+      align-items: center;
+      min-height: 5.5rem;
+      color: var(--service-muted);
+      border-bottom: 0.0625rem solid var(--service-border);
+      text-decoration: none;
+      transition:
+        color 200ms ease-out,
+        border-color 200ms ease-out;
+    }
+
+    .service-page_related-title {
+      font-family: "Satoshi", var(--display-family);
+      font-size: clamp(1.5rem, 3vw, 2.75rem);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+    }
+
+    .service-page_related-list i {
+      color: var(--service-accent);
+      font-size: 1.25rem;
+      transition: transform 200ms ease-out;
+    }
+
+    .service-page_related-list a:hover,
+    .service-page_related-list a:focus-visible {
+      color: var(--service-foreground);
+      border-color: var(--service-accent);
+    }
+
+    .service-page_related-list a:hover i,
+    .service-page_related-list a:focus-visible i {
+      transform: translate(0.2rem, -0.2rem);
+    }
+
+    .service-page_cta {
+      text-align: center;
+      background: var(--editorial-surface-deep);
+    }
+
+    .service-page_cta-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .service-page_cta-title {
+      max-width: 11ch;
+      margin: 0;
+      color: var(--service-foreground);
+      font-family: "Satoshi", var(--display-family);
+      font-size: clamp(4rem, 9vw, 9rem);
+      font-weight: 700;
+      line-height: 0.82;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .service-page_cta-title span {
+      color: var(--service-accent);
+    }
+
+    .service-page_cta-copy {
+      max-width: 43ch;
+      margin: 2rem auto;
+      color: var(--service-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .service-page_wrap :where(a, button):focus-visible {
+      outline: 0.125rem solid var(--service-accent);
+      outline-offset: 0.25rem;
+    }
+
+    @media (width < 64rem) {
+      .service-page_hero {
+        min-height: auto;
+      }
+
+      .service-page_heading {
+        grid-column: 1 / 9;
+      }
+
+      .service-page_intro {
+        grid-column: 9 / -1;
+      }
+
+      .service-page_visual {
+        grid-column: 2 / -1;
+      }
+
+      .service-page_overview-layout,
+      .service-page_included-layout,
+      .service-page_related-layout {
+        gap: clamp(2.5rem, 5vw, 4rem);
+      }
+    }
+
+    @media (width < 48rem) {
+      .service-page_container {
+        width: calc(100% - 2rem);
+      }
+
+      .service-page_hero {
+        padding-block: 7.5rem 5rem;
+      }
+
+      .service-page_hero-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2rem;
+      }
+
+      .service-page_heading,
+      .service-page_intro,
+      .service-page_visual {
+        width: 100%;
+      }
+
+      .service-page_title {
+        font-size: clamp(3.5rem, 18vw, 6rem);
+      }
+
+      .service-page_intro {
+        padding: 0;
+      }
+
+      .service-page_visual {
+        order: 4;
+        margin-top: 0.5rem;
+      }
+
+      .service-page_visual img {
+        aspect-ratio: 4 / 3;
+      }
+
+      .service-page_hero-mark {
+        display: none;
+      }
+
+      .service-page_overview-layout,
+      .service-page_included-layout,
+      .service-page_related-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .service-page_section-heading {
+        position: static;
+      }
+
+      .service-page_subtitle {
+        max-width: 10ch;
+        font-size: clamp(3rem, 15vw, 5rem);
+      }
+
+      .service-page_body {
+        padding-top: 0;
+      }
+
+      .service-page_body .text {
+        font-size: 1.1rem;
+      }
+
+      .service-page_included-list li,
+      .service-page_related-list a {
+        gap: 1rem;
+      }
+
+      .service-page_included-list p,
+      .service-page_related-title {
+        font-size: clamp(1.35rem, 7vw, 2rem);
+      }
+
+      .service-page_cta-title {
+        font-size: clamp(3.5rem, 17vw, 6rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .service-page_related-list a,
+      .service-page_related-list i,
+      .service-page_breadcrumbs a {
+        transition-duration: 0.01ms;
+      }
+    }
+  }
+</style>

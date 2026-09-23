@@ -345,7 +345,22 @@ const processSteps = [
               step.
             </p>
           </div>
-          <form class="portfolio-contact_form" id="contact-form" novalidate>
+          <form
+            class="portfolio-contact_form"
+            id="contact-form"
+            name="portfolio-contact"
+            method="POST"
+            action="/"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            novalidate
+          >
+            <input type="hidden" name="form-name" value="portfolio-contact" />
+            <p hidden>
+              <label>
+                Do not fill this out: <input name="bot-field" />
+              </label>
+            </p>
             <div class="portfolio-contact_field">
               <label for="first-name">First Name</label><input
                 id="first-name"
@@ -401,6 +416,11 @@ const processSteps = [
                   aria-hidden="true"></i></button
               >
             </div>
+            <p
+              class="portfolio-contact_status wide"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
         </div>
       </section>
@@ -643,6 +663,11 @@ const processSteps = [
     const contactForm =
       document.querySelector<HTMLFormElement>("#contact-form");
     if (contactForm) {
+      const submitButton =
+        contactForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = contactForm.querySelector<HTMLElement>(
+        ".portfolio-contact_status",
+      );
       const messages: Record<string, string> = {
         firstName: "Please enter your first name.",
         lastName: "Please enter your last name.",
@@ -669,17 +694,50 @@ const processSteps = [
             if (field.getAttribute("aria-invalid") === "true") validate(field);
           });
         });
-      contactForm.addEventListener("submit", (event) => {
+      contactForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const fields = [
           ...contactForm.querySelectorAll<
             HTMLInputElement | HTMLTextAreaElement
-          >("input, textarea"),
+          >('input:not([type="hidden"]), textarea'),
         ];
         const valid = fields.map(validate).every(Boolean);
         if (!valid) {
           fields.find((field) => !field.validity.valid)?.focus();
           return;
+        }
+
+        if (submitButton) submitButton.disabled = true;
+        if (status) status.textContent = "Sending your message...";
+
+        try {
+          const formData = new FormData(contactForm);
+          const response = await fetch(contactForm.action, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(
+              Array.from(formData.entries(), ([key, value]) => [
+                key,
+                String(value),
+              ]),
+            ).toString(),
+          });
+
+          if (!response.ok) throw new Error(String(response.status));
+
+          contactForm.reset();
+          fields.forEach((field) => field.removeAttribute("aria-invalid"));
+          if (status) {
+            status.textContent =
+              "Thanks - your message was sent. I will be in touch soon.";
+          }
+        } catch {
+          if (status) {
+            status.textContent =
+              "Your message could not be sent. Please try again.";
+          }
+        } finally {
+          if (submitButton) submitButton.disabled = false;
         }
       });
     }
@@ -1517,7 +1575,8 @@ const processSteps = [
         gap: 0.55rem;
       }
       .portfolio-contact_field.wide,
-      .portfolio-contact_submit.wide {
+      .portfolio-contact_submit.wide,
+      .portfolio-contact_status.wide {
         grid-column: 1 / -1;
       }
       .portfolio-contact_field label {
@@ -1582,6 +1641,16 @@ const processSteps = [
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: -0.01em;
+      }
+      .portfolio-contact_submit button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+      .portfolio-contact_status {
+        min-height: 1.5em;
+        margin: 0;
+        color: var(--text-2);
+        font-size: 0.9rem;
       }
       @media (width < 64rem) {
         .portfolio-hero_wrap {
@@ -1754,7 +1823,8 @@ const processSteps = [
           grid-template-columns: 1fr;
         }
         .portfolio-contact_field.wide,
-        .portfolio-contact_submit.wide {
+        .portfolio-contact_submit.wide,
+        .portfolio-contact_status.wide {
           grid-column: auto;
         }
       }

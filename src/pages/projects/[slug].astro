@@ -1,0 +1,53 @@
+---
+import Layout from "@/layouts/BaseLayout.astro";
+import ProjectPage from "@/components/Portfolio/ProjectPage.astro";
+import { projects, type Project } from "@/data/projects.ts";
+import { SITE_NAME, SITE_URL } from "@/consts.ts";
+
+export function getStaticPaths() {
+  return projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      nextProject: projects[(index + 1) % projects.length],
+    },
+  }));
+}
+
+interface Props {
+  project: Project;
+  nextProject: Project;
+}
+
+const { project, nextProject } = Astro.props;
+const canonicalUrl = new URL(`/projects/${project.slug}`, SITE_URL).href;
+const projectImageUrl = new URL(project.image.src, SITE_URL).href;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.title,
+  description: project.shortDescription,
+  url: canonicalUrl,
+  image: projectImageUrl,
+  author: {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+  },
+};
+---
+
+<Layout
+  theme="dark"
+  title={`${project.title} — Case Study`}
+  description={project.seoDescription}
+  image={project.image.src}
+>
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
+  <ProjectPage project={project} nextProject={nextProject} />
+</Layout>

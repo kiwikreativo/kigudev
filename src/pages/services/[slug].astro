@@ -1,0 +1,47 @@
+---
+import Layout from "@/layouts/BaseLayout.astro";
+import ServicePage from "@/components/Portfolio/ServicePage.astro";
+import { services, type Service } from "@/data/services.ts";
+import { SITE_NAME, SITE_URL } from "@/consts.ts";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const otherServices = services.filter((item) => item.slug !== service.slug);
+const canonicalUrl = new URL(`/services/${service.slug}`, SITE_URL).href;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: service.title,
+  description: service.seoDescription,
+  url: canonicalUrl,
+  provider: {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+  },
+};
+---
+
+<Layout
+  theme="dark"
+  title={`${service.title} Services`}
+  description={service.seoDescription}
+>
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
+  <ServicePage service={service} otherServices={otherServices} />
+</Layout>

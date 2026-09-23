@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import "@phosphor-icons/web/regular";
 import BaseHead from "@/components/Utility/BaseHead.astro";
 import SkipLink from "@/components/Global/SkipLink.astro";
 import Nav from "@/components/Global/Nav.astro";
@@ -29,7 +30,11 @@ const { theme = "inherit", overlap = false, ...seo } = Astro.props;
   <body>
     <SkipLink />
     <Nav overlap={overlap} />
-    <main id="main" tabindex="-1">
+    <main
+      id="main"
+      tabindex="-1"
+      class="overflow-x-hidden width-full max-width-full"
+    >
       <slot />
     </main>
     <Footer />

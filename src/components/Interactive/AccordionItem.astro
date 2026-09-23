@@ -1,8 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import Heading from "@/components/Typography/Heading.astro";
-import Icon from "@/components/Media/Icon.astro";
-import arrow from "@/assets/icons/arrow.svg";
 import { slotContent } from "@/utils/slots.ts";
 
 type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
@@ -42,7 +40,12 @@ const content = await slotContent(Astro.slots);
         <Heading tag={headingTag} variant="h5" class="accordion_title">
           {heading}
         </Heading>
-        <Icon class="accordion_icon" src={arrow} variant="small" />
+        <span class="accordion_icon" aria-hidden="true">
+          <>
+            <i class="ph ph-plus" />
+            <i class="ph ph-x" />
+          </>
+        </span>
       </summary>
 
       <div class="accordion_body margin-trim">
@@ -83,15 +86,25 @@ const content = await slotContent(Astro.slots);
     }
 
     .accordion_icon {
-      rotate: 90deg;
-      transition: rotate var(--open-duration) var(--open-ease);
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      min-width: 2.75rem;
+      aspect-ratio: 1;
+      border: var(--border-width) solid var(--border);
+      border-radius: 50%;
     }
-
-    .accordion_item:is([open], .stacki-opened) .accordion_icon,
-    .stacki-designer .accordion_wrap.preview .accordion_icon {
-      rotate: -90deg;
+    .accordion_icon .ph-x {
+      display: none;
     }
-
+    .accordion_item:is([open], .stacki-opened) .accordion_icon .ph-plus,
+    .stacki-designer .accordion_wrap.preview .accordion_icon .ph-plus {
+      display: none;
+    }
+    .accordion_item:is([open], .stacki-opened) .accordion_icon .ph-x,
+    .stacki-designer .accordion_wrap.preview .accordion_icon .ph-x {
+      display: block;
+    }
     .accordion_item::details-content {
       block-size: 0;
       overflow: hidden;

@@ -1,17 +1,24 @@
 /* 1. Design tokens */
 :root {
   /* Swatches */
+  --navy-950: #030712;
+  --navy-900: #111827;
+  --blue-700: #4f46e5;
+  --blue-500: #06b6d4;
+  --off-white: #f7f8ff;
   --light-100: #ffffff;
-  --light-200: #ebebeb;
-  --light-300: #d9d9d9;
-  --dark-700: #453e42;
-  --dark-800: #2f2b2d;
-  --dark-900: #1f1d1e;
-  --brand-500: #c6fb50;
-  --brand-text: var(--dark-900);
+  --light-200: #f1f3ff;
+  --light-300: var(--off-white);
+  --dark-700: var(--blue-700);
+  --dark-800: var(--navy-900);
+  --dark-900: var(--navy-950);
+  --brand-500: var(--blue-500);
+  --brand-text: #ffffff;
 
   /* Typography primitives */
-  --primary-family: var(--font-inter, system-ui, sans-serif);
+  --primary-family: "Geist", sans-serif;
+  --display-family: "Geist", sans-serif;
+  --label-family: "JetBrains Mono", monospace;
   --primary-regular: 400;
   --primary-medium: 500;
   --primary-bold: 700;
@@ -19,7 +26,7 @@
   --primary-trim-bottom: 0.38em;
 
   /* Letter spacing */
-  --letter-spacing-tight: -0.03em;
+  --letter-spacing-tight: -0.04em;
   --letter-spacing-normal: 0em;
 
   /* Line height */
@@ -35,8 +42,8 @@
   --focus-offset-inner: calc(var(--focus-width) * -1);
 
   /* Hover motion */
-  --hover-duration: 200ms;
-  --hover-ease: ease;
+  --hover-duration: 280ms;
+  --hover-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* Opening motion */
   --open-duration: var(--hover-duration);
@@ -45,6 +52,7 @@
   /* Radius */
   --radius-small: 0.5rem;
   --radius-main: 1rem;
+  --button-radius: 0.75rem;
   --radius-round: 100vw;
 
   /* Fluid scale range */
@@ -63,12 +71,12 @@
   --display: clamp(var(--display-min) / 16 * 1rem, ((var(--display-min) - ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--display-max) - var(--display-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--display-max) / 16 * 1rem);
   --display-min: 64;
   --display-max: 112;
-  --display-line-height: var(--line-height-small);
+  --display-line-height: 0.85;
   --display-letter-spacing: var(--letter-spacing-tight);
   --display-text-transform: none;
   --display-margin-top: var(--space-7);
   --display-margin-bottom: var(--space-6);
-  --display-font-family: var(--primary-family);
+  --display-font-family: var(--display-family);
   --display-font-weight: var(--primary-medium);
   --display-trim-top: var(--primary-trim-top);
   --display-trim-bottom: var(--primary-trim-bottom);
@@ -77,12 +85,12 @@
   --h1: clamp(var(--h1-min) / 16 * 1rem, ((var(--h1-min) - ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h1-max) - var(--h1-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h1-max) / 16 * 1rem);
   --h1-min: 48;
   --h1-max: 80;
-  --h1-line-height: var(--line-height-small);
-  --h1-letter-spacing: var(--letter-spacing-tight);
+  --h1-line-height: 0.9;
+  --h1-letter-spacing: -0.04em;
   --h1-text-transform: none;
   --h1-margin-top: var(--space-7);
   --h1-margin-bottom: var(--space-6);
-  --h1-font-family: var(--primary-family);
+  --h1-font-family: var(--display-family);
   --h1-font-weight: var(--primary-medium);
   --h1-trim-top: var(--primary-trim-top);
   --h1-trim-bottom: var(--primary-trim-bottom);
@@ -91,12 +99,12 @@
   --h2: clamp(var(--h2-min) / 16 * 1rem, ((var(--h2-min) - ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h2-max) - var(--h2-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h2-max) / 16 * 1rem);
   --h2-min: 40;
   --h2-max: 64;
-  --h2-line-height: var(--line-height-small);
-  --h2-letter-spacing: var(--letter-spacing-tight);
+  --h2-line-height: 0.9;
+  --h2-letter-spacing: -0.035em;
   --h2-text-transform: none;
   --h2-margin-top: var(--space-7);
   --h2-margin-bottom: var(--space-5);
-  --h2-font-family: var(--primary-family);
+  --h2-font-family: var(--display-family);
   --h2-font-weight: var(--primary-medium);
   --h2-trim-top: var(--primary-trim-top);
   --h2-trim-bottom: var(--primary-trim-bottom);
@@ -105,12 +113,12 @@
   --h3: clamp(var(--h3-min) / 16 * 1rem, ((var(--h3-min) - ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--h3-max) - var(--h3-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--h3-max) / 16 * 1rem);
   --h3-min: 36;
   --h3-max: 48;
-  --h3-line-height: var(--line-height-medium);
-  --h3-letter-spacing: var(--letter-spacing-tight);
+  --h3-line-height: 0.95;
+  --h3-letter-spacing: -0.03em;
   --h3-text-transform: none;
   --h3-margin-top: var(--space-6);
   --h3-margin-bottom: var(--space-5);
-  --h3-font-family: var(--primary-family);
+  --h3-font-family: var(--display-family);
   --h3-font-weight: var(--primary-medium);
   --h3-trim-top: var(--primary-trim-top);
   --h3-trim-bottom: var(--primary-trim-bottom);
@@ -124,7 +132,7 @@
   --h4-text-transform: none;
   --h4-margin-top: var(--space-6);
   --h4-margin-bottom: var(--space-4);
-  --h4-font-family: var(--primary-family);
+  --h4-font-family: var(--display-family);
   --h4-font-weight: var(--primary-medium);
   --h4-trim-top: var(--primary-trim-top);
   --h4-trim-bottom: var(--primary-trim-bottom);
@@ -138,7 +146,7 @@
   --h5-text-transform: none;
   --h5-margin-top: var(--space-5);
   --h5-margin-bottom: var(--space-4);
-  --h5-font-family: var(--primary-family);
+  --h5-font-family: var(--display-family);
   --h5-font-weight: var(--primary-medium);
   --h5-trim-top: var(--primary-trim-top);
   --h5-trim-bottom: var(--primary-trim-bottom);
@@ -152,7 +160,7 @@
   --h6-text-transform: none;
   --h6-margin-top: var(--space-5);
   --h6-margin-bottom: var(--space-3);
-  --h6-font-family: var(--primary-family);
+  --h6-font-family: var(--display-family);
   --h6-font-weight: var(--primary-medium);
   --h6-trim-top: var(--primary-trim-top);
   --h6-trim-bottom: var(--primary-trim-bottom);
@@ -161,7 +169,7 @@
   --text-large: clamp(var(--text-large-min) / 16 * 1rem, ((var(--text-large-min) - ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--text-large-max) - var(--text-large-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--text-large-max) / 16 * 1rem);
   --text-large-min: 18;
   --text-large-max: 20;
-  --text-large-line-height: var(--line-height-large);
+  --text-large-line-height: 1.6;
   --text-large-letter-spacing: var(--letter-spacing-normal);
   --text-large-text-transform: none;
   --text-large-margin-top: var(--space-4);
@@ -175,7 +183,7 @@
   --text-main: clamp(var(--text-main-min) / 16 * 1rem, ((var(--text-main-min) - ((var(--text-main-max) - var(--text-main-min)) / (var(--viewport-max) - var(--viewport-min)) * var(--viewport-min))) / 16 * 1rem + ((var(--text-main-max) - var(--text-main-min)) / (var(--viewport-max) - var(--viewport-min))) * 100vw), var(--text-main-max) / 16 * 1rem);
   --text-main-min: 16;
   --text-main-max: 18;
-  --text-main-line-height: var(--line-height-huge);
+  --text-main-line-height: 1.6;
   --text-main-letter-spacing: var(--letter-spacing-normal);
   --text-main-text-transform: none;
   --text-main-margin-top: var(--space-4);
@@ -367,6 +375,82 @@
   color: var(--text);
 }
 
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #030712;
+  --background-2: #111827;
+  --background-3: #18181b;
+  --surface: #18181b;
+  --surface-secondary: #111827;
+  --text: #ffffff;
+  --text-2: #a1a1aa;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --accent: #06b6d4;
+  --accent-strong: #4f46e5;
+  --border: #27272a;
+  --button-background: #4f46e5;
+  --button-border: #4f46e5;
+  --button-text: #ffffff;
+  --button-background-hover: #06b6d4;
+  --button-border-hover: #06b6d4;
+  --button-text-hover: #030712;
+  --foreground: #f4f7f8;
+  --foreground-muted: rgba(244, 247, 248, 0.68);
+  --surface-elevated: #0a2232;
+  --accent-secondary: #8c68ff;
+  --nav-background: #071821;
+  --nav-foreground: #f4f7f8;
+  --nav-foreground-muted: rgba(244, 247, 248, 0.72);
+  --nav-border: rgba(244, 247, 248, 0.14);
+  --editorial-surface: #071722;
+  --editorial-surface-alt: #06131d;
+  --editorial-surface-raised: #0a2232;
+  --editorial-surface-deep: #020b12;
+  --editorial-foreground: #f4f7f8;
+  --editorial-muted: rgba(244, 247, 248, 0.68);
+  --editorial-subtle: rgba(244, 247, 248, 0.5);
+  --editorial-border: rgba(244, 247, 248, 0.22);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #f7f8ff;
+  --background-2: #ffffff;
+  --background-3: #eef1ff;
+  --surface: #ffffff;
+  --surface-secondary: #eef1ff;
+  --text: #111827;
+  --text-2: rgba(17, 24, 39, 0.68);
+  --text-primary: #111827;
+  --text-secondary: rgba(17, 24, 39, 0.68);
+  --accent: #4338ca;
+  --accent-strong: #0891b2;
+  --border: rgba(79, 70, 229, 0.16);
+  --button-background: #4f46e5;
+  --button-border: #4f46e5;
+  --button-text: #ffffff;
+  --button-background-hover: #0891b2;
+  --button-border-hover: #0891b2;
+  --button-text-hover: #ffffff;
+  --foreground: #071722;
+  --foreground-muted: rgba(7, 23, 34, 0.68);
+  --surface-elevated: #e1eaf1;
+  --accent-secondary: #6948cf;
+  --nav-background: #edf2f6;
+  --nav-foreground: #071722;
+  --nav-foreground-muted: rgba(7, 23, 34, 0.7);
+  --nav-border: rgba(7, 23, 34, 0.14);
+  --editorial-surface: #e8eef3;
+  --editorial-surface-alt: #f0f4f7;
+  --editorial-surface-raised: #dfe9f0;
+  --editorial-surface-deep: #d7e3eb;
+  --editorial-foreground: #071722;
+  --editorial-muted: rgba(7, 23, 34, 0.7);
+  --editorial-subtle: rgba(7, 23, 34, 0.52);
+  --editorial-border: rgba(7, 23, 34, 0.2);
+}
+
 /* 3. Reset & base */
 *,
 ::before,
@@ -390,6 +474,33 @@ body {
     flex-direction: column;
     flex-grow: 1;
   }
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--primary-family);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+nav,
+section,
+article,
+footer,
+button,
+input,
+textarea {
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease;
 }
 
 a {
@@ -436,6 +547,10 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+label {
+  font-family: var(--label-family);
 }
 
 ul,

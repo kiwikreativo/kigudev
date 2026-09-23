@@ -352,13 +352,13 @@ const processSteps = [
             method="POST"
             action="/"
             data-netlify="true"
-            data-netlify-honeypot="bot-field"
+            netlify-honeypot="bot-field"
             novalidate
           >
             <input type="hidden" name="form-name" value="portfolio-contact" />
-            <p hidden>
+            <p class="portfolio-contact_honeypot" hidden>
               <label>
-                Do not fill this out: <input name="bot-field" />
+                Do not fill this out: <input name="bot-field" tabindex="-1" />
               </label>
             </p>
             <div class="portfolio-contact_field">
@@ -686,7 +686,7 @@ const processSteps = [
       };
       contactForm
         .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-          "input, textarea",
+          ".portfolio-contact_field input, .portfolio-contact_field textarea",
         )
         .forEach((field) => {
           field.addEventListener("blur", () => validate(field));
@@ -699,7 +699,7 @@ const processSteps = [
         const fields = [
           ...contactForm.querySelectorAll<
             HTMLInputElement | HTMLTextAreaElement
-          >('input:not([type="hidden"]), textarea'),
+          >(".portfolio-contact_field input, .portfolio-contact_field textarea"),
         ];
         const valid = fields.map(validate).every(Boolean);
         if (!valid) {
@@ -1569,6 +1569,9 @@ const processSteps = [
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1.25rem;
         padding: clamp(1.5rem, 3vw, 2.25rem);
+      }
+      .portfolio-contact_honeypot[hidden] {
+        display: none !important;
       }
       .portfolio-contact_field {
         display: grid;

@@ -38,13 +38,10 @@ const content = await slotContent(Astro.slots);
     >
       <form
         class="form_fields"
-        name="contact"
-
-        data-netlify="true"
+        name={name}
         action={action}
         method={method}
         {...rest}
-        
       >
         <Fragment set:html={content} />
       </form>

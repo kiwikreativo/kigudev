@@ -52,7 +52,7 @@ export const projects: Project[] = [
     category: "Event decoration website",
     shortDescription:
       "Business website for Decorazon Joss, an event decoration company, built with Astro.",
-    role: "Design & Astro development",
+    role: "Web Design, Development, and SEO",
     focus: "Brand presence & inquiries",
     duration: "4 weeks",
     image: decorazonjossImage,
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     category: "Corporate logistics website",
     shortDescription:
       "A responsive corporate website for Meguis Logistics, showcasing customs and logistics consulting services.",
-    role: "UI/UX & front-end",
+    role: "Web Design, Development, and SEO",
     focus: "Services & lead generation",
     duration: "5 weeks",
     image: meguisImage,
@@ -103,7 +103,7 @@ export const projects: Project[] = [
     category: "AI developer tool",
     shortDescription:
       "An AI-powered application that scaffolds and generates development boilerplates to accelerate project creation.",
-    role: "Product design & development",
+    role: "Web Design, Development",
     focus: "Scaffolding workflows",
     duration: "6 weeks",
     image: stackChefImage,
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     category: "Product landing page",
     shortDescription:
       "A modern landing page designed to showcase premium ghee and egg bread products while encouraging customer engagement.",
-    role: "Landing page design",
+    role: "Landing page design & development",
     focus: "Product storytelling",
     duration: "3 weeks",
     image: egheeImage,
@@ -149,7 +149,7 @@ export const projects: Project[] = [
     category: "Web3 wallet dApp",
     shortDescription:
       "A Web3 dApp for connecting a MetaMask wallet, checking balances, and sending funds through a lightweight wallet interface.",
-    role: "UI/UX & front-end",
+    role: "Web Design & Development",
     focus: "Wallet flows",
     duration: "5 weeks",
     image: chainpeekImage,

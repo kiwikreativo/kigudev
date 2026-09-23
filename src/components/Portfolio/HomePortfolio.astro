@@ -64,6 +64,7 @@ const processSteps = [
             src={comic}
             alt="Illustrated portrait of Kigudev"
             widths={[320, 480, 640]}
+            class="hero-image"
             sizes="(max-width: 48rem) 95vw, (max-width: 64rem) 37rem, 43rem"
             loading="eager"
           />
@@ -925,6 +926,13 @@ const processSteps = [
         top: 64%;
         right: max(1.5rem, calc((100% - 87.5rem) / 2));
       }
+
+      .hero-image {
+        mask-image: linear-gradient(
+          black 80%,
+          transparent
+        );
+      }
       .portfolio-hero_role {
         margin: 0 0 1rem;
         color: #61a5c2;
@@ -1253,7 +1261,7 @@ const processSteps = [
       .portfolio-project_title {
         max-width: 10ch;
         margin: 0;
-        font-size: clamp(1.25rem, 3.5vw, 4rem);
+        font-size: clamp(1.25rem, 3vw, 3.5rem);
         font-weight: bold;
         line-height: 0.95;
         letter-spacing: -0.03em;
@@ -1935,7 +1943,7 @@ const processSteps = [
       }
       .portfolio-project_title {
         max-width: 8ch;
-        font-size: clamp(1.25rem, 3.5vw, 4rem);
+        font-size: clamp(1.25rem, 3vw, 3.5rem);
         font-weight: bold;
         line-height: 0.82;
         letter-spacing: -0.065em;
@@ -2372,7 +2380,7 @@ const processSteps = [
       .portfolio-project_title {
         max-width: 100%;
         color: var(--portfolio-foreground);
-        font-size: clamp(2.5rem, 4.5vw, 5rem);
+        font-size: clamp(1.25rem, 3vw, 3.5rem);
         font-weight: bold;
         line-height: 0.84;
         letter-spacing: -0.055em;

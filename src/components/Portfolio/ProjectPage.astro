@@ -64,6 +64,16 @@ const hasCapabilities =
                 </span>
               ))}
             </p>
+            <Button
+              render={Boolean(project.projectUrl)}
+              element="link"
+              href={project.projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-page_live-button"
+            >
+              View live project <span aria-hidden="true">↗</span>
+            </Button>
           </div>
         </div>
       </header>
@@ -498,6 +508,10 @@ const hasCapabilities =
 
     .project-page_word {
       opacity: 1;
+    }
+
+    .project-page_live-button.button_wrap {
+      margin-top: 1.75rem;
     }
 
     .project-page_overview,

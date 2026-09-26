@@ -66,6 +66,7 @@ export const projects: Project[] = [
       { title: "UI/UX Design", slug: "ui-ux-design" },
       { title: "Web Development", slug: "web-development" },
     ],
+    projectUrl: "#",
     technologies: ["Astro"],
     seoDescription:
       "Explore the DeCorazonJoss case study: an Astro business website for an event decoration company, focused on brand presence and inquiries.",
@@ -92,6 +93,7 @@ export const projects: Project[] = [
       { title: "UI/UX Design", slug: "ui-ux-design" },
       { title: "Web Development", slug: "web-development" },
     ],
+    projectUrl: "https://meguis.net/",
     seoDescription:
       "Explore the Meguis Import&Export case study: a responsive corporate website presenting customs and logistics consulting services.",
   },
@@ -117,6 +119,7 @@ export const projects: Project[] = [
       { title: "UI/UX Design", slug: "ui-ux-design" },
       { title: "Web Development", slug: "web-development" },
     ],
+    projectUrl: "https://stackcheff.netlify.app/",
     seoDescription:
       "Explore the Stack Chef case study: an AI-powered application for scaffolding and generating development boilerplates.",
   },
@@ -138,6 +141,7 @@ export const projects: Project[] = [
     photoUrl:
       "https://www.pexels.com/photo/bread-slices-on-brown-wooden-chopping-board-11842180/",
     services: [{ title: "UI/UX Design", slug: "ui-ux-design" }],
+    projectUrl: "https://egghee.netlify.app/",
     seoDescription:
       "Explore the Eghee case study: a modern product landing page focused on premium ghee, egg bread, and product storytelling.",
   },
@@ -163,6 +167,7 @@ export const projects: Project[] = [
       { title: "UI/UX Design", slug: "ui-ux-design" },
       { title: "Web Development", slug: "web-development" },
     ],
+    projectUrl: "https://chaiinpeek.netlify.app/",
     technologies: ["MetaMask"],
     seoDescription:
       "Explore the ChainPeek case study: a lightweight Web3 wallet interface for connecting MetaMask, checking balances, and sending funds.",

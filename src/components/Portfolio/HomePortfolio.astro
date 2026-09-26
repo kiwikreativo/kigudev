@@ -42,7 +42,6 @@ const processSteps = [
     icon: "ph-code",
   },
 ];
-
 ---
 
 <div class="portfolio_wrap">
@@ -184,12 +183,23 @@ const processSteps = [
                         </div>
                       </>
                     </dl>
-                    <Button element="link" href={`/projects/${project.slug}`} emphasis="secondary">
+                    <Button
+                      element="link"
+                      href={`/projects/${project.slug}`}
+                      emphasis="secondary"
+                    >
                       View Project{" "}
                       <i class="ph ph-arrow-up-right" aria-hidden="true" />
                     </Button>
                     <p class="portfolio-project_credit">
-                      Photo by <a href={project.photoUrl} target="_blank" rel="noopener noreferrer">{project.photoCredit} on Pexels</a>
+                      Photo by{" "}
+                      <a
+                        href={project.photoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {project.photoCredit} on Pexels
+                      </a>
                     </p>
                   </div>
                 </article>
@@ -409,6 +419,28 @@ const processSteps = [
                 class="portfolio-contact_error"
                 id="message-error"></span>
             </div>
+            <div class="portfolio-contact_consent wide">
+              <label for="privacy-consent">
+                <input
+                  id="privacy-consent"
+                  name="privacyConsent"
+                  type="checkbox"
+                  value="accepted"
+                  required
+                  aria-describedby="privacy-consent-error"
+                />
+                <span>
+                  I have read the <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer">Privacy Policy</a
+                  > and consent to the processing and international transfer of my
+                  information so Kigudev can respond to my inquiry.
+                </span>
+              </label>
+              <span class="portfolio-contact_error" id="privacy-consent-error"
+              ></span>
+            </div>
             <div class="portfolio-contact_submit wide">
               <button type="submit"
                 >Send Message <i
@@ -420,7 +452,8 @@ const processSteps = [
               class="portfolio-contact_status wide"
               role="status"
               aria-live="polite"
-            ></p>
+            >
+            </p>
           </form>
         </div>
       </section>
@@ -663,8 +696,9 @@ const processSteps = [
     const contactForm =
       document.querySelector<HTMLFormElement>("#contact-form");
     if (contactForm) {
-      const submitButton =
-        contactForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const submitButton = contactForm.querySelector<HTMLButtonElement>(
+        'button[type="submit"]',
+      );
       const status = contactForm.querySelector<HTMLElement>(
         ".portfolio-contact_status",
       );
@@ -674,6 +708,7 @@ const processSteps = [
         email: "Please enter a valid email address.",
         subject: "Please add a subject.",
         message: "Please tell me a little about your project.",
+        privacyConsent: "Please review and accept the Privacy Policy.",
       };
       const validate = (field: HTMLInputElement | HTMLTextAreaElement) => {
         const error = contactForm.querySelector<HTMLElement>(
@@ -686,7 +721,7 @@ const processSteps = [
       };
       contactForm
         .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-          ".portfolio-contact_field input, .portfolio-contact_field textarea",
+          ".portfolio-contact_field input, .portfolio-contact_field textarea, .portfolio-contact_consent input",
         )
         .forEach((field) => {
           field.addEventListener("blur", () => validate(field));
@@ -699,7 +734,9 @@ const processSteps = [
         const fields = [
           ...contactForm.querySelectorAll<
             HTMLInputElement | HTMLTextAreaElement
-          >(".portfolio-contact_field input, .portfolio-contact_field textarea"),
+          >(
+            ".portfolio-contact_field input, .portfolio-contact_field textarea, .portfolio-contact_consent input",
+          ),
         ];
         const valid = fields.map(validate).every(Boolean);
         if (!valid) {
@@ -986,10 +1023,7 @@ const processSteps = [
       }
 
       .hero-image {
-        mask-image: linear-gradient(
-          black 80%,
-          transparent
-        );
+        mask-image: linear-gradient(black 80%, transparent);
       }
       .portfolio-hero_role {
         margin: 0 0 1rem;
@@ -1578,6 +1612,7 @@ const processSteps = [
         gap: 0.55rem;
       }
       .portfolio-contact_field.wide,
+      .portfolio-contact_consent.wide,
       .portfolio-contact_submit.wide,
       .portfolio-contact_status.wide {
         grid-column: 1 / -1;
@@ -1623,6 +1658,38 @@ const processSteps = [
         min-height: 1rem;
         color: var(--text-2);
         font-size: 0.72rem;
+      }
+      .portfolio-contact_consent {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .portfolio-contact_consent label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        color: var(--text-2);
+        font-size: 0.84rem;
+        line-height: 1.5;
+      }
+      .portfolio-contact_consent input {
+        flex: 0 0 auto;
+        width: 1rem;
+        height: 1rem;
+        margin-top: 0.15rem;
+        accent-color: var(--accent);
+      }
+      .portfolio-contact_consent a {
+        color: currentColor;
+        text-decoration-color: var(--accent);
+        text-underline-offset: 0.15em;
+      }
+      .portfolio-contact_consent input:focus-visible {
+        outline: 0.125rem solid var(--accent);
+        outline-offset: 0.2rem;
+      }
+      .portfolio-contact_consent input[aria-invalid="true"] {
+        outline: 0.125rem solid var(--accent-strong);
+        outline-offset: 0.2rem;
       }
       .portfolio-contact_submit {
         display: block;
@@ -1826,6 +1893,7 @@ const processSteps = [
           grid-template-columns: 1fr;
         }
         .portfolio-contact_field.wide,
+        .portfolio-contact_consent.wide,
         .portfolio-contact_submit.wide,
         .portfolio-contact_status.wide {
           grid-column: auto;
@@ -2307,7 +2375,18 @@ const processSteps = [
         --portfolio-accent-secondary: #8c68ff;
         --portfolio-on-accent: #071722;
         --hero-background: #071a28;
-        --hero-ambient: radial-gradient(circle at 56% 55%, rgba(0, 137, 185, 0.38), transparent 27%), radial-gradient(circle at 7% 90%, rgba(83, 45, 148, 0.22), transparent 31%), linear-gradient(135deg, #071a28, #020b12 72%);
+        --hero-ambient:
+          radial-gradient(
+            circle at 56% 55%,
+            rgba(0, 137, 185, 0.38),
+            transparent 27%
+          ),
+          radial-gradient(
+            circle at 7% 90%,
+            rgba(83, 45, 148, 0.22),
+            transparent 31%
+          ),
+          linear-gradient(135deg, #071a28, #020b12 72%);
         --hero-circle-1: rgba(1, 73, 124, 0.2);
         --hero-circle-2: rgba(44, 125, 160, 0.13);
         --hero-circle-3: rgba(70, 143, 175, 0.12);
@@ -2341,7 +2420,18 @@ const processSteps = [
         --portfolio-accent-secondary: #6948cf;
         --portfolio-on-accent: #f7fafc;
         --hero-background: #e8f0f5;
-        --hero-ambient: radial-gradient(circle at 56% 55%, rgba(105, 188, 213, 0.24), transparent 30%), radial-gradient(circle at 7% 90%, rgba(178, 208, 225, 0.36), transparent 34%), linear-gradient(135deg, #eaf2f6, #dce9f0 72%);
+        --hero-ambient:
+          radial-gradient(
+            circle at 56% 55%,
+            rgba(105, 188, 213, 0.24),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 7% 90%,
+            rgba(178, 208, 225, 0.36),
+            transparent 34%
+          ),
+          linear-gradient(135deg, #eaf2f6, #dce9f0 72%);
         --hero-circle-1: rgba(88, 159, 191, 0.13);
         --hero-circle-2: rgba(89, 187, 207, 0.12);
         --hero-circle-3: rgba(127, 183, 212, 0.14);
@@ -2790,7 +2880,13 @@ const processSteps = [
       }
       .portfolio-contact_wrap {
         color: var(--contact-foreground);
-        background: radial-gradient(circle at 85% 18%, var(--contact-glow), transparent 24%), var(--contact-background);
+        background:
+          radial-gradient(
+            circle at 85% 18%,
+            var(--contact-glow),
+            transparent 24%
+          ),
+          var(--contact-background);
       }
       .portfolio-contact_title {
         color: var(--contact-foreground);

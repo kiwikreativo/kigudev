@@ -1,0 +1,560 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import { projects } from "@/data/projects.ts";
+---
+
+<section class="home-projects_wrap" id="work" aria-labelledby="work-title">
+  <div class="home-projects_heading">
+    <p>Selected projects</p>
+    <Heading tag="h2" variant="inherit" id="work-title">Work made to be useful</Heading>
+  </div>
+
+  <div
+    class="home-projects_carousel"
+    data-project-carousel
+    aria-roledescription="carousel"
+    aria-label="Selected Kigudev projects"
+  >
+    <div class="home-projects_slides" aria-live="polite">
+      {projects.map((project, index) => (
+        <article
+          class:list={["home-project_slide", index === 0 && "is-active"]}
+          data-project-slide
+          aria-hidden={index === 0 ? "false" : "true"}
+        >
+          <div class="home-project_content">
+            <p class="home-project_count">
+              <span aria-hidden="true"></span>
+              {project.number} / {String(projects.length).padStart(2, "0")}
+            </p>
+            <p class="home-project_category">{project.category}</p>
+            <Heading tag="h3" variant="inherit" class="home-project_title">
+              {project.titleLines.map((line) => <span>{line}</span>)}
+            </Heading>
+            <p class="home-project_description">{project.shortDescription}</p>
+            <dl class="home-project_meta">
+              <div><dt>Role</dt><dd>{project.role}</dd></div>
+              <div><dt>Focus</dt><dd>{project.focus}</dd></div>
+              <div><dt>Timeline</dt><dd>{project.duration}</dd></div>
+            </dl>
+            <Button element="link" href={`/projects/${project.slug}`} emphasis="secondary">
+              View Project <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </Button>
+            <div class="home-project_footer">
+              <p class="home-project_credit">
+                Photo by <a href={project.photoUrl} target="_blank" rel="noopener noreferrer">
+                  {project.photoCredit} on Pexels
+                </a>
+              </p>
+              <div class="home-project_arrows">
+                <button type="button" data-project-previous aria-label="Previous project">
+                  <i class="ph ph-arrow-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" data-project-next aria-label="Next project">
+                  <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="home-project_media">
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              widths={[480, 720, 960, 1280, 1600]}
+              sizes="(max-width: 48rem) 100vw, 56vw"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : "auto"}
+            />
+            <span class="home-project_corner top" aria-hidden="true"></span>
+            <span class="home-project_corner bottom" aria-hidden="true"></span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="home-projects_controls">
+      <div class="home-projects_progress" aria-label="Choose a project">
+        {projects.map((project, index) => (
+          <button
+            type="button"
+            class:list={[index === 0 && "is-active"]}
+            data-project-selector
+            aria-label={`Show ${project.title}`}
+            aria-current={index === 0 ? "true" : undefined}
+          >
+            <span class="home-projects_track"><span class="home-projects_fill"></span></span>
+            <span class="home-projects_label">{project.title}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const projectSlideDuration = 6000;
+  let projectCarouselController: AbortController | undefined;
+
+  const initializeProjectCarousels = () => {
+    projectCarouselController?.abort();
+    projectCarouselController = new AbortController();
+    const { signal } = projectCarouselController;
+
+    document.querySelectorAll<HTMLElement>("[data-project-carousel]").forEach((carousel) => {
+      const slides = [...carousel.querySelectorAll<HTMLElement>("[data-project-slide]")];
+      const selectors = [...carousel.querySelectorAll<HTMLButtonElement>("[data-project-selector]")];
+      const previousButtons = [...carousel.querySelectorAll<HTMLButtonElement>("[data-project-previous]")];
+      const nextButtons = [...carousel.querySelectorAll<HTMLButtonElement>("[data-project-next]")];
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let activeIndex = 0;
+      let elapsedTime = 0;
+      let previousTimestamp = performance.now();
+      let animationFrame = 0;
+      let isPaused = reduceMotion;
+      let touchStartX = 0;
+
+      const renderProject = (nextIndex: number, direction: "next" | "previous" = "next") => {
+        if (nextIndex === activeIndex || nextIndex < 0 || nextIndex >= slides.length) return;
+        const outgoingSlide = slides[activeIndex];
+        const incomingSlide = slides[nextIndex];
+        outgoingSlide.classList.remove("is-active");
+        outgoingSlide.classList.add(direction === "next" ? "is-leaving-left" : "is-leaving-right");
+        outgoingSlide.setAttribute("aria-hidden", "true");
+        incomingSlide.classList.remove("is-leaving-left", "is-leaving-right");
+        incomingSlide.classList.add("is-active");
+        incomingSlide.setAttribute("aria-hidden", "false");
+        selectors.forEach((selector, index) => {
+          const isActive = index === nextIndex;
+          selector.classList.toggle("is-active", isActive);
+          if (isActive) selector.setAttribute("aria-current", "true");
+          else selector.removeAttribute("aria-current");
+        });
+        window.setTimeout(() => outgoingSlide.classList.remove("is-leaving-left", "is-leaving-right"), 700);
+        activeIndex = nextIndex;
+        elapsedTime = 0;
+      };
+
+      const showNextProject = () => renderProject((activeIndex + 1) % slides.length, "next");
+      const showPreviousProject = () => renderProject((activeIndex - 1 + slides.length) % slides.length, "previous");
+
+      const updateProjectProgress = (timestamp: number) => {
+        const delta = timestamp - previousTimestamp;
+        previousTimestamp = timestamp;
+        if (!isPaused && !document.hidden) elapsedTime += delta;
+        const progress = Math.min(elapsedTime / projectSlideDuration, 1);
+        selectors.forEach((selector, index) => {
+          const fill = selector.querySelector<HTMLElement>(".home-projects_fill");
+          if (!fill) return;
+          fill.style.transform = `scaleX(${index < activeIndex ? 1 : index === activeIndex ? progress : 0})`;
+        });
+        if (progress >= 1) showNextProject();
+        animationFrame = requestAnimationFrame(updateProjectProgress);
+      };
+
+      previousButtons.forEach((button) => button.addEventListener("click", showPreviousProject, { signal }));
+      nextButtons.forEach((button) => button.addEventListener("click", showNextProject, { signal }));
+      selectors.forEach((selector, index) => {
+        selector.addEventListener("click", () => renderProject(index, index > activeIndex ? "next" : "previous"), { signal });
+      });
+      carousel.addEventListener("mouseenter", () => { isPaused = true; }, { signal });
+      carousel.addEventListener("mouseleave", () => { isPaused = reduceMotion; }, { signal });
+      carousel.addEventListener("focusin", () => { isPaused = true; }, { signal });
+      carousel.addEventListener("focusout", (event) => {
+        if (!carousel.contains(event.relatedTarget as Node | null)) isPaused = reduceMotion;
+      }, { signal });
+      carousel.addEventListener("touchstart", (event) => {
+        touchStartX = event.touches[0]?.clientX ?? 0;
+      }, { signal, passive: true });
+      carousel.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+        const distance = touchStartX - touchEndX;
+        if (Math.abs(distance) > 60) distance > 0 ? showNextProject() : showPreviousProject();
+      }, { signal, passive: true });
+
+      previousTimestamp = performance.now();
+      animationFrame = requestAnimationFrame(updateProjectProgress);
+      signal.addEventListener("abort", () => cancelAnimationFrame(animationFrame), { once: true });
+    });
+  };
+
+  initializeProjectCarousels();
+  document.addEventListener("astro:page-load", initializeProjectCarousels);
+  document.addEventListener("astro:before-swap", () => projectCarouselController?.abort());
+</script>
+
+<style>
+  @layer components {
+    .home-projects_wrap {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      color: var(--text);
+      background: color-mix(in srgb, var(--surface-secondary) 82%, transparent);
+    }
+
+    .home-projects_heading,
+    .home-projects_carousel {
+      width: min(calc(100% - 2.5rem), 80rem);
+      margin-inline: auto;
+    }
+
+    .home-projects_heading {
+      display: grid;
+      justify-items: center;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .home-projects_heading p {
+      margin: 0;
+      color: var(--accent);
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .home-projects_heading :global(h2) {
+      max-width: 12ch;
+      margin: 0;
+      font-family: var(--display-family);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+    }
+
+    .home-projects_carousel {
+      position: relative;
+      overflow: hidden;
+      border: 0.0625rem solid var(--border);
+      border-radius: 1.5rem;
+      background:
+        radial-gradient(circle at 76% 45%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 42%),
+        var(--surface);
+    }
+
+    .home-projects_slides {
+      position: relative;
+      min-height: 52rem;
+    }
+
+    .home-project_slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(3rem);
+      transition:
+        opacity 500ms ease,
+        transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s linear 650ms;
+    }
+
+    .home-project_slide.is-active {
+      z-index: 2;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      transition-delay: 80ms;
+    }
+
+    .home-project_slide.is-leaving-left {
+      visibility: visible;
+      opacity: 0;
+      transform: translateX(-3rem);
+    }
+
+    .home-project_slide.is-leaving-right {
+      visibility: visible;
+      opacity: 0;
+      transform: translateX(3rem);
+    }
+
+    .home-project_content {
+      display: grid;
+      min-width: 0;
+      align-content: center;
+      gap: 1.1rem;
+      padding: 2rem 1.5rem;
+    }
+
+    .home-project_count,
+    .home-project_category,
+    .home-project_credit {
+      margin: 0;
+      font-family: var(--label-family);
+      font-size: 0.72rem;
+    }
+
+    .home-project_count {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .home-project_count span {
+      width: 2.5rem;
+      height: 0.0625rem;
+      background: var(--accent);
+    }
+
+    .home-project_category {
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .home-project_title {
+      display: grid;
+      max-width: 100%;
+      margin: 0;
+      font-family: var(--display-family);
+      font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .home-project_title span {
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .home-project_description {
+      width: 100%;
+      max-width: 34rem;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.55;
+      overflow-wrap: break-word;
+    }
+
+    .home-project_meta {
+      display: grid;
+      min-width: 0;
+      gap: 0.75rem;
+      margin: 0.5rem 0;
+    }
+
+    .home-project_meta div {
+      display: grid;
+      grid-template-columns: 5.25rem minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .home-project_meta dt,
+    .home-project_meta dd {
+      min-width: 0;
+      margin: 0;
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+    }
+
+    .home-project_meta dt {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    .home-project_credit {
+      max-width: 100%;
+      color: var(--text-muted);
+      overflow-wrap: break-word;
+    }
+
+    .home-project_credit a {
+      color: inherit;
+    }
+
+    .home-project_footer {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .home-project_media {
+      position: relative;
+      min-height: 23rem;
+      overflow: hidden;
+    }
+
+    .home-project_media :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .home-project_slide.is-active .home-project_media :global(img) {
+      transform: scale(1.02);
+    }
+
+    .home-project_media::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 52%);
+    }
+
+    .home-project_corner {
+      position: absolute;
+      z-index: 2;
+      width: 3rem;
+      height: 3rem;
+      border-color: var(--accent);
+    }
+
+    .home-project_corner.top {
+      top: 1.25rem;
+      left: 1.25rem;
+      border-top: 0.125rem solid;
+      border-left: 0.125rem solid;
+    }
+
+    .home-project_corner.bottom {
+      right: 1.25rem;
+      bottom: 1.25rem;
+      border-right: 0.125rem solid;
+      border-bottom: 0.125rem solid;
+    }
+
+    .home-projects_controls {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .home-project_arrows {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .home-project_arrows button {
+      display: grid;
+      width: 2.75rem;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 0.0625rem solid var(--border);
+      border-radius: 50%;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      transition:
+        color 200ms ease,
+        background 200ms ease,
+        transform 200ms ease;
+    }
+
+    .home-project_arrows button:hover {
+      color: var(--background);
+      background: var(--text);
+      transform: translateY(-0.125rem);
+    }
+
+    .home-project_arrows button:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    .home-project_arrows button:focus-visible,
+    .home-projects_progress button:focus-visible {
+      outline: 0.125rem solid var(--accent);
+      outline-offset: 0.2rem;
+    }
+
+    .home-projects_progress {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(3rem, 1fr));
+      gap: 0.6rem;
+    }
+
+    .home-projects_progress button {
+      display: grid;
+      gap: 0.55rem;
+      border: 0;
+      padding: 0;
+      color: var(--text-muted);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .home-projects_track {
+      display: block;
+      height: 0.125rem;
+      overflow: hidden;
+      background: var(--border);
+    }
+
+    .home-projects_fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .home-projects_label {
+      overflow: hidden;
+      font-size: 0.65rem;
+      opacity: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .home-projects_progress button.is-active {
+      color: var(--text);
+    }
+
+    @media (width > 64rem) {
+      .home-projects_slides {
+        min-height: 38rem;
+      }
+
+      .home-project_slide {
+        grid-template-columns: minmax(20rem, 0.8fr) minmax(0, 1.2fr);
+      }
+
+      .home-project_content {
+        align-content: start;
+        gap: 1rem;
+        padding: 3rem 3rem 5.5rem;
+      }
+
+      .home-project_media {
+        min-height: 38rem;
+      }
+
+      .home-projects_controls {
+        position: absolute;
+        right: calc(60% + 3rem);
+        bottom: 0.75rem;
+        left: 3rem;
+        padding: 0;
+      }
+
+      .home-projects_label {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-project_slide,
+      .home-project_media :global(img),
+      .home-project_arrows button {
+        transition: none;
+      }
+    }
+  }
+</style>

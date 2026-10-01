@@ -15,6 +15,7 @@ import comic from "@/assets/logo/comic.png";
       sizes="(max-width: 48rem) 100vw, 62vw"
       loading="eager"
       fetchpriority="high"
+      class="home-hero_media-image"
     />
   </div>
   <div class="home-hero_overlay" aria-hidden="true"></div>
@@ -175,6 +176,10 @@ import comic from "@/assets/logo/comic.png";
       text-transform: uppercase;
     }
 
+    .home-hero_media-image{
+      mask-image: linear-gradient(black 80%, transparent);
+    }
+
     .home-hero_text {
       max-width: 34rem;
       margin: 0;
@@ -232,6 +237,17 @@ import comic from "@/assets/logo/comic.png";
       .home-hero_content {
         grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.75fr);
         align-items: end;
+      }
+    }
+
+    @media (width >= 64rem) {
+      .home-hero_media :global(img) {
+        position: absolute;
+        top: clamp(5rem, 12vh, 6.5rem);
+        right: clamp(2rem, 4vw, 4.75rem);
+        width: min(30rem, 28vw);
+        height: auto;
+        object-position: center;
       }
     }
 

@@ -9,7 +9,7 @@
 ## Before Implementing
 
 - Read the existing component, page, or layout first.
-- Check whether the component can be built as a `.astro` file.
+- Check whether the component can be built as a `.astro` file if not use the native component technology.
   - Confirm it will actually work. Do not say yes and then generate a non-functional `.astro` component.
   - If it needs client-side interactivity (state, event handlers, animations driven by JS), say so and choose one of these:
     - A `<script>` tag inside the `.astro` file for small interactions.
@@ -27,6 +27,7 @@
 - Keep components small and single-purpose.
 - Use semantic HTML (`header`, `nav`, `main`, `section`, `footer`, `button`) before reaching for `div`.
 - Keep styles scoped to the component. Use shared design tokens (colors, spacing, radii, fonts) instead of hardcoded values.
+- Preserve the actual structure of the page.
 
 ### Design
 
@@ -65,6 +66,9 @@ Do not call the work complete until every item below is checked.
 - [ ] The layout works at mobile, tablet, and desktop widths.
 - [ ] Keyboard navigation, focus states, and reduced-motion behavior work.
 - [ ] No leftover unused code, imports, or styles.
+- [ ] No content overlaps, clips, or breaks inside words at any supported viewport; verify the longest real title, label, metadata value, credit, and control set in every repeated card or slide.
+- [ ] Repeated cards and slides use consistent spacing between related CTAs, credits, and controls: they never touch, overlap, or drift apart across real content variations, and every real item is checked.
+- [ ] Check the top, right, bottom, and left spacing around every content group at mobile, tablet, and desktop widths; content must stay inside its container, never overlap or touch adjacent elements, and related items must use consistent, intentional gaps without excessive empty space.
 
 ## Response Format
 

@@ -1,14 +1,10 @@
 ---
-import { Image } from "astro:assets";
-import Button from "@/components/Button.astro";
 import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import Slider from "@/components/Interactive/Slider.astro";
 import Marquee from "@/components/Interactive/Marquee.astro";
 import UnicornBackground from "@/components/Media/UnicornBackground.astro";
-import comic from "@/assets/logo/comic.png";
-import { services } from "@/data/services.ts";
-import { projects } from "@/data/projects.ts";
+import SectionHeroHome from "@/components/Portfolio/SectionHeroHome.astro";
+import SectionProjectsHome from "@/components/Portfolio/SectionProjectsHome.astro";
+import SectionServicesHome from "@/components/Portfolio/SectionServicesHome.astro";
 
 const processSteps = [
   {
@@ -45,51 +41,7 @@ const processSteps = [
 ---
 
 <div class="portfolio_wrap">
-  <section class="portfolio-hero_wrap" aria-labelledby="hero-title">
-    <div class="portfolio-hero_ambient" aria-hidden="true"></div>
-    <div class="portfolio-hero_circles" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="portfolio-hero_layout">
-      <Heading
-        tag="h1"
-        variant="inherit"
-        id="hero-title"
-        class="portfolio-hero_title">KIGUDEV</Heading
-      >
-      <div class="portfolio-hero_stage">
-        <div class="portfolio-hero_portrait">
-          <Image
-            src={comic}
-            alt="Illustrated portrait of Kigudev"
-            widths={[320, 480, 640]}
-            class="hero-image"
-            sizes="(max-width: 48rem) 95vw, (max-width: 64rem) 37rem, 43rem"
-            loading="eager"
-          />
-        </div>
-      </div>
-      <div class="portfolio-hero_left">
-        <p class="portfolio-hero_role">Software engineer + UI/UX</p>
-        <Paragraph class="portfolio-hero_text"
-          >I design and build thoughtful digital experiences with a focus on
-          usability, performance, and clarity.</Paragraph
-        >
-      </div>
-      <div class="portfolio-hero_right">
-        <Paragraph class="portfolio-hero_text"
-          >Merging design thinking with software engineering to create digital
-          experiences that are intuitive, efficient, and thoughtfully built.</Paragraph
-        >
-        <Button element="link" href="#contact" class="portfolio-hero_cta"
-          >Start a project <span
-            class="portfolio-hero_cta-mark"
-            aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span
-          ></Button
-        >
-      </div>
-    </div>
-  </section>
+  <SectionHeroHome />
 
   <div class="portfolio-post-hero_wrap">
     <UnicornBackground />
@@ -113,156 +65,8 @@ const processSteps = [
         </Marquee>
       </section>
 
-      <section
-        class="portfolio-work_wrap"
-        id="work"
-        aria-labelledby="work-title"
-      >
-        <div class="portfolio-container portfolio-work_inner">
-          <span class="portfolio-decor portfolio-decor_work" aria-hidden="true"
-            >&lt;/&gt;</span
-          >
-          <div class="portfolio-heading_wrap centered">
-            <p class="portfolio-kicker">Selected projects</p><Heading
-              tag="h2"
-              variant="inherit"
-              id="work-title"
-              class="portfolio-section_title">Work made to be useful</Heading
-            >
-          </div>
-          <Slider
-            variant="contained"
-            xsmall={1}
-            class="portfolio-work_slider"
-            label="Selected Kigudev projects"
-          >
-            {
-              projects.map((project, index) => (
-                <article class="portfolio-project_wrap">
-                  <div class="portfolio-project_media">
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt}
-                      widths={[480, 720, 960, 1280, 1600]}
-                      sizes="(max-width: 48rem) 100vw, 62vw"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchpriority={index === 0 ? "high" : "auto"}
-                    />
-                  </div>
-                  <div class="portfolio-project_content">
-                    <p class="portfolio-project_category">{project.category}</p>
-                    <Heading
-                      tag="h3"
-                      variant="inherit"
-                      class="portfolio-project_title"
-                    >
-                      {project.title}
-                    </Heading>
-                    <Paragraph class="portfolio-project_text">
-                      {project.shortDescription}
-                    </Paragraph>
-                    <dl class="portfolio-project_meta">
-                      <>
-                        <div>
-                          <>
-                            <dt>Role</dt>
-                            <dd>{project.role}</dd>
-                          </>
-                        </div>
-                        <div>
-                          <>
-                            <dt>Focus</dt>
-                            <dd>{project.focus}</dd>
-                          </>
-                        </div>
-                        <div>
-                          <>
-                            <dt>Timeline</dt>
-                            <dd>{project.duration}</dd>
-                          </>
-                        </div>
-                      </>
-                    </dl>
-                    <Button
-                      element="link"
-                      href={`/projects/${project.slug}`}
-                      emphasis="secondary"
-                    >
-                      View Project{" "}
-                      <i class="ph ph-arrow-up-right" aria-hidden="true" />
-                    </Button>
-                    <p class="portfolio-project_credit">
-                      Photo by{" "}
-                      <a
-                        href={project.photoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {project.photoCredit} on Pexels
-                      </a>
-                    </p>
-                  </div>
-                </article>
-              ))
-            }
-          </Slider>
-        </div>
-      </section>
-
-      <section
-        class="portfolio-services_wrap"
-        id="services"
-        aria-labelledby="services-title"
-      >
-        <div class="portfolio-container">
-          <span
-            class="portfolio-decor portfolio-decor_services"
-            aria-hidden="true">[ + ]</span
-          >
-          <div class="portfolio-heading_wrap">
-            <p class="portfolio-kicker">Services</p>
-            <Heading
-              tag="h2"
-              variant="inherit"
-              id="services-title"
-              class="portfolio-section_title">I can help you with</Heading
-            >
-          </div>
-          <div class="portfolio-services_list">
-            {
-              services.map((service, index) => (
-                <a
-                  href={`/services/${service.slug}`}
-                  class:list={[
-                    "portfolio-service_item",
-                    index === 3 && "is-active",
-                  ]}
-                >
-                  <span class="portfolio-service_number">{service.number}</span>
-                  <div class="portfolio-service_copy">
-                    <Heading
-                      tag="h3"
-                      variant="inherit"
-                      class="portfolio-service_title"
-                    >
-                      {service.title}
-                    </Heading>
-                    <Paragraph class="portfolio-service_text">
-                      {service.homepageCopy}
-                    </Paragraph>
-                  </div>
-                  <div class="portfolio-service_reveal">
-                    <span>{service.homepageDetail}</span>
-                  </div>
-                  <span class="portfolio-service_arrow" aria-hidden="true">
-                    <i class="ph ph-arrow-up-right" />
-                  </span>
-                </a>
-              ))
-            }
-          </div>
-        </div>
-      </section>
+      <SectionProjectsHome />
+      <SectionServicesHome />
 
       <section
         class="portfolio-about_wrap"
@@ -466,7 +270,6 @@ const processSteps = [
     gsap.registerPlugin(ScrollTrigger);
 
     let motionContext: gsap.Context | undefined;
-    let serviceInteractionController: AbortController | undefined;
 
     const initializePortfolioMotion = () => {
       const portfolio = document.querySelector<HTMLElement>(".portfolio_wrap");
@@ -508,65 +311,7 @@ const processSteps = [
           { y: -12, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.55, ease: "power2.out" },
         );
-        gsap.fromTo(
-          [
-            ".portfolio-hero_title",
-            ".portfolio-hero_left",
-            ".portfolio-hero_right",
-          ],
-          { y: 14, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power2.out",
-          },
-        );
-        gsap.fromTo(
-          ".portfolio-hero_portrait",
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-        );
-
         reveal(".portfolio-tech_wrap", ".portfolio-tech_marquee", 0, 12);
-        reveal(
-          ".portfolio-work_wrap",
-          ".portfolio-work_wrap .portfolio-heading_wrap > *",
-        );
-        reveal(
-          ".portfolio-work_slider",
-          [
-            ".portfolio-project_content > *",
-            ".portfolio-work_slider .slider_controls",
-          ],
-          0.05,
-          16,
-        );
-        gsap.utils
-          .toArray<HTMLElement>(".portfolio-project_media")
-          .forEach((media) =>
-            gsap.fromTo(
-              media,
-              { scale: 0.88, opacity: 0.45 },
-              {
-                scale: 1,
-                opacity: 1,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: media,
-                  start: "top 88%",
-                  end: "center 52%",
-                  scrub: 0.7,
-                },
-              },
-            ),
-          );
-
-        reveal(
-          ".portfolio-services_wrap",
-          ".portfolio-services_wrap .portfolio-heading_wrap > *",
-        );
         reveal(
           ".portfolio-about_wrap",
           [".portfolio-about_header", ".portfolio-about_intro > *"],
@@ -601,95 +346,21 @@ const processSteps = [
           );
         }
 
-        gsap.utils
-          .toArray<HTMLElement>(".portfolio-project_wrap")
-          .forEach((card, index) => {
-            gsap.set(card, { zIndex: index + 1 });
-            gsap.fromTo(
-              card,
-              { y: 70, scale: 0.96 },
-              {
-                y: 0,
-                scale: 1,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 92%",
-                  end: "top 52%",
-                  scrub: 0.75,
-                },
-              },
-            );
-          });
         reveal(".footer_wrap", [".footer_top > *", ".footer_bottom"], 0.07, 14);
       }, document.body);
-    };
-
-    const cleanupServiceInteractions = () => {
-      serviceInteractionController?.abort();
-      serviceInteractionController = undefined;
-      gsap.killTweensOf(".portfolio-service_item");
-      gsap.set(".portfolio-service_item", {
-        clearProps: "opacity,transform",
-      });
-    };
-
-    const initializeServiceInteractions = () => {
-      cleanupServiceInteractions();
-      const items = document.querySelectorAll<HTMLElement>(
-        ".portfolio-service_item",
-      );
-      if (!items.length) return;
-
-      gsap.set(items, { clearProps: "opacity,transform" });
-
-      serviceInteractionController = new AbortController();
-      const { signal } = serviceInteractionController;
-      const reduceMotion = matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
-      items.forEach((item) => {
-        const activate = () => {
-          if (item.classList.contains("is-active")) return;
-          items.forEach((row) => row.classList.remove("is-active"));
-          item.classList.add("is-active");
-
-          if (!reduceMotion) {
-            gsap.fromTo(
-              item,
-              { scale: 0.992 },
-              {
-                scale: 1,
-                duration: 0.45,
-                ease: "power2.out",
-                overwrite: true,
-                clearProps: "transform",
-              },
-            );
-          }
-        };
-
-        item.addEventListener("mouseenter", activate, { signal });
-        item.addEventListener("focus", activate, { signal });
-        item.addEventListener("click", activate, { signal });
-      });
     };
 
     const cleanupPortfolioMotion = () => {
       motionContext?.revert();
       motionContext = undefined;
-      cleanupServiceInteractions();
       document
         .querySelector<HTMLElement>(".portfolio_wrap")
         ?.removeAttribute("data-motion-ready");
     };
 
     initializePortfolioMotion();
-    initializeServiceInteractions();
     document.addEventListener("astro:page-load", () => {
       initializePortfolioMotion();
-      initializeServiceInteractions();
     });
     document.addEventListener("astro:before-swap", cleanupPortfolioMotion);
     window.addEventListener("pagehide", cleanupPortfolioMotion, { once: true });

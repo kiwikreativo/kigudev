@@ -1,0 +1,260 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import comic from "@/assets/logo/comic.png";
+---
+
+<section class="home-hero_wrap" aria-labelledby="hero-title">
+  <div class="home-hero_media">
+    <Image
+      src={comic}
+      alt="Illustrated portrait of Kigudev"
+      widths={[480, 720, 960]}
+      sizes="(max-width: 48rem) 100vw, 62vw"
+      loading="eager"
+      fetchpriority="high"
+      class="home-hero_media-image"
+    />
+  </div>
+  <div class="home-hero_overlay" aria-hidden="true"></div>
+  <div class="home-hero_inner">
+    <Heading tag="h1" variant="inherit" id="hero-title" class="home-hero_title">
+      <span>KIGUDEV</span><sup aria-hidden="true">*</sup>
+    </Heading>
+    <div class="home-hero_content">
+      <div class="home-hero_intro">
+        <p class="home-hero_role">Software engineer + UI/UX</p>
+        <Paragraph class="home-hero_text">
+          I design and build thoughtful digital experiences with a focus on
+          usability, performance, and clarity.
+        </Paragraph>
+      </div>
+      <div class="home-hero_action">
+        <Paragraph class="home-hero_text">
+          Merging design thinking with software engineering to create digital
+          experiences that are intuitive, efficient, and thoughtfully built.
+        </Paragraph>
+        <Button element="link" href="#contact" class="home-hero_cta">
+          Start a project
+          <span class="home-hero_cta-icon" aria-hidden="true">
+            <i class="ph ph-arrow-up-right"></i>
+          </span>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+
+  const animateHomeHero = () => {
+    const hero = document.querySelector<HTMLElement>(".home-hero_wrap");
+    if (!hero || hero.dataset.animated) return;
+    hero.dataset.animated = "true";
+
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    gsap.fromTo(
+      hero.querySelectorAll(".home-hero_title, .home-hero_intro, .home-hero_action"),
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+    );
+    gsap.fromTo(
+      hero.querySelector(".home-hero_media img"),
+      { scale: 1.06, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1.1, ease: "power3.out" },
+    );
+  };
+
+  animateHomeHero();
+  document.addEventListener("astro:page-load", animateHomeHero);
+</script>
+
+<style>
+  @layer components {
+    .home-hero_wrap {
+      position: relative;
+      min-height: max(42rem, calc(100dvh - 1rem));
+      margin: 0.5rem;
+      overflow: hidden;
+      isolation: isolate;
+      border-radius: 1.5rem;
+      color: #f2f3e9;
+      background: #06131d;
+    }
+
+    .home-hero_media,
+    .home-hero_overlay {
+      position: absolute;
+      inset: 0;
+    }
+
+    .home-hero_media {
+      display: grid;
+      place-items: end center;
+      background:
+        radial-gradient(circle at 50% 35%, #164c65 0, transparent 38%),
+        linear-gradient(115deg, #03101a, #0b3043 54%, #020b11);
+    }
+
+    .home-hero_media :global(img) {
+      width: min(72rem, 90vw);
+      height: 92%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: saturate(0.82) contrast(1.04);
+    }
+
+    .home-hero_overlay {
+      z-index: 1;
+      background:
+        linear-gradient(to bottom, rgb(2 10 16 / 28%), transparent 40%, rgb(2 10 16 / 82%)),
+        linear-gradient(90deg, rgb(2 10 16 / 38%), transparent 45%, rgb(2 10 16 / 28%));
+    }
+
+    .home-hero_overlay::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      opacity: 0.16;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    .home-hero_inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      min-height: max(42rem, calc(100dvh - 1rem));
+      align-content: end;
+      gap: 1.25rem;
+      padding: 6rem 1.25rem 1.5rem;
+    }
+
+    .home-hero_title {
+      display: flex;
+      align-items: flex-start;
+      margin: 0;
+      font-family: var(--display-family);
+      font-size: clamp(4.5rem, 18vw, 17rem);
+      font-weight: 500;
+      line-height: 0.72;
+      letter-spacing: -0.075em;
+      white-space: nowrap;
+    }
+
+    .home-hero_title sup {
+      margin-top: 0.08em;
+      font-size: 0.18em;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .home-hero_content {
+      display: grid;
+      gap: 1.5rem;
+      border-top: 0.0625rem solid rgb(242 243 233 / 28%);
+      padding-top: 1.25rem;
+    }
+
+    .home-hero_intro,
+    .home-hero_action {
+      display: grid;
+      align-content: end;
+      gap: 1rem;
+    }
+
+    .home-hero_role {
+      margin: 0;
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .home-hero_media-image{
+      mask-image: linear-gradient(black 80%, transparent);
+    }
+
+    .home-hero_text {
+      max-width: 34rem;
+      margin: 0;
+      color: rgb(242 243 233 / 78%);
+      font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+      line-height: 1.45;
+    }
+
+    .home-hero_cta:global(.button_wrap) {
+      justify-self: start;
+      min-height: 3rem;
+      padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+      border-radius: 100vw;
+      color: #06131d;
+      background: #f2f3e9;
+    }
+
+    .home-hero_cta:global(.button_wrap) :global(.button_text) {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .home-hero_cta:global(.button_wrap) :global(.button_text)::before,
+    .home-hero_cta:global(.button_wrap) :global(.button_text)::after {
+      display: none;
+    }
+
+    .home-hero_cta-icon {
+      display: grid;
+      width: 2.5rem;
+      aspect-ratio: 1;
+      margin-left: 0.5rem;
+      place-items: center;
+      border-radius: 50%;
+      color: #f2f3e9;
+      background: #06131d;
+      transition: transform 250ms ease;
+    }
+
+    .home-hero_cta:hover .home-hero_cta-icon {
+      transform: rotate(45deg);
+    }
+
+    @media (width >= 48rem) {
+      .home-hero_wrap {
+        margin: 0.75rem;
+        border-radius: 2rem;
+      }
+
+      .home-hero_inner {
+        padding: 7rem 2rem 2rem;
+      }
+
+      .home-hero_content {
+        grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.75fr);
+        align-items: end;
+      }
+    }
+
+    @media (width >= 64rem) {
+      .home-hero_media :global(img) {
+        position: absolute;
+        top: clamp(5rem, 12vh, 6.5rem);
+        right: clamp(2rem, 4vw, 4.75rem);
+        width: min(30rem, 28vw);
+        height: auto;
+        object-position: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-hero_cta-icon {
+        transition: none;
+      }
+    }
+  }
+</style>

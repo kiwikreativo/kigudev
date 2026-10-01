@@ -1,0 +1,312 @@
+---
+import { Image } from "astro:assets";
+import Heading from "@/components/Typography/Heading.astro";
+import { services } from "@/data/services.ts";
+---
+
+<section class="home-services_wrap" id="services" aria-labelledby="services-title">
+  <div class="home-services_inner">
+    <header class="home-services_header">
+      <p class="home-services_kicker">Services</p>
+      <Heading tag="h2" variant="inherit" id="services-title" class="home-services_title">
+        I can help you with
+      </Heading>
+    </header>
+
+    <div class="home-services_accordion" data-service-accordion>
+      {services.map((service, index) => (
+        <article class:list={["home-service_item", index === services.length - 1 && "is-active"]}>
+          <Image
+            src={service.image}
+            alt={service.imageAlt}
+            widths={[320, 480, 720]}
+            sizes="(max-width: 48rem) 72vw, 32vw"
+            loading="lazy"
+          />
+          <div class="home-service_shade" aria-hidden="true"></div>
+          <button
+            class="home-service_trigger"
+            type="button"
+            aria-expanded={index === services.length - 1 ? "true" : "false"}
+            aria-controls={`service-panel-${service.slug}`}
+          >
+            <span class="home-service_number">{service.number}</span>
+            <span class="home-service_label">{service.title}</span>
+          </button>
+          <div class="home-service_content" id={`service-panel-${service.slug}`}>
+            <h3>{service.title}</h3>
+            <p>{service.homepageCopy}</p>
+            <span>{service.homepageDetail}</span>
+            <a href={`/services/${service.slug}`}>
+              View service <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  let serviceAccordionController: AbortController | undefined;
+
+  const initializeServiceAccordion = () => {
+    serviceAccordionController?.abort();
+    serviceAccordionController = new AbortController();
+    const { signal } = serviceAccordionController;
+
+    document.querySelectorAll<HTMLElement>("[data-service-accordion]").forEach((accordion) => {
+      const items = [...accordion.querySelectorAll<HTMLElement>(".home-service_item")];
+      const activateService = (activeItem: HTMLElement) => {
+        items.forEach((item) => {
+          const isActive = item === activeItem;
+          item.classList.toggle("is-active", isActive);
+          item.querySelector<HTMLButtonElement>(".home-service_trigger")?.setAttribute(
+            "aria-expanded",
+            String(isActive),
+          );
+        });
+        if (accordion.scrollWidth > accordion.clientWidth) {
+          activeItem.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        }
+      };
+
+      items.forEach((item) => {
+        item.addEventListener("mouseenter", () => activateService(item), { signal });
+        item.addEventListener("focusin", () => activateService(item), { signal });
+        item.querySelector(".home-service_trigger")?.addEventListener(
+          "click",
+          () => activateService(item),
+          { signal },
+        );
+      });
+    });
+  };
+
+  initializeServiceAccordion();
+  document.addEventListener("astro:page-load", initializeServiceAccordion);
+  document.addEventListener("astro:before-swap", () => serviceAccordionController?.abort());
+</script>
+
+<style>
+  @layer components {
+    .home-services_wrap {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      color: var(--text);
+    }
+
+    .home-services_inner {
+      display: grid;
+      width: min(calc(100% - 2.5rem), 80rem);
+      margin-inline: auto;
+      gap: 3rem;
+    }
+
+    .home-services_header {
+      display: grid;
+      align-content: center;
+      gap: 1.25rem;
+    }
+
+    .home-services_kicker {
+      margin: 0;
+      color: var(--accent);
+      font-family: var(--label-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .home-services_title {
+      max-width: 8ch;
+      margin: 0;
+      font-family: var(--display-family);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+    }
+
+    .home-services_accordion {
+      display: flex;
+      min-width: 0;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding: 0.25rem 0.25rem 1rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+    }
+
+    .home-service_item {
+      position: relative;
+      flex: 0 0 4.25rem;
+      min-height: 30rem;
+      overflow: hidden;
+      isolation: isolate;
+      border-radius: 1.25rem;
+      background: var(--surface-secondary);
+      scroll-snap-align: center;
+      transition: flex-basis 650ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .home-service_item.is-active {
+      flex-basis: min(75vw, 25rem);
+    }
+
+    .home-service_item :global(img),
+    .home-service_shade {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .home-service_item :global(img) {
+      z-index: -2;
+      object-fit: cover;
+      transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .home-service_item.is-active :global(img) {
+      transform: scale(1.035);
+    }
+
+    .home-service_shade {
+      z-index: -1;
+      background: linear-gradient(to top, rgb(2 8 13 / 92%), rgb(2 8 13 / 8%) 72%);
+    }
+
+    .home-service_trigger {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      border: 0;
+      color: #fff;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .home-service_trigger:focus-visible {
+      outline: 0.125rem solid var(--accent);
+      outline-offset: -0.25rem;
+    }
+
+    .home-service_number {
+      position: absolute;
+      top: 1.25rem;
+      left: 50%;
+      font-family: var(--label-family);
+      font-size: 0.72rem;
+      transform: translateX(-50%);
+    }
+
+    .home-service_label {
+      position: absolute;
+      bottom: 6rem;
+      left: 50%;
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transform: translateX(-50%) rotate(-90deg);
+      transition: opacity 200ms ease;
+    }
+
+    .home-service_item.is-active .home-service_label {
+      opacity: 0;
+    }
+
+    .home-service_content {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 2;
+      display: grid;
+      gap: 0.75rem;
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(1rem);
+      transition:
+        opacity 300ms ease 120ms,
+        transform 400ms cubic-bezier(0.16, 1, 0.3, 1) 120ms;
+    }
+
+    .home-service_item.is-active .home-service_content {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .home-service_content h3,
+    .home-service_content p {
+      margin: 0;
+    }
+
+    .home-service_content h3 {
+      font-family: var(--display-family);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .home-service_content p {
+      max-width: 34rem;
+      color: rgb(255 255 255 / 76%);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .home-service_content > span {
+      color: rgb(255 255 255 / 58%);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .home-service_content a {
+      position: relative;
+      z-index: 3;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .home-service_content a:focus-visible {
+      outline: 0.125rem solid var(--accent);
+      outline-offset: 0.25rem;
+    }
+
+    @media (width >= 64rem) {
+      .home-services_inner {
+        grid-template-columns: minmax(17rem, 0.7fr) minmax(0, 1.3fr);
+        align-items: center;
+      }
+
+      .home-services_accordion {
+        overflow: visible;
+      }
+
+      .home-service_item.is-active {
+        flex-basis: 25rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-service_item,
+      .home-service_item :global(img),
+      .home-service_label,
+      .home-service_content {
+        transition: none;
+      }
+    }
+  }
+</style>

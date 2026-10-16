@@ -1,12 +1,19 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import HomePortfolio from "@/components/Portfolio/HomePortfolio.astro";
+import { siteEntityGraph } from "@/utils/structuredData.ts";
 ---
 
 <Layout
   theme="dark"
-  title="Designer & Front-end Developer"
-  description="Kigudev designs and builds thoughtful digital products with clarity, usability, and performance at their core."
+  title="Web Designer & Front-End Developer in Costa Rica"
+  description="Guillermo Obando designs and builds clear, responsive websites and digital products from Costa Rica for local businesses and remote US clients."
 >
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(siteEntityGraph)}
+  />
   <HomePortfolio />
 </Layout>

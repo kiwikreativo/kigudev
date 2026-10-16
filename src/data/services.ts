@@ -13,6 +13,9 @@ export interface Service {
   homepageDetail: string;
   paragraphs: string[];
   included: string[];
+  audience: string;
+  process: string[];
+  faqs: Array<{ question: string; answer: string }>;
   seoDescription: string;
   image: ImageMetadata;
   imageAlt: string;
@@ -39,6 +42,18 @@ export const services: Service[] = [
       "User flow mapping",
       "Wireframes and high-fidelity mockups",
       "A reusable design system for future pages",
+    ],
+    audience:
+      "For businesses and product teams that need a new interface, a clearer user flow, or a consistent design system before development begins.",
+    process: [
+      "Clarify business goals, user needs, and the decisions the interface must support.",
+      "Map content and user flows before committing to visual details.",
+      "Design and refine responsive screens, components, and interaction states.",
+      "Prepare an organized design system and implementation-ready handoff.",
+    ],
+    faqs: [
+      { question: "Can UI/UX design be delivered without development?", answer: "Yes. The engagement can end with approved responsive designs and a reusable design system, or continue into front-end implementation." },
+      { question: "What is needed to begin?", answer: "A useful starting point is the business goal, the primary audience, existing brand material, and any current product or content that needs improvement." },
     ],
     seoDescription:
       "UI/UX design focused on research, user flows, wireframes, high-fidelity interfaces, and reusable design systems built around real business needs.",
@@ -68,6 +83,18 @@ export const services: Service[] = [
       "CMS or e-commerce integration where needed",
       "Clean handoff with documentation",
     ],
+    audience:
+      "For businesses that need a responsive marketing site, landing page, e-commerce experience, or front-end implementation of an approved design.",
+    process: [
+      "Confirm scope, content, integrations, and the pages required for launch.",
+      "Translate approved layouts into accessible, reusable components.",
+      "Optimize responsive behavior, images, loading, and interaction details.",
+      "Test the finished site and provide a clear launch or handoff path.",
+    ],
+    faqs: [
+      { question: "Which technologies are used?", answer: "The technology is selected for the project rather than forced in advance. This site and several portfolio projects use Astro for fast, maintainable static delivery." },
+      { question: "Can an existing design be developed?", answer: "Yes. Development can begin from an approved design, or design and development can be handled together as one engagement." },
+    ],
     seoDescription:
       "Responsive web development for business websites, landing pages, and e-commerce stores with a focus on performance and maintainable code.",
     image: webDevelopmentImage,
@@ -96,6 +123,18 @@ export const services: Service[] = [
       "Accessibility fixes (contrast, tap targets, screen readers)",
       "Cross-device testing",
     ],
+    audience:
+      "For teams with an existing website that works on desktop but has layout, navigation, readability, performance, or accessibility problems on smaller screens.",
+    process: [
+      "Review the current site at representative mobile and tablet widths.",
+      "Prioritize layout failures, difficult controls, content density, and loading issues.",
+      "Rework the highest-impact components and responsive rules.",
+      "Verify the updated experience across devices, keyboard input, and reduced-motion settings.",
+    ],
+    faqs: [
+      { question: "Does the whole website need to be redesigned?", answer: "Not necessarily. The work can focus on the specific templates and interactions causing the greatest mobile friction." },
+      { question: "Is accessibility included?", answer: "Accessibility checks for contrast, focus, keyboard use, touch targets, semantic structure, and screen-reader context are included in the improvement pass." },
+    ],
     seoDescription:
       "Improve existing websites for mobile with responsive redesign, usability fixes, accessibility improvements, and cross-device testing.",
     image: mobileEnhancementImage,
@@ -123,6 +162,18 @@ export const services: Service[] = [
       "Site structure and metadata optimization",
       "Keyword and content strategy",
       "Ongoing performance monitoring",
+    ],
+    audience:
+      "For businesses with a technically sound service to offer but unclear search positioning, weak crawl paths, incomplete metadata, or content that does not answer buyer questions.",
+    process: [
+      "Audit crawlability, indexability, metadata, page structure, links, and performance risks.",
+      "Align priority pages with real search intent and a coherent site architecture.",
+      "Implement technical, on-page, schema, image, and internal-link improvements.",
+      "Measure deployed results and maintain an action plan for content and authority growth.",
+    ],
+    faqs: [
+      { question: "Does SEO guarantee a ranking position?", answer: "No. SEO improves technical accessibility, relevance, and evidence, but rankings also depend on competition, authority, demand, and ongoing search-engine changes." },
+      { question: "Is SEO a one-time project?", answer: "A technical foundation can be corrected in one engagement, but content, competitors, links, and search behavior should be reviewed over time." },
     ],
     seoDescription:
       "Technical SEO, site structure, metadata, keyword strategy, performance optimization, and monitoring to improve search visibility.",

@@ -1,0 +1,78 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Button from "@/components/Button.astro";
+---
+
+<article class="about-page_wrap">
+  <header class="about-page_hero">
+    <div class="about-page_container">
+      <p class="about-page_eyebrow">About / Guillermo Obando</p>
+      <Heading tag="h1" variant="inherit" class="about-page_title">
+        Design thinking meets front-end engineering.
+      </Heading>
+      <Paragraph class="about-page_lede">
+        I&rsquo;m Guillermo Obando, the designer and developer behind Kigudev. I
+        work from Costa Rica with local and remote US clients to create clear,
+        responsive digital experiences.
+      </Paragraph>
+    </div>
+  </header>
+
+  <section class="about-page_section" aria-labelledby="work-title">
+    <div class="about-page_container about-page_layout">
+      <Heading tag="h2" variant="inherit" id="work-title" class="about-page_subtitle">
+        How I work
+      </Heading>
+      <div class="about-page_copy">
+        <Paragraph>
+          My work combines user experience design, interface systems, and
+          front-end development. That combination keeps design decisions close
+          to implementation and helps avoid handoff gaps that weaken the final
+          product.
+        </Paragraph>
+        <Paragraph>
+          Projects begin with the business goal and the people using the
+          product. From there, I define structure, design the interface, build
+          responsive components, and test the experience across devices.
+        </Paragraph>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-page_section alternate" aria-labelledby="collaboration-title">
+    <div class="about-page_container about-page_layout">
+      <Heading tag="h2" variant="inherit" id="collaboration-title" class="about-page_subtitle">
+        Remote collaboration
+      </Heading>
+      <div class="about-page_copy">
+        <Paragraph>
+          I support businesses in Costa Rica and remote clients in the United
+          States. Communication, project scope, and practical next steps stay
+          visible throughout the engagement so decisions can be made without
+          unnecessary complexity.
+        </Paragraph>
+        <Button element="link" href="/#contact">Start a project</Button>
+      </div>
+    </div>
+  </section>
+</article>
+
+<style>
+  @layer components {
+    .about-page_wrap { color: var(--text); background: var(--background); }
+    .about-page_container { width: min(calc(100% - 2.5rem), 80rem); margin-inline: auto; }
+    .about-page_hero { padding-block: clamp(9rem, 16vw, 15rem) clamp(6rem, 10vw, 9rem); }
+    .about-page_eyebrow { margin: 0 0 1.5rem; color: var(--accent); font-family: var(--label-family); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+    .about-page_title { max-width: 12ch; margin: 0; font-family: var(--display-family); font-size: clamp(3.25rem, 9vw, 8rem); font-weight: 500; line-height: 0.88; letter-spacing: -0.055em; text-wrap: balance; }
+    .about-page_lede { max-width: 48rem; margin: 2.5rem 0 0 auto; color: var(--text-secondary); font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.6; }
+    .about-page_section { padding-block: clamp(5rem, 10vw, 9rem); border-top: 0.0625rem solid var(--border); }
+    .about-page_section.alternate { background: var(--surface-secondary); }
+    .about-page_layout { display: grid; gap: 3rem; }
+    .about-page_subtitle { max-width: 8ch; margin: 0; font-family: var(--display-family); font-size: clamp(2.75rem, 6vw, 5.5rem); font-weight: 500; line-height: 0.92; letter-spacing: -0.045em; }
+    .about-page_copy { display: grid; max-width: 42rem; gap: 1.5rem; }
+    .about-page_copy p { margin: 0; color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; }
+    .about-page_copy :global(.button_wrap) { justify-self: start; }
+    @media (width >= 48rem) { .about-page_layout { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; } }
+  }
+</style>

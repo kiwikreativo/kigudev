@@ -3,6 +3,10 @@ import Layout from "@/layouts/BaseLayout.astro";
 import ProjectPage from "@/components/Portfolio/ProjectPage.astro";
 import { projects, type Project } from "@/data/projects.ts";
 import { SITE_NAME, SITE_URL } from "@/consts.ts";
+import {
+  breadcrumbSchema,
+  entityIds,
+} from "@/utils/structuredData.ts";
 
 export function getStaticPaths() {
   return projects.map((project, index) => ({
@@ -20,20 +24,36 @@ interface Props {
 }
 
 const { project, nextProject } = Astro.props;
-const canonicalUrl = new URL(`/projects/${project.slug}`, SITE_URL).href;
+const canonicalUrl = new URL(`/projects/${project.slug}/`, SITE_URL).href;
 const projectImageUrl = new URL(project.image.src, SITE_URL).href;
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  name: project.title,
-  description: project.shortDescription,
-  url: canonicalUrl,
-  image: projectImageUrl,
-  author: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-  },
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": `${canonicalUrl}#project`,
+      name: project.title,
+      description: project.shortDescription,
+      url: canonicalUrl,
+      image: projectImageUrl,
+      creator: { "@id": entityIds.person },
+      publisher: { "@id": entityIds.organization },
+      about: project.services.map((service) => service.title),
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: `${project.title} Case Study`,
+      isPartOf: { "@id": entityIds.website },
+      mainEntity: { "@id": `${canonicalUrl}#project` },
+    },
+    breadcrumbSchema([
+      { name: SITE_NAME, url: `${SITE_URL}/` },
+      { name: "Projects", url: `${SITE_URL}/projects/` },
+      { name: project.title, url: canonicalUrl },
+    ]),
+  ],
 };
 ---
 

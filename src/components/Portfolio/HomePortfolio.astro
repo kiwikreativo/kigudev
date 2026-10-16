@@ -5,6 +5,7 @@ import UnicornBackground from "@/components/Media/UnicornBackground.astro";
 import SectionHeroHome from "@/components/Portfolio/SectionHeroHome.astro";
 import SectionProjectsHome from "@/components/Portfolio/SectionProjectsHome.astro";
 import SectionServicesHome from "@/components/Portfolio/SectionServicesHome.astro";
+import SectionTestimonialsHome from "@/components/Portfolio/SectionTestimonialsHome.astro";
 
 const processSteps = [
   {
@@ -134,6 +135,8 @@ const processSteps = [
         </div>
       </section>
 
+      <SectionTestimonialsHome />
+
       <section
         class="portfolio-contact_wrap"
         id="contact"
@@ -170,7 +173,7 @@ const processSteps = [
             novalidate
           >
             <input type="hidden" name="form-name" value="portfolio-contact" />
-            <p class="portfolio-contact_honeypot" hidden>
+            <p class="portfolio-contact_honeypot">
               <label>
                 Do not fill this out: <input name="bot-field" tabindex="-1" />
               </label>
@@ -1275,8 +1278,15 @@ const processSteps = [
         gap: 1.25rem;
         padding: clamp(1.5rem, 3vw, 2.25rem);
       }
-      .portfolio-contact_honeypot[hidden] {
-        display: none !important;
+      .portfolio-contact_honeypot {
+        position: absolute;
+        width: 0.0625rem;
+        height: 0.0625rem;
+        margin: -0.0625rem;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        border: 0;
       }
       .portfolio-contact_field {
         display: grid;

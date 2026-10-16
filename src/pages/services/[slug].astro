@@ -3,6 +3,11 @@ import Layout from "@/layouts/BaseLayout.astro";
 import ServicePage from "@/components/Portfolio/ServicePage.astro";
 import { services, type Service } from "@/data/services.ts";
 import { SITE_NAME, SITE_URL } from "@/consts.ts";
+import {
+  areaServed,
+  breadcrumbSchema,
+  entityIds,
+} from "@/utils/structuredData.ts";
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -17,18 +22,33 @@ interface Props {
 
 const { service } = Astro.props;
 const otherServices = services.filter((item) => item.slug !== service.slug);
-const canonicalUrl = new URL(`/services/${service.slug}`, SITE_URL).href;
+const canonicalUrl = new URL(`/services/${service.slug}/`, SITE_URL).href;
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  name: service.title,
-  description: service.seoDescription,
-  url: canonicalUrl,
-  provider: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-  },
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${canonicalUrl}#service`,
+      name: service.title,
+      description: service.seoDescription,
+      url: canonicalUrl,
+      provider: { "@id": entityIds.organization },
+      areaServed,
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: `${service.title} Services`,
+      isPartOf: { "@id": entityIds.website },
+      mainEntity: { "@id": `${canonicalUrl}#service` },
+    },
+    breadcrumbSchema([
+      { name: SITE_NAME, url: `${SITE_URL}/` },
+      { name: "Services", url: `${SITE_URL}/services/` },
+      { name: service.title, url: canonicalUrl },
+    ]),
+  ],
 };
 ---
 

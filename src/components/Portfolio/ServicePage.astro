@@ -25,7 +25,7 @@ const { render = true, service, otherServices } = Astro.props;
           <nav class="service-page_breadcrumbs" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span aria-hidden="true">/</span>
-            <a href="/#services">Services</a>
+            <a href="/services/">Services</a>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{service.title}</span>
           </nav>
@@ -125,6 +125,50 @@ const { render = true, service, otherServices } = Astro.props;
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section class="service-page_detail" aria-labelledby="fit-title">
+        <div class="service-page_container service-page_detail-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Service / Fit</p>
+            <Heading tag="h2" variant="inherit" id="fit-title" class="service-page_subtitle">
+              Who it&rsquo;s for
+            </Heading>
+          </div>
+          <Paragraph class="service-page_detail-copy">{service.audience}</Paragraph>
+        </div>
+      </section>
+
+      <section class="service-page_process" aria-labelledby="process-title">
+        <div class="service-page_container service-page_included-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Process / 04</p>
+            <Heading tag="h2" variant="inherit" id="process-title" class="service-page_subtitle">
+              How the work moves
+            </Heading>
+          </div>
+          <ol class="service-page_included-list">
+            {service.process.map((item, index) => (
+              <li><span>0{index + 1}</span><p>{item}</p></li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="service-page_faq" aria-labelledby="faq-title">
+        <div class="service-page_container service-page_detail-layout">
+          <div class="service-page_section-heading">
+            <p class="service-page_eyebrow">Questions / Answers</p>
+            <Heading tag="h2" variant="inherit" id="faq-title" class="service-page_subtitle">
+              Before we begin
+            </Heading>
+          </div>
+          <div class="service-page_faq-list">
+            {service.faqs.map((item) => (
+              <article><h3>{item.question}</h3><Paragraph>{item.answer}</Paragraph></article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -374,6 +418,9 @@ const { render = true, service, otherServices } = Astro.props;
 
     .service-page_overview,
     .service-page_included,
+    .service-page_detail,
+    .service-page_process,
+    .service-page_faq,
     .service-page_related,
     .service-page_cta {
       width: 100%;
@@ -386,11 +433,56 @@ const { render = true, service, otherServices } = Astro.props;
 
     .service-page_overview-layout,
     .service-page_included-layout,
+    .service-page_detail-layout,
     .service-page_related-layout {
       display: grid;
       grid-template-columns: minmax(14rem, 4fr) minmax(0, 7fr);
       gap: clamp(3rem, 8vw, 9rem);
       align-items: start;
+    }
+
+    .service-page_detail,
+    .service-page_faq {
+      border-top: 0.0625rem solid var(--service-border);
+    }
+
+    .service-page_process {
+      background: var(--service-surface-raised);
+    }
+
+    .service-page_detail-copy {
+      max-width: 46rem;
+      margin: 0;
+      color: var(--service-muted);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      line-height: 1.65;
+    }
+
+    .service-page_faq-list {
+      display: grid;
+    }
+
+    .service-page_faq-list article {
+      padding-block: 1.75rem;
+      border-top: 0.0625rem solid var(--service-border);
+    }
+
+    .service-page_faq-list article:last-child {
+      border-bottom: 0.0625rem solid var(--service-border);
+    }
+
+    .service-page_faq-list h3 {
+      margin: 0 0 0.75rem;
+      color: var(--service-foreground);
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .service-page_faq-list p {
+      max-width: 42rem;
+      margin: 0;
+      color: var(--service-muted);
+      line-height: 1.65;
     }
 
     .service-page_section-heading {
@@ -565,6 +657,7 @@ const { render = true, service, otherServices } = Astro.props;
 
       .service-page_overview-layout,
       .service-page_included-layout,
+      .service-page_detail-layout,
       .service-page_related-layout {
         gap: clamp(2.5rem, 5vw, 4rem);
       }
@@ -615,6 +708,7 @@ const { render = true, service, otherServices } = Astro.props;
 
       .service-page_overview-layout,
       .service-page_included-layout,
+      .service-page_detail-layout,
       .service-page_related-layout {
         display: grid;
         grid-template-columns: 1fr;

@@ -1,5 +1,9 @@
 ---
-import { SITE_NAME, SITE_DESCRIPTION } from "@/consts.ts";
+import {
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_OG_LOCALE,
+} from "@/consts.ts";
 import { isNoindexRoute } from "@/utils/seo.ts";
 import type { SeoProps } from "@/types.ts";
 import favicon from "@/assets/logo/favicon.webp";
@@ -10,6 +14,7 @@ const {
   title,
   description = SITE_DESCRIPTION,
   image = "/og-image.jpg",
+  imageAlt = `${SITE_NAME} web design and development portfolio`,
   type = "website",
   noindex,
 } = Astro.props;
@@ -37,19 +42,27 @@ const socialImage = new URL(image, Astro.site);
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{isNoindex && <meta name="robots" content="noindex, nofollow" />}
+<meta
+  name="robots"
+  content={isNoindex
+    ? "noindex, nofollow"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+/>
 
 <meta property="og:type" content={type} />
+<meta property="og:locale" content={SITE_OG_LOCALE} />
 <meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={imageAlt} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
 <link rel="icon" type="image/webp" href={favicon.src} />
 <meta name="generator" content={Astro.generator} />

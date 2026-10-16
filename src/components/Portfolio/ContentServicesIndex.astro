@@ -1,0 +1,45 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import { services } from "@/data/services.ts";
+---
+
+<article class="directory-page_wrap">
+  <header class="directory-page_hero">
+    <div class="directory-page_container">
+      <p class="directory-page_eyebrow">Services / 04</p>
+      <Heading tag="h1" variant="inherit" class="directory-page_title">Design and development services</Heading>
+      <Paragraph class="directory-page_lede">Focused support for businesses that need a clearer interface, a stronger website, a better mobile experience, or a sound SEO foundation.</Paragraph>
+    </div>
+  </header>
+  <section class="directory-page_list" aria-label="Available services">
+    <div class="directory-page_container">
+      {services.map((service) => (
+        <a class="directory-page_item" href={`/services/${service.slug}/`}>
+          <span>{service.number}</span>
+          <div><h2>{service.title}</h2><p>{service.homepageCopy}</p></div>
+          <i class="ph ph-arrow-up-right" aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  </section>
+</article>
+
+<style>
+  @layer components {
+    .directory-page_wrap { color: var(--text); background: var(--background); }
+    .directory-page_container { width: min(calc(100% - 2.5rem), 80rem); margin-inline: auto; }
+    .directory-page_hero { padding-block: clamp(9rem, 16vw, 14rem) clamp(5rem, 9vw, 8rem); }
+    .directory-page_eyebrow { margin: 0 0 1.5rem; color: var(--accent); font-family: var(--label-family); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+    .directory-page_title { max-width: 13ch; margin: 0; font-family: var(--display-family); font-size: clamp(2.75rem, 9vw, 8rem); font-weight: 500; line-height: 0.88; letter-spacing: -0.055em; text-wrap: balance; }
+    .directory-page_lede { max-width: 42rem; margin: 2.5rem 0 0 auto; color: var(--text-secondary); font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.65; }
+    .directory-page_list { padding-bottom: clamp(6rem, 12vw, 11rem); }
+    .directory-page_item { display: grid; padding-block: 2rem; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1.5rem; color: var(--text); border-top: 0.0625rem solid var(--border); text-decoration: none; }
+    .directory-page_item:last-child { border-bottom: 0.0625rem solid var(--border); }
+    .directory-page_item > span { color: var(--accent); font-family: var(--label-family); font-size: 0.75rem; }
+    .directory-page_item h2 { margin: 0; font-family: var(--display-family); font-size: clamp(1.8rem, 5vw, 3.75rem); font-weight: 500; letter-spacing: -0.035em; }
+    .directory-page_item p { max-width: 42rem; margin: 0.75rem 0 0; color: var(--text-secondary); line-height: 1.6; }
+    .directory-page_item i { color: var(--accent); font-size: 1.5rem; transition: transform 200ms ease; }
+    .directory-page_item:hover i, .directory-page_item:focus-visible i { transform: translate(0.2rem, -0.2rem); }
+  }
+</style>

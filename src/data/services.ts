@@ -27,10 +27,10 @@ export const services: Service[] = [
   {
     slug: "ui-ux-design",
     number: "01",
-    title: "UI/UX Design",
-    titleLines: ["UI/UX", "Design"],
+    title: "WEB REDESIGN",
+    titleLines: ["WEB", "REDESIGN"],
     homepageCopy:
-      "Clear and thoughtful interfaces designed around real users and business goals.",
+      "Outdated websites redesigned into modern, responsive experiences built around real users and business goals.",
     homepageDetail: "Research · user flows · design systems",
     paragraphs: [
       "Good design starts with research, not a blank canvas. Before any screen gets drawn, I look at who's using the product, what they're trying to do, and where they get stuck.",
@@ -41,7 +41,6 @@ export const services: Service[] = [
       "User and competitor research",
       "User flow mapping",
       "Wireframes and high-fidelity mockups",
-      "A reusable design system for future pages",
     ],
     audience:
       "For businesses and product teams that need a new interface, a clearer user flow, or a consistent design system before development begins.",

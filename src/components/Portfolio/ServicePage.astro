@@ -31,7 +31,7 @@ const { render = true, service, otherServices } = Astro.props;
           </nav>
 
           <div class="service-page_heading">
-            <p class="service-page_eyebrow">{service.number} / Service</p>
+            <p class="service-page_eyebrow">Service</p>
             <Heading
               tag="h1"
               variant="inherit"
@@ -86,7 +86,7 @@ const { render = true, service, otherServices } = Astro.props;
       <section class="service-page_overview" aria-labelledby="overview-title">
         <div class="service-page_container service-page_overview-layout">
           <div class="service-page_section-heading">
-            <p class="service-page_eyebrow">Service / Overview</p>
+            <p class="service-page_eyebrow">Overview</p>
             <Heading
               tag="h2"
               variant="inherit"
@@ -107,7 +107,7 @@ const { render = true, service, otherServices } = Astro.props;
       <section class="service-page_included" aria-labelledby="included-title">
         <div class="service-page_container service-page_included-layout">
           <div class="service-page_section-heading">
-            <p class="service-page_eyebrow">Scope / 04</p>
+            <p class="service-page_eyebrow">Included</p>
             <Heading
               tag="h2"
               variant="inherit"
@@ -163,7 +163,7 @@ const { render = true, service, otherServices } = Astro.props;
 
       <section class="service-page_cta" aria-labelledby="service-cta-title">
         <div class="service-page_container service-page_cta-layout">
-          <p class="service-page_eyebrow">Next / Start</p>
+          <p class="service-page_eyebrow">Start a Conversation</p>
           <Heading
             tag="h2"
             variant="inherit"
@@ -658,6 +658,136 @@ const { render = true, service, otherServices } = Astro.props;
       .service-page_related-list i,
       .service-page_breadcrumbs a {
         transition-duration: 0.01ms;
+      }
+    }
+  }
+</style>
+
+<style is:global>
+  @layer components {
+    .service-page_wrap {
+      --service-surface: #eef0e8;
+      --service-surface-raised: #d9edef;
+      --service-surface-strong: #88d6de;
+      --service-surface-deep: #071d2b;
+      --service-foreground: #071722;
+      --service-muted: rgb(7 23 34 / 70%);
+      --service-subtle: rgb(7 23 34 / 52%);
+      --service-border: rgb(7 23 34 / 18%);
+      --service-accent: #087f95;
+    }
+    [data-theme="dark"] .service-page_wrap {
+      --service-surface: #081721;
+      --service-surface-raised: #0c2634;
+      --service-surface-strong: #105669;
+      --service-surface-deep: #031019;
+      --service-foreground: #edf4f3;
+      --service-muted: rgb(237 244 243 / 72%);
+      --service-subtle: rgb(237 244 243 / 54%);
+      --service-border: rgb(237 244 243 / 18%);
+      --service-accent: #62d0dc;
+    }
+    .service-page_hero {
+      min-height: 100dvh;
+      background: var(--service-surface);
+    }
+    .service-page_hero::before,
+    .service-page_hero-mark {
+      display: none;
+    }
+    .service-page_title,
+    .service-page_subtitle,
+    .service-page_included-list p,
+    .service-page_related-title,
+    .service-page_cta-title {
+      font-family: "Barlow Condensed", var(--display-family);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+    }
+    .service-page_title {
+      font-size: clamp(5rem, 11vw, 11rem);
+      line-height: 0.75;
+    }
+    .service-page_lede,
+    .service-page_body .text,
+    .service-page_cta-copy {
+      font-family: "Fraunces", Georgia, serif;
+    }
+    .service-page_lede {
+      color: var(--service-foreground);
+      font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+      line-height: 1.45;
+    }
+    .service-page_primary-cta.button_wrap {
+      border-radius: 100vw;
+      font-family: var(--primary-family);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .service-page_visual {
+      grid-column: 2 / -1;
+    }
+    .service-page_visual img {
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+      filter: saturate(0.9);
+    }
+    .service-page_overview {
+      background: var(--service-surface-raised);
+    }
+    .service-page_body .text {
+      color: var(--service-foreground);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      line-height: 1.55;
+    }
+    .service-page_included {
+      background: var(--service-surface-strong);
+    }
+    .service-page_included-list span {
+      display: none;
+    }
+    .service-page_included-list li {
+      grid-template-columns: 1fr;
+      padding-block: 1.5rem;
+    }
+    .service-page_included-list p {
+      color: var(--service-foreground);
+      font-size: clamp(2rem, 4vw, 3.75rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .service-page_related {
+      background: var(--service-surface);
+    }
+    .service-page_related-number {
+      display: none;
+    }
+    .service-page_related-list a {
+      grid-template-columns: 1fr auto;
+      color: var(--service-foreground);
+    }
+    .service-page_related-title {
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+    .service-page_cta {
+      color: #edf4f3;
+      background: var(--service-surface-deep);
+    }
+    .service-page_cta-title,
+    .service-page_cta-copy {
+      color: #edf4f3;
+    }
+    @media (width < 48rem) {
+      .service-page_hero {
+        min-height: auto;
+      }
+      .service-page_title {
+        font-size: clamp(4rem, 20vw, 7rem);
+      }
+      .service-page_visual {
+        margin-top: 1rem;
       }
     }
   }

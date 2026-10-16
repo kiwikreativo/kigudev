@@ -39,9 +39,7 @@ const hasCapabilities =
           </nav>
 
           <div class="project-page_heading">
-            <p class="project-page_eyebrow">
-              {project.number} / Selected Project
-            </p>
+            <p class="project-page_eyebrow">Selected Project</p>
             <Heading
               tag="h1"
               variant="inherit"
@@ -302,9 +300,9 @@ const hasCapabilities =
               <Heading
                 tag="h2"
                 variant="inherit"
-              id="next-project-title"
-              class="project-page_next-title"
-            >
+                id="next-project-title"
+                class="project-page_next-title"
+              >
                 {nextProject.titleLines.map((line) => (
                   <span>{line}</span>
                 ))}
@@ -370,23 +368,6 @@ const hasCapabilities =
           },
         },
       );
-
-      ScrollTrigger.create({
-        trigger: ".project-page_reveal-media",
-        start: "top 90%",
-        once: true,
-        onEnter: () =>
-          gsap.fromTo(
-            ".project-page_reveal-media img",
-            { scale: 0.94, opacity: 0.85 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: 0.8,
-              ease: "power2.out",
-            },
-          ),
-      });
     }, document.body);
   };
 
@@ -946,6 +927,141 @@ const hasCapabilities =
       .project-page_next-layout > i,
       .project-page_breadcrumbs a {
         transition-duration: 0.01ms;
+      }
+    }
+  }
+</style>
+
+<style is:global>
+  @layer components {
+    .project-page_wrap {
+      --project-surface: #eef0e8;
+      --project-surface-raised: #d9edef;
+      --project-surface-strong: #88d6de;
+      --project-surface-deep: #071d2b;
+      --project-foreground: #071722;
+      --project-muted: rgb(7 23 34 / 70%);
+      --project-subtle: rgb(7 23 34 / 52%);
+      --project-border: rgb(7 23 34 / 18%);
+      --project-accent: #087f95;
+    }
+    [data-theme="dark"] .project-page_wrap {
+      --project-surface: #081721;
+      --project-surface-raised: #0c2634;
+      --project-surface-strong: #105669;
+      --project-surface-deep: #031019;
+      --project-foreground: #edf4f3;
+      --project-muted: rgb(237 244 243 / 72%);
+      --project-subtle: rgb(237 244 243 / 54%);
+      --project-border: rgb(237 244 243 / 18%);
+      --project-accent: #62d0dc;
+    }
+    .project-page_hero {
+      min-height: 100dvh;
+      background:
+        radial-gradient(
+          circle at 82% 25%,
+          color-mix(in srgb, var(--project-accent) 32%, transparent),
+          transparent 28rem
+        ),
+        var(--project-surface);
+    }
+    .project-page_eyebrow,
+    .project-page_category {
+      color: var(--project-accent);
+    }
+    .project-page_title,
+    .project-page_subtitle,
+    .project-page_next-title,
+    .project-page_cta-title {
+      font-family: "Barlow Condensed", var(--display-family);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+    }
+    .project-page_title {
+      max-width: 10ch;
+      font-size: clamp(5rem, 11vw, 11rem);
+      line-height: 0.75;
+    }
+    .project-page_lede,
+    .project-page_story-copy .text,
+    .project-page_cta-copy {
+      font-family: "Fraunces", Georgia, serif;
+    }
+    .project-page_lede {
+      color: var(--project-foreground);
+      font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+      line-height: 1.45;
+    }
+    .project-page_live-button.button_wrap,
+    .project-page_cta-button.button_wrap {
+      border-radius: 100vw;
+      font-family: var(--primary-family);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .project-page_overview {
+      background: var(--project-surface-strong);
+    }
+    .project-page_overview .project-page_eyebrow,
+    .project-page_overview .project-page_metadata dt {
+      color: var(--project-foreground);
+    }
+    .project-page_visual {
+      padding: clamp(1rem, 3vw, 2.5rem);
+      background: var(--project-surface);
+    }
+    .project-page_visual .project-page_container {
+      width: min(100%, 90rem);
+    }
+    .project-page_visual img {
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+    .project-page_story {
+      border: 0;
+      background: var(--project-surface);
+    }
+    .project-page_story:nth-of-type(even) {
+      background: var(--project-surface-raised);
+    }
+    .project-page_story-copy .text {
+      color: var(--project-foreground);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      line-height: 1.55;
+    }
+    .project-page_gallery,
+    .project-page_cta {
+      color: #edf4f3;
+      background: var(--project-surface-deep);
+    }
+    .project-page_gallery .project-page_subtitle,
+    .project-page_cta .project-page_cta-title {
+      color: #edf4f3;
+    }
+    .project-page_gallery img {
+      overflow: hidden;
+      border: 0;
+      border-radius: 1rem;
+    }
+    .project-page_capabilities {
+      background: var(--project-surface-strong);
+    }
+    .project-page_next > a {
+      border-block: 0;
+    }
+    .project-page_next > a:hover {
+      background: var(--project-surface-raised);
+    }
+    @media (width < 48rem) {
+      .project-page_hero {
+        min-height: auto;
+      }
+      .project-page_title {
+        font-size: clamp(4rem, 20vw, 7rem);
+      }
+      .project-page_visual {
+        padding: 1rem;
       }
     }
   }

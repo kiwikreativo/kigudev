@@ -6,14 +6,16 @@ The homepage contact section now presents a six-step project inquiry, retaining 
 
 ## User journey and questions
 
-1. Service: Website Development, Website Redesign, SEO & Search Visibility, UI/UX Design, or Other / Not Sure Yet.
+1. Service: Website Development, Website Redesign, Local SEO & Geographic SEO, Mobile Enhacement, or Other / Not Sure Yet. Options are defined once in `src/utils/leadValidation.ts`; older SEO & Search Visibility and UI/UX Design submissions remain accepted.
 2. Project description: 20–3,000 characters.
 3. Budget: Under $500, $500–$1,500, $1,500–$3,000, Over $3,000, or Not sure yet.
 4. Timeline: As soon as possible, Within a month, Within three months, or Just exploring.
 5. Decision: decision-maker, team, or approval required.
-6. Name, email, optional company and website, and required consent linked to `/privacy-policy`.
+6. Name, email, optional company and website, preferred communication language (English by default or Español), and required consent linked to `/privacy-policy`.
 
-Back/Continue preserve browser form values. Native validity checks, focus, disabled-submit state, status announcements, and a honeypot are used. The post-submit Calendly link appears for high-priority submissions only. Calendly owns availability, calendar sync, and Google Meet creation. Confirmation copy is English or Spanish based on the submitted `language` field; the current form sends English.
+Back/Continue preserve browser form values. Native validity checks, focus, disabled-submit state, status announcements, and a honeypot are used. The post-submit Calendly link appears for high-priority submissions only. Calendly owns availability, calendar sync, and Google Meet creation. The form submits `preferredLanguage` for personal follow-up; the admin template's `LANGUAGE` variable displays English or Spanish. Automated confirmations always use the English template. The existing hidden `language=en` field remains independent; legacy requests without `preferredLanguage` fall back to their valid `language`, then English. Explicit invalid preferences are rejected by shared browser/server validation.
+
+The success screen displays the inbox/spam reminder only when the backend returns `confirmationSent: true`. Failed submissions never show success; accepted inquiries whose confirmation fails show success without the reminder. API acceptance does not prove final inbox delivery.
 
 ## Scoring
 
@@ -27,9 +29,11 @@ Email-only storage means there is no durable retry queue, submission history, or
 
 ## Environment variables
 
-The function uses the existing `ADMIN_NOTIFICATION_TEMPLATE` and `CLIENT_CONFIRMATION_TEMPLATE` names; `RESEND_ADMIN_TEMPLATE_ID` and `RESEND_CLIENT_TEMPLATE_EN_ID` are accepted as aliases. Spanish confirmation uses `CLIENT_CONFIRMATION_TEMPLATE_ES` (or `RESEND_CLIENT_TEMPLATE_ES_ID`). Set these to the published Resend template IDs or aliases; never use example placeholders. Copy `.env.example` to local `.env` and fill in `RESEND_API_KEY`, `LEAD_NOTIFICATION_EMAIL`, sender, admin template, and English and Spanish confirmation templates. `.env` is ignored and is not deployed. In Netlify, set these variables with scope available to Functions. Production builds do not need a key. Missing admin configuration prevents processing; if the internal email is accepted but a language template is missing or fails, the inquiry still succeeds and the failure is logged without personal information.
+The function uses the existing `ADMIN_NOTIFICATION_TEMPLATE` and `CLIENT_CONFIRMATION_TEMPLATE` names; `RESEND_ADMIN_TEMPLATE_ID` and `RESEND_CLIENT_TEMPLATE_EN_ID` are accepted as aliases. Set these to the published Resend template IDs or aliases; never use example placeholders. Existing `CLIENT_CONFIRMATION_TEMPLATE_ES` / `RESEND_CLIENT_TEMPLATE_ES_ID` values are unused and need not be changed. Copy `.env.example` to local `.env` and fill in `RESEND_API_KEY`, `LEAD_NOTIFICATION_EMAIL`, sender, admin template, and English confirmation template. `.env` is ignored and is not deployed. In Netlify, set these variables with scope available to Functions. Production builds do not need a key. Missing admin configuration prevents processing; if the internal email is accepted but the English template is missing or fails, the inquiry still succeeds and the failure is logged without personal information.
 
 ## Local testing
+
+For regression tests run `npm test`. For safe in-process load testing run `npm run test:lead-load -- --concurrency 50 --count 100 --rate 10`; this tool always replaces email delivery with synthetic responses and has no remote URL option. See [the reliability audit](lead-system-reliability-audit.md) for measured results and limits.
 
 Run `npx netlify dev` from the repository with `.env` present (Netlify CLI loads local environment variables). Restart Netlify Dev after changing `.env`; use its reported local URL rather than assuming a port. With valid credentials it can send real email; submit the form using controlled test recipients only when intentionally testing delivery. Do not expose the local server publicly. Automated checks should mock `fetch` to `api.resend.com`; no real email is sent by build/check commands. In Resend, copy each published template's ID or alias into the matching environment variable. For admin template failures, check its published status, required variable keys, sender verification, Resend API key, rate limits, and Netlify Function scope. Client template failures are logged as `client_confirmation` with status and a safe error code; internal delivery remains successful. Calendly links do not create bookings until a visitor completes Calendly's own flow.
 

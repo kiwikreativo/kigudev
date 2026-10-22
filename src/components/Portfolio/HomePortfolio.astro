@@ -6,6 +6,7 @@ import formal from "@/assets/logo/formal.png";
 import { projects } from "@/data/projects.ts";
 import { services } from "@/data/services.ts";
 import { SCHEDULE_URL } from "@/consts.ts";
+import { leadOptions, leadLimits, communicationLanguages } from "@/utils/leadValidation.ts";
 
 const process = [
   ["Discover", "Goals, users, constraints, and the real problem come first."],
@@ -230,26 +231,34 @@ const process = [
         <input type="text" name="website" class="editorial-contact_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="editorial-step" data-step="1">
           <p class="editorial-step-label">Step 1 of 6</p><label for="service">What service do you need?</label>
-          <select id="service" name="service" required><option value="">Choose a service</option><option>Website Development</option><option>Website Redesign</option><option>Local SEO &amp; Geographic SEO</option><option>Mobile Enhacement</option><option>Other / Not Sure Yet</option></select>
+          <select id="service" name="service" required><option value="">Choose a service</option>{leadOptions.service.map((option) => <option value={option}>{option}</option>)}</select>
         </div>
         <div class="editorial-step" data-step="2" hidden><p class="editorial-step-label">Step 2 of 6</p><label for="description">Tell me about your project.</label><textarea id="description" name="description" class="editorial-textarea" rows="5" minlength="20" maxlength="3000" required placeholder="Business goals, current website, requirements, and desired outcomes"></textarea><span class="editorial-hint"><span class="character-count">0</span>/3,000 characters</span></div>
-        <div class="editorial-step" data-step="3" hidden><p class="editorial-step-label">Step 3 of 6</p><label for="budget">What's your estimated budget?</label><select id="budget" name="budget" required><option value="">Choose a range</option><option>Under $500</option><option>$500–$1,500</option><option>$1,500–$3,000</option><option>Over $3,000</option><option>Not sure yet</option></select></div>
-        <div class="editorial-step" data-step="4" hidden><p class="editorial-step-label">Step 4 of 6</p><label for="timeline">When would you like to get started?</label><select id="timeline" name="timeline" required><option value="">Choose a timeline</option><option>As soon as possible</option><option>Within a month</option><option>Within three months</option><option>Just exploring</option></select></div>
-        <div class="editorial-step" data-step="5" hidden><p class="editorial-step-label">Step 5 of 6</p><label for="decision">Who will make the final decision?</label><select id="decision" name="decision" required><option value="">Choose one</option><option>I am the decision-maker</option><option>We make decisions as a team</option><option>I need approval from someone else</option></select></div>
+        <div class="editorial-step" data-step="3" hidden><p class="editorial-step-label">Step 3 of 6</p><label for="budget">What's your estimated budget?</label><select id="budget" name="budget" required><option value="">Choose a range</option>{leadOptions.budget.map((option) => <option value={option}>{option}</option>)}</select></div>
+        <div class="editorial-step" data-step="4" hidden><p class="editorial-step-label">Step 4 of 6</p><label for="timeline">When would you like to get started?</label><select id="timeline" name="timeline" required><option value="">Choose a timeline</option>{leadOptions.timeline.map((option) => <option value={option}>{option}</option>)}</select></div>
+        <div class="editorial-step" data-step="5" hidden><p class="editorial-step-label">Step 5 of 6</p><label for="decision">Who will make the final decision?</label><select id="decision" name="decision" required><option value="">Choose one</option>{leadOptions.decision.map((option) => <option value={option}>{option}</option>)}</select></div>
         <div class="editorial-step" data-step="6" hidden><p class="editorial-step-label">Step 6 of 6</p>
-        <div class="editorial-field wide"><label for="full-name">Full name</label><input id="full-name" name="name" autocomplete="name" required /></div>
+        <div class="editorial-field wide"><label for="full-name">Full name</label><input id="full-name" name="name" autocomplete="name" maxlength={leadLimits.name} required /></div>
         <div class="editorial-field wide">
           <label for="email">Email</label><input
             id="email"
             name="email"
             type="email"
+            maxlength={leadLimits.email}
             autocomplete="email"
             required
             aria-describedby="email-error"
           /><span id="email-error"></span>
         </div>
-        <div class="editorial-field"><label for="company">Company (optional)</label><input id="company" name="company" autocomplete="organization" /></div>
-        <div class="editorial-field"><label for="website-url">Website (optional)</label><input id="website-url" name="websiteUrl" type="url" autocomplete="url" /></div>
+        <div class="editorial-field"><label for="company">Company (optional)</label><input id="company" name="company" autocomplete="organization" maxlength={leadLimits.company} /></div>
+        <div class="editorial-field"><label for="website-url">Website (optional)</label><input id="website-url" name="websiteUrl" type="url" autocomplete="url" maxlength={leadLimits.websiteUrl} /></div>
+        <div class="editorial-field wide">
+          <label for="preferred-language">Preferred communication language</label>
+          <select id="preferred-language" name="preferredLanguage" required aria-describedby="preferred-language-help">
+            {communicationLanguages.map(({ value, label }) => <option value={value} selected={value === "en"}>{label}</option>)}
+          </select>
+          <p class="editorial-hint" id="preferred-language-help">We'll use your preference when following up about your project.</p>
+        </div>
         <div class="editorial-consent wide">
           <label for="privacy-consent"
             ><input
@@ -273,7 +282,7 @@ const process = [
         <div class="editorial-step-actions wide"><button class="editorial-step-back" type="button" data-back hidden>Back</button><button class="editorial-submit" type="button" data-next>Continue</button><button class="editorial-submit" type="submit" data-submit hidden>Send inquiry</button></div>
         <p class="editorial-error wide" data-error role="alert"></p>
         <p class="editorial-status wide" role="status" aria-live="polite"></p>
-        <div class="editorial-success wide" data-success hidden><strong>Thanks — your inquiry has been received.</strong><p>I’ll review the details and follow up by email.</p><a class="editorial-button light" data-calendly href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer" hidden>Schedule a Discovery Call <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
+        <div class="editorial-success wide" data-success hidden><strong tabindex="-1">Your inquiry has been submitted successfully!</strong><p>We'll review your project details and get back to you soon.</p><p class="editorial-hint" data-confirmation-reminder hidden>Please check your inbox and spam folder for our confirmation email.</p><a class="editorial-button light" data-calendly href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer" hidden>Schedule a Discovery Call <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
       </form>
     </div>
   </section>
@@ -284,6 +293,8 @@ const process = [
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { validateLead } from "@/utils/leadValidation.ts";
+  import { leadErrorMessage } from "@/utils/leadErrors.ts";
   gsap.registerPlugin(ScrollTrigger);
   let context: gsap.Context | undefined;
   let formController: AbortController | undefined;
@@ -351,6 +362,7 @@ const process = [
     const back = form.querySelector<HTMLButtonElement>("[data-back]");
     const submit = form.querySelector<HTMLButtonElement>("[data-submit]");
     const success = form.querySelector<HTMLElement>("[data-success]");
+    const confirmationReminder = form.querySelector<HTMLElement>("[data-confirmation-reminder]");
     const calendly = form.querySelector<HTMLAnchorElement>("[data-calendly]");
     let current = 0;
     const analytics = (event: string) => window.dispatchEvent(new CustomEvent("kiguidev:analytics", { detail: { event } }));
@@ -362,7 +374,7 @@ const process = [
       if (focus) steps[current]?.querySelector<HTMLElement>("input, select, textarea")?.focus();
     };
     const validateStep = () => {
-      const fields = [...(steps[current]?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input[required], select[required], textarea[required]") ?? [])];
+      const fields = [...(steps[current]?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input, select, textarea") ?? [])];
       const invalid = fields.find((field) => !field.checkValidity());
       if (invalid) {
         invalid.focus();
@@ -372,7 +384,13 @@ const process = [
       }
       return true;
     };
+    if (success && !success.hidden) return;
     renderStep();
+    const textArea = form.querySelector<HTMLTextAreaElement>("#description");
+    const counter = form.querySelector<HTMLElement>(".character-count");
+    const updateCounter = () => { if (counter && textArea) counter.textContent = textArea.value.length.toLocaleString("en-US"); };
+    textArea?.addEventListener("input", updateCounter, { signal: formController.signal });
+    updateCounter();
     analytics("lead_form_opened");
     next?.addEventListener("click", () => {
       if (!validateStep()) return;
@@ -385,12 +403,26 @@ const process = [
       "submit",
       async (event) => {
         event.preventDefault();
+        if (form.dataset.submitting === "true") return;
         if (!validateStep()) return;
+        const data = Object.fromEntries(new FormData(form).entries());
+        const { fields } = validateLead(data);
+        if (fields.length) {
+          const field = form.elements.namedItem(fields[0]);
+          const index = field instanceof HTMLElement ? steps.findIndex((step) => step.contains(field)) : -1;
+          if (index >= 0) { current = index; renderStep(); }
+          if (field instanceof HTMLElement) field.focus();
+          if (error) error.textContent = leadErrorMessage(400);
+          analytics("lead_form_validation_failed");
+          return;
+        }
+        form.dataset.submitting = "true";
         const button = form.querySelector<HTMLButtonElement>(
           "[data-submit]",
         );
         if (button) button.disabled = true;
         if (next) next.disabled = true;
+        if (back) back.disabled = true;
         if (status) status.textContent = "Sending your inquiry...";
         if (error) error.textContent = "";
         let failureReason = "The form service could not be reached.";
@@ -398,17 +430,17 @@ const process = [
           const response = await fetch(form.action, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
+            body: JSON.stringify(data),
           });
           const result = await response.json().catch(() => ({}));
-          if (!response.ok) {
-            failureReason = response.status === 503
-              ? "Email delivery is not configured on the server."
-              : `The email service returned an error (HTTP ${response.status}).`;
+          if (!response.ok || result.ok !== true) {
+            failureReason = leadErrorMessage(response.ok ? 500 : response.status, result.code);
+            if (import.meta.env.DEV) console.info("Lead submission failed", { status: response.status, code: result.code, requestId: response.headers.get("x-request-id") });
             throw new Error("Submission failed");
           }
           analytics("lead_form_submitted");
           form.querySelectorAll<HTMLElement>("[data-step], .editorial-step-actions, .editorial-error, .editorial-status").forEach((el) => { el.hidden = true; });
+          if (confirmationReminder) confirmationReminder.hidden = result.confirmationSent !== true;
           if (success) success.hidden = false;
           if (calendly && result.priority === "high") calendly.hidden = false;
           success?.querySelector("strong")?.focus();
@@ -417,8 +449,10 @@ const process = [
           if (status) status.textContent = "";
           if (error) error.textContent = `${failureReason} Please try again or email guillermo.obando@kiguidev.me.`;
         } finally {
+          delete form.dataset.submitting;
           if (button) button.disabled = false;
           if (next) next.disabled = false;
+          if (back) back.disabled = false;
         }
       },
       { signal: formController.signal },
@@ -435,20 +469,6 @@ const process = [
     context?.revert();
     formController?.abort();
   });
-  const textArea = document.querySelector<HTMLTextAreaElement>("#description");
-  const counter = document.querySelector<HTMLElement>(".character-count");
-
-    if (textArea && counter) {
-      const updateCounter = () => {
-        counter.textContent = textArea.value.length.toLocaleString("en-US");
-      };
-
-      textArea.addEventListener("input", updateCounter);
-
-      // Initialize counter if the field already contains text.
-      updateCounter();
-    }
-
 </script>
 
 <style>

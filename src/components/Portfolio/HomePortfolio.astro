@@ -230,9 +230,9 @@ const process = [
         <input type="text" name="website" class="editorial-contact_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="editorial-step" data-step="1">
           <p class="editorial-step-label">Step 1 of 6</p><label for="service">What service do you need?</label>
-          <select id="service" name="service" required><option value="">Choose a service</option><option>Website Development</option><option>Website Redesign</option><option>SEO &amp; Search Visibility</option><option>UI/UX Design</option><option>Other / Not Sure Yet</option></select>
+          <select id="service" name="service" required><option value="">Choose a service</option><option>Website Development</option><option>Website Redesign</option><option>Local SEO &amp; Geographic SEO</option><option>Mobile Enhacement</option><option>Other / Not Sure Yet</option></select>
         </div>
-        <div class="editorial-step" data-step="2" hidden><p class="editorial-step-label">Step 2 of 6</p><label for="description">Tell me about your project.</label><textarea id="description" name="description" rows="5" minlength="20" maxlength="3000" required placeholder="Business goals, current website, requirements, and desired outcomes"></textarea><span class="editorial-hint">20–3,000 characters</span></div>
+        <div class="editorial-step" data-step="2" hidden><p class="editorial-step-label">Step 2 of 6</p><label for="description">Tell me about your project.</label><textarea id="description" name="description" class="editorial-textarea" rows="5" minlength="20" maxlength="3000" required placeholder="Business goals, current website, requirements, and desired outcomes"></textarea><span class="editorial-hint"><span class="character-count">0</span>/3,000 characters</span></div>
         <div class="editorial-step" data-step="3" hidden><p class="editorial-step-label">Step 3 of 6</p><label for="budget">What's your estimated budget?</label><select id="budget" name="budget" required><option value="">Choose a range</option><option>Under $500</option><option>$500–$1,500</option><option>$1,500–$3,000</option><option>Over $3,000</option><option>Not sure yet</option></select></div>
         <div class="editorial-step" data-step="4" hidden><p class="editorial-step-label">Step 4 of 6</p><label for="timeline">When would you like to get started?</label><select id="timeline" name="timeline" required><option value="">Choose a timeline</option><option>As soon as possible</option><option>Within a month</option><option>Within three months</option><option>Just exploring</option></select></div>
         <div class="editorial-step" data-step="5" hidden><p class="editorial-step-label">Step 5 of 6</p><label for="decision">Who will make the final decision?</label><select id="decision" name="decision" required><option value="">Choose one</option><option>I am the decision-maker</option><option>We make decisions as a team</option><option>I need approval from someone else</option></select></div>
@@ -278,6 +278,8 @@ const process = [
     </div>
   </section>
 </div>
+
+
 
 <script>
   import gsap from "gsap";
@@ -413,7 +415,7 @@ const process = [
         } catch {
           analytics("lead_form_submission_failed");
           if (status) status.textContent = "";
-          if (error) error.textContent = `${failureReason} Please try again or email leads@kiguidev.me.`;
+          if (error) error.textContent = `${failureReason} Please try again or email guillermo.obando@kiguidev.me.`;
         } finally {
           if (button) button.disabled = false;
           if (next) next.disabled = false;
@@ -433,6 +435,20 @@ const process = [
     context?.revert();
     formController?.abort();
   });
+  const textArea = document.querySelector<HTMLTextAreaElement>("#description");
+  const counter = document.querySelector<HTMLElement>(".character-count");
+
+    if (textArea && counter) {
+      const updateCounter = () => {
+        counter.textContent = textArea.value.length.toLocaleString("en-US");
+      };
+
+      textArea.addEventListener("input", updateCounter);
+
+      // Initialize counter if the field already contains text.
+      updateCounter();
+    }
+
 </script>
 
 <style>
@@ -515,7 +531,7 @@ const process = [
     .editorial-submit {
       display: inline-flex;
       width: fit-content;
-      min-height: 3.25rem;
+      height: 2.5rem;
       align-items: center;
       justify-content: center;
       gap: 0.75rem;
@@ -531,6 +547,12 @@ const process = [
       transition:
         transform 250ms ease,
         background 250ms ease;
+    }
+    .editorial-textarea{
+      resize:none;
+    }
+    .editorial-textarea::placeholder {
+      color: #ffffff;
     }
     .editorial-button:hover {
       background: var(--accent-deep);
@@ -862,7 +884,7 @@ const process = [
     .editorial-step-actions { display: flex; justify-content: space-between; gap: 1rem; }
     .editorial-step-back { border: 0; color: #eff8f7; background: transparent; font: inherit; cursor: pointer; }
     .editorial-error { color: #ffe2de; }
-    .editorial-success { display: grid; gap: 0.75rem; }
+    .editorial-success { display: grid; gap: 0.50rem; }
     .editorial-success strong:focus { outline: none; }
     .editorial-contact_honeypot { position: absolute; left: -100vw; width: 1px; height: 1px; overflow: hidden; }
     .editorial-field {

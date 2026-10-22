@@ -176,14 +176,14 @@ const process = [
           variant="inherit"
           id="personal-title">Design decisions stay close to the code.</Heading
         ><p class="editorial-serif">
-          Kigudev is my independent practice. I bring product thinking and
+          Kiguidev is my independent practice. I bring product thinking and
           front-end engineering into one focused collaboration.
         </p>
       </div>
       <div class="editorial-personal_portrait">
         <Image
           src={formal}
-          alt="Guillermo, the designer and developer behind Kigudev"
+          alt="Guillermo, the designer and developer behind Kiguidev"
           widths={[480, 720, 960]}
           sizes="(max-width: 48rem) 100vw, 42vw"
           loading="lazy"
@@ -204,13 +204,14 @@ const process = [
           variant="inherit"
           id="contact-title">Have a project in mind?</Heading
         ><p>
-          Book a call for a quick introduction, or send the details here.
+          Share a few details about your project, or contact me directly at
+          <a href="mailto:leads@kiguidev.me">leads@kiguidev.me</a>.
         </p><a
           class="editorial-button light"
           href={SCHEDULE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          >Schedule a free call <i
+          >Schedule a call <i
             class="ph ph-arrow-up-right"
             aria-hidden="true"></i></a
         >
@@ -218,43 +219,24 @@ const process = [
       <form
         class="editorial-contact_form"
         id="contact-form"
-        name="portfolio-contact"
+        name="lead-qualification"
         method="POST"
-        action="/"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
+        action="/.netlify/functions/submit-lead"
+        data-lead-form
         novalidate
       >
-        <input type="hidden" name="form-name" value="portfolio-contact" /><p
-          class="editorial-contact_honeypot"
-          hidden
-          aria-hidden="true"
-        >
-          <label
-            >Do not fill this out: <input
-              name="bot-field"
-              tabindex="-1"
-            /></label
-          >
-        </p>
-        <div class="editorial-field">
-          <label for="first-name">First Name</label><input
-            id="first-name"
-            name="firstName"
-            autocomplete="given-name"
-            required
-            aria-describedby="first-name-error"
-          /><span id="first-name-error"></span>
+        <input type="hidden" name="language" value="en" />
+        <input type="text" name="website" class="editorial-contact_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="editorial-step" data-step="1">
+          <p class="editorial-step-label">Step 1 of 6</p><label for="service">What service do you need?</label>
+          <select id="service" name="service" required><option value="">Choose a service</option><option>Website Development</option><option>Website Redesign</option><option>SEO &amp; Search Visibility</option><option>UI/UX Design</option><option>Other / Not Sure Yet</option></select>
         </div>
-        <div class="editorial-field">
-          <label for="last-name">Last Name</label><input
-            id="last-name"
-            name="lastName"
-            autocomplete="family-name"
-            required
-            aria-describedby="last-name-error"
-          /><span id="last-name-error"></span>
-        </div>
+        <div class="editorial-step" data-step="2" hidden><p class="editorial-step-label">Step 2 of 6</p><label for="description">Tell me about your project.</label><textarea id="description" name="description" rows="5" minlength="20" maxlength="3000" required placeholder="Business goals, current website, requirements, and desired outcomes"></textarea><span class="editorial-hint">20–3,000 characters</span></div>
+        <div class="editorial-step" data-step="3" hidden><p class="editorial-step-label">Step 3 of 6</p><label for="budget">What's your estimated budget?</label><select id="budget" name="budget" required><option value="">Choose a range</option><option>Under $500</option><option>$500–$1,500</option><option>$1,500–$3,000</option><option>Over $3,000</option><option>Not sure yet</option></select></div>
+        <div class="editorial-step" data-step="4" hidden><p class="editorial-step-label">Step 4 of 6</p><label for="timeline">When would you like to get started?</label><select id="timeline" name="timeline" required><option value="">Choose a timeline</option><option>As soon as possible</option><option>Within a month</option><option>Within three months</option><option>Just exploring</option></select></div>
+        <div class="editorial-step" data-step="5" hidden><p class="editorial-step-label">Step 5 of 6</p><label for="decision">Who will make the final decision?</label><select id="decision" name="decision" required><option value="">Choose one</option><option>I am the decision-maker</option><option>We make decisions as a team</option><option>I need approval from someone else</option></select></div>
+        <div class="editorial-step" data-step="6" hidden><p class="editorial-step-label">Step 6 of 6</p>
+        <div class="editorial-field wide"><label for="full-name">Full name</label><input id="full-name" name="name" autocomplete="name" required /></div>
         <div class="editorial-field wide">
           <label for="email">Email</label><input
             id="email"
@@ -265,23 +247,8 @@ const process = [
             aria-describedby="email-error"
           /><span id="email-error"></span>
         </div>
-        <div class="editorial-field wide">
-          <label for="subject">Subject</label><input
-            id="subject"
-            name="subject"
-            required
-            aria-describedby="subject-error"
-          /><span id="subject-error"></span>
-        </div>
-        <div class="editorial-field wide">
-          <label for="message">Message</label><textarea
-            id="message"
-            name="message"
-            rows="5"
-            required
-            aria-describedby="message-error"></textarea><span id="message-error"
-          ></span>
-        </div>
+        <div class="editorial-field"><label for="company">Company (optional)</label><input id="company" name="company" autocomplete="organization" /></div>
+        <div class="editorial-field"><label for="website-url">Website (optional)</label><input id="website-url" name="websiteUrl" type="url" autocomplete="url" /></div>
         <div class="editorial-consent wide">
           <label for="privacy-consent"
             ><input
@@ -297,14 +264,15 @@ const process = [
                 target="_blank"
                 rel="noopener noreferrer">Privacy Policy</a
               > and consent to the processing and international transfer of my information
-              so Kigudev can respond to my inquiry.</span
+              so Kiguidev can respond to my inquiry.</span
             ></label
           ><span id="privacy-consent-error"></span>
         </div>
-        <button class="editorial-submit wide" type="submit"
-          >Send message <i class="ph ph-paper-plane-tilt" aria-hidden="true"
-          ></i></button
-        ><p class="editorial-status wide" role="status" aria-live="polite"></p>
+        </div>
+        <div class="editorial-step-actions wide"><button class="editorial-step-back" type="button" data-back hidden>Back</button><button class="editorial-submit" type="button" data-next>Continue</button><button class="editorial-submit" type="submit" data-submit hidden>Send inquiry</button></div>
+        <p class="editorial-error wide" data-error role="alert"></p>
+        <p class="editorial-status wide" role="status" aria-live="polite"></p>
+        <div class="editorial-success wide" data-success hidden><strong>Thanks — your inquiry has been received.</strong><p>I’ll review the details and follow up by email.</p><a class="editorial-button light" data-calendly href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer" hidden>Schedule a Discovery Call <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
       </form>
     </div>
   </section>
@@ -374,58 +342,78 @@ const process = [
     const form = document.querySelector<HTMLFormElement>("#contact-form");
     if (!form) return;
     const status = form.querySelector<HTMLElement>(".editorial-status");
-    const showErrors = () =>
-      form
-        .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-          "input[required], textarea[required]",
-        )
-        .forEach((field) => {
-          const error = document.getElementById(`${field.id}-error`);
-          if (error)
-            error.textContent = field.validity.valueMissing
-              ? "This field is required."
-              : field.validity.typeMismatch
-                ? "Enter a valid email address."
-                : "";
-        });
+    const error = form.querySelector<HTMLElement>("[data-error]");
+    const steps = [...form.querySelectorAll<HTMLElement>("[data-step]")];
+    const next = form.querySelector<HTMLButtonElement>("[data-next]");
+    const back = form.querySelector<HTMLButtonElement>("[data-back]");
+    const submit = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const success = form.querySelector<HTMLElement>("[data-success]");
+    const calendly = form.querySelector<HTMLAnchorElement>("[data-calendly]");
+    let current = 0;
+    const analytics = (event: string) => window.dispatchEvent(new CustomEvent("kiguidev:analytics", { detail: { event } }));
+    const renderStep = (focus = false) => {
+      steps.forEach((step, index) => { step.hidden = index !== current; });
+      if (back) back.hidden = current === 0;
+      if (next) next.hidden = current === steps.length - 1;
+      if (submit) submit.hidden = current !== steps.length - 1;
+      if (focus) steps[current]?.querySelector<HTMLElement>("input, select, textarea")?.focus();
+    };
+    const validateStep = () => {
+      const fields = [...(steps[current]?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input[required], select[required], textarea[required]") ?? [])];
+      const invalid = fields.find((field) => !field.checkValidity());
+      if (invalid) {
+        invalid.focus();
+        invalid.reportValidity();
+        analytics("lead_form_validation_failed");
+        return false;
+      }
+      return true;
+    };
+    renderStep();
+    analytics("lead_form_opened");
+    next?.addEventListener("click", () => {
+      if (!validateStep()) return;
+      current++;
+      analytics("lead_form_step_completed");
+      renderStep(true);
+    }, { signal: formController.signal });
+    back?.addEventListener("click", () => { current--; renderStep(true); }, { signal: formController.signal });
     form.addEventListener(
       "submit",
       async (event) => {
         event.preventDefault();
-        showErrors();
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
+        if (!validateStep()) return;
         const button = form.querySelector<HTMLButtonElement>(
-          "button[type='submit']",
+          "[data-submit]",
         );
         if (button) button.disabled = true;
-        if (status) status.textContent = "Sending your message...";
+        if (next) next.disabled = true;
+        if (status) status.textContent = "Sending your inquiry...";
+        if (error) error.textContent = "";
         try {
-          await fetch(form.action, {
+          const response = await fetch(form.action, {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(
-              new FormData(form) as unknown as Record<string, string>,
-            ).toString(),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
           });
-          form.reset();
-          if (status)
-            status.textContent = "Thanks. Your message has been sent.";
+          if (!response.ok) throw new Error("Submission failed");
+          analytics("lead_form_submitted");
+          form.querySelectorAll<HTMLElement>("[data-step], .editorial-step-actions, .editorial-error, .editorial-status").forEach((el) => { el.hidden = true; });
+          if (success) success.hidden = false;
+          const result = await response.json();
+          if (calendly && result.priority === "high") calendly.hidden = false;
+          success?.querySelector("strong")?.focus();
         } catch {
-          if (status)
-            status.textContent =
-              "The message could not be sent. Please try again or book a call.";
+          analytics("lead_form_submission_failed");
+          if (error) error.textContent = "Your inquiry could not be sent. Please try again or email leads@kiguidev.me.";
         } finally {
           if (button) button.disabled = false;
+          if (next) next.disabled = false;
         }
       },
       { signal: formController.signal },
     );
-    form.addEventListener("input", showErrors, {
-      signal: formController.signal,
-    });
+    calendly?.addEventListener("click", () => analytics("lead_calendly_clicked"), { signal: formController.signal });
   };
   const initialize = () => {
     initializeMotion();
@@ -858,13 +846,26 @@ const process = [
     .editorial-contact_form [hidden] {
       display: none !important;
     }
+    .editorial-step { display: grid; grid-column: 1/-1; gap: 0.65rem; }
+    .editorial-step > label { font: 600 0.7rem/1.2 var(--label-family); letter-spacing: 0.08em; text-transform: uppercase; }
+    .editorial-step select, .editorial-step textarea, .editorial-step input { width: 100%; border: 0; border-bottom: 0.0625rem solid rgb(239 248 247/48%); border-radius: 0; padding: 0.75rem 0; color: #eff8f7; background: transparent; font: inherit; }
+    .editorial-step select option { color: #071722; }
+    .editorial-step-label, .editorial-hint { color: #a9c3c8; font-size: 0.75rem; }
+    .editorial-step-actions { display: flex; justify-content: space-between; gap: 1rem; }
+    .editorial-step-back { border: 0; color: #eff8f7; background: transparent; font: inherit; cursor: pointer; }
+    .editorial-error { color: #ffe2de; }
+    .editorial-success { display: grid; gap: 0.75rem; }
+    .editorial-success strong:focus { outline: none; }
+    .editorial-contact_honeypot { position: absolute; left: -100vw; width: 1px; height: 1px; overflow: hidden; }
     .editorial-field {
       display: grid;
       gap: 0.45rem;
     }
     .editorial-field.wide,
     .editorial-consent.wide,
-    .editorial-submit.wide,
+    .editorial-step-actions.wide,
+    .editorial-error.wide,
+    .editorial-success.wide,
     .editorial-status.wide {
       grid-column: 1/-1;
     }

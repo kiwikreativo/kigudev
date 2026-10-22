@@ -112,14 +112,14 @@ export default async (request: Request) => {
     internal = await resend({ to: [to], reply_to: lead.email, template: { id: adminTemplate, variables: adminVariables } });
   } catch {
     logFailure("admin_notification", "network_error", undefined, [], requestId);
-    return response(502, { error: "We could not deliver your inquiry. Please try again or email leads@kiguidev.me." });
+    return response(502, { error: "We could not deliver your inquiry. Please try again or use the contact details on our website." });
   }
   if (!internal.ok) {
     const errorBody = await internal.text();
     logFailure("admin_notification", internal.status, errorBody, [apiKey, lead.name, lead.email, lead.company, lead.websiteUrl, lead.description], requestId);
     const retryAfter = internal.headers.get("retry-after");
     const headers: Record<string, string> = retryAfter && /^\d{1,6}$/.test(retryAfter) ? { "retry-after": retryAfter } : {};
-    return response(502, { error: "We could not deliver your inquiry. Please try again or email leads@kiguidev.me.", code: internal.status === 429 ? "rate_limited" : "upstream_error" }, headers);
+    return response(502, { error: "We could not deliver your inquiry. Please try again or use the contact details on our website.", code: internal.status === 429 ? "rate_limited" : "upstream_error" }, headers);
   }
 
   trace({ upstreamStatus: internal.status, upstreamDurationMs: Math.round(performance.now() - upstreamStarted) });

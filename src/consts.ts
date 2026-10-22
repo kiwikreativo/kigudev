@@ -16,7 +16,7 @@ export const SITE_BASE = "Costa Rica";
 /** Markets served remotely by Kiguidev. */
 export const SITE_MARKETS = ["Costa Rica", "United States"] as const;
 /** Canonical client scheduling destination used by every booking CTA. */
-export const SCHEDULE_URL = import.meta.env.CALENDLY_URL || "https://calendly.com/guillermo-obandoc/45min";
+export const SCHEDULE_URL = import.meta.env.CALENDLY_URL || "https://calendly.com/guillermo-obandoc/30min";
 /**
  * Routes kept out of search results. Each is excluded from the sitemap and
  * served with a `robots: noindex, nofollow` tag, so the two can't disagree.

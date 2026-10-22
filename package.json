@@ -10,6 +10,7 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write ."

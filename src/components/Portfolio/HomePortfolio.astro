@@ -204,9 +204,10 @@ const process = [
           variant="inherit"
           id="contact-title">Have a project in mind?</Heading
         ><p>
-          Share a few details about your project, or contact me directly at
-          <a href="mailto:leads@kiguidev.me">leads@kiguidev.me</a>.
-        </p><a
+          Non of the available hours fits you for a call? or there's no space in my schedule? You can also reach me by email at
+          <a href="mailto:guillermo.obando@kiguidev.me"> guillermo.obando@kiguidev.me</a>.
+        </p>
+        <!-- <a
           class="editorial-button light"
           href={SCHEDULE_URL}
           target="_blank"
@@ -214,7 +215,7 @@ const process = [
           >Schedule a call <i
             class="ph ph-arrow-up-right"
             aria-hidden="true"></i></a
-        >
+        > -->
       </div>
       <form
         class="editorial-contact_form"
@@ -390,22 +391,29 @@ const process = [
         if (next) next.disabled = true;
         if (status) status.textContent = "Sending your inquiry...";
         if (error) error.textContent = "";
+        let failureReason = "The form service could not be reached.";
         try {
           const response = await fetch(form.action, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
           });
-          if (!response.ok) throw new Error("Submission failed");
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            failureReason = response.status === 503
+              ? "Email delivery is not configured on the server."
+              : `The email service returned an error (HTTP ${response.status}).`;
+            throw new Error("Submission failed");
+          }
           analytics("lead_form_submitted");
           form.querySelectorAll<HTMLElement>("[data-step], .editorial-step-actions, .editorial-error, .editorial-status").forEach((el) => { el.hidden = true; });
           if (success) success.hidden = false;
-          const result = await response.json();
           if (calendly && result.priority === "high") calendly.hidden = false;
           success?.querySelector("strong")?.focus();
         } catch {
           analytics("lead_form_submission_failed");
-          if (error) error.textContent = "Your inquiry could not be sent. Please try again or email leads@kiguidev.me.";
+          if (status) status.textContent = "";
+          if (error) error.textContent = `${failureReason} Please try again or email leads@kiguidev.me.`;
         } finally {
           if (button) button.disabled = false;
           if (next) next.disabled = false;

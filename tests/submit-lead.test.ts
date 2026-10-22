@@ -9,7 +9,7 @@ const previousEnv = Object.fromEntries(envKeys.map((key) => [key, process.env[ke
 const oldFetch = globalThis.fetch;
 const lead = (language = "en") => ({ name: "Avery Example", email: "avery@example.com", company: "Example Co", websiteUrl: "https://example.com", description: "We need a responsive site to explain our services and generate qualified inquiries.", service: "Website Development", budget: "Over $3,000", timeline: "As soon as possible", decision: "I am the decision-maker", language, privacyConsent: "accepted" });
 const configure = () => {
-  Object.assign(process.env, { RESEND_API_KEY: "test-key", LEAD_FROM_EMAIL: "leads@kiguidev.me", LEAD_NOTIFICATION_EMAIL: "owner@kiguidev.me", ADMIN_NOTIFICATION_TEMPLATE: "admin-template", CLIENT_CONFIRMATION_TEMPLATE: "client-en", CLIENT_CONFIRMATION_TEMPLATE_ES: "client-es", CONTEXT: "test", RESEND_DEBUG_ERRORS: "false" });
+  Object.assign(process.env, { RESEND_API_KEY: "test-key", LEAD_FROM_EMAIL: "leads@example.com", LEAD_NOTIFICATION_EMAIL: "owner@kiguidev.me", ADMIN_NOTIFICATION_TEMPLATE: "admin-template", CLIENT_CONFIRMATION_TEMPLATE: "client-en", CLIENT_CONFIRMATION_TEMPLATE_ES: "client-es", CONTEXT: "test", RESEND_DEBUG_ERRORS: "false" });
   for (const key of ["RESEND_ADMIN_TEMPLATE_ID", "RESEND_CLIENT_TEMPLATE_EN_ID", "RESEND_CLIENT_TEMPLATE_ES_ID"]) delete process.env[key];
 };
 const invoke = (body: unknown, method = "POST") => submitLead(new Request("https://example.test/.netlify/functions/submit-lead", { method, headers: { "content-type": "application/json" }, body: method === "POST" ? JSON.stringify(body) : undefined }));
@@ -27,7 +27,7 @@ test("sends admin template first, then English confirmation with correct recipie
   assert.equal(result.status, 200);
   assert.equal(calls.length, 2);
   assert.deepEqual(calls.map((call) => call.body.template.id), ["admin-template", "client-en"]);
-  assert.equal(calls[0].body.from, "leads@kiguidev.me");
+  assert.equal(calls[0].body.from, "leads@example.com");
   assert.deepEqual(calls[0].body.to, ["owner@kiguidev.me"]);
   assert.equal(calls[0].body.reply_to, "avery@example.com");
   assert.equal(calls[0].body.template.variables.SCORE, "100");

@@ -6,7 +6,7 @@ The homepage contact section now presents a six-step project inquiry, retaining 
 
 ## User journey and questions
 
-1. Service: Website Development, Website Redesign, Local SEO & Geographic SEO, Mobile Enhacement, or Other / Not Sure Yet. Options are defined once in `src/utils/leadValidation.ts`; older SEO & Search Visibility and UI/UX Design submissions remain accepted.
+1. Service: Website Development, Website Redesign, Local SEO & Geographic SEO, Mobile Enhancement, or Other / Not Sure Yet. Options are defined once in `src/utils/leadValidation.ts`; older SEO & Search Visibility, UI/UX Design, and misspelled Mobile Enhacement submissions remain accepted.
 2. Project description: 20–3,000 characters.
 3. Budget: Under $500, $500–$1,500, $1,500–$3,000, Over $3,000, or Not sure yet.
 4. Timeline: As soon as possible, Within a month, Within three months, or Just exploring.

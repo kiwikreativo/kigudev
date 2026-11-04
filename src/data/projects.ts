@@ -37,6 +37,7 @@ export interface Project {
   approach?: string[];
   solution?: string[];
   outcome?: string[];
+  resultCard?: { problem: string; work: string; result: string };
   gallery?: ProjectGalleryItem[];
   projectUrl?: string;
   repositoryUrl?: string;
@@ -117,6 +118,13 @@ export const projects: Project[] = [
     outcome: [
       "Meguis now has a focused website that supports sales conversations, gives prospects a clearer overview of the business, and works consistently across desktop and mobile devices.",
     ],
+    resultCard: {
+      problem:
+        "The business needed a website that could be found and represented it well.",
+      work: "UI design, front-end and back-end development, SEO setup, and submission to Google Search Console.",
+      // owner: add a confirmed metric here once verified, e.g. "+[X]% inquiries in [period]"
+      result: "The owner reports more clients after launch.",
+    },
     seoDescription:
       "Explore the Meguis Import&Export case study: a responsive corporate website presenting customs and logistics consulting services.",
   },

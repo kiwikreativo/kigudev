@@ -1,6 +1,6 @@
 // Render these options in the form and validate the same values on the server.
 export const leadOptions = {
-  service: ["Website Development", "Website Redesign", "Local SEO & Geographic SEO", "Mobile Enhacement", "Other / Not Sure Yet"] as const,
+  service: ["Website Development", "Website Redesign", "Local SEO & Geographic SEO", "Mobile Enhancement", "Other / Not Sure Yet"] as const,
   budget: ["Under $500", "$500–$1,500", "$1,500–$3,000", "Over $3,000", "Not sure yet"],
   timeline: ["As soon as possible", "Within a month", "Within three months", "Just exploring"],
   decision: ["I am the decision-maker", "We make decisions as a team", "I need approval from someone else"],
@@ -27,7 +27,7 @@ export const validateLead = (data: Record<string, unknown>) => {
   if (data.privacyConsent !== "accepted") fields.add("privacyConsent");
   for (const key of Object.keys(leadOptions) as Array<keyof typeof leadOptions>) {
     // Accept older open browser tabs after deploying the renamed services.
-    const legacy = key === "service" && ["SEO & Search Visibility", "UI/UX Design"].includes(lead.service);
+    const legacy = key === "service" && ["SEO & Search Visibility", "UI/UX Design", "Mobile Enhacement"].includes(lead.service);
     if (!legacy && !leadOptions[key].some((option) => option === lead[key])) fields.add(key);
   }
   if (lead.websiteUrl) {

@@ -44,7 +44,7 @@ try {
     await page.locator("#privacy-consent").check();
     assert.equal(await page.locator("[data-confirmation-reminder]").isVisible(), false);
   };
-  for (const [width, service, preferredLanguage] of [[390, "Mobile Enhacement", "es"], [1440, "Local SEO & Geographic SEO", "en"]]) {
+  for (const [width, service, preferredLanguage] of [[390, "Mobile Enhancement", "es"], [1440, "Local SEO & Geographic SEO", "en"]]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(localUrl.href);
     await complete(service, preferredLanguage);
@@ -64,7 +64,7 @@ try {
   }
   await page.goto(localUrl.href);
   confirmationFailure = true;
-  await complete("Mobile Enhacement", "es");
+  await complete("Mobile Enhancement", "es");
   await page.locator("[data-submit]").click();
   await page.locator("[data-success]").waitFor({ state: "visible" });
   assert.equal(await page.locator("[data-confirmation-reminder]").isVisible(), false);
@@ -86,7 +86,7 @@ try {
   // Trigger Astro's watcher without changing the user's component contents.
   await utimes(new URL("../src/components/Portfolio/HomePortfolio.astro", import.meta.url), now, now);
   await reload;
-  await complete("Mobile Enhacement");
+  await complete("Mobile Enhancement");
   await page.locator("[data-submit]").click();
   await page.locator("[data-success]").waitFor({ state: "visible" });
   console.log(JSON.stringify({ frontendReload: "pass", providerCalls, backendCalls, actualEmails: 0 }));

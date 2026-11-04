@@ -103,7 +103,7 @@ test("accepts the current SEO and mobile options with finite template scores", a
     if ("SCORE" in variables) scores.push(variables.SCORE);
     return new Response("{}", { status: 200 });
   };
-  for (const service of ["Local SEO & Geographic SEO", "Mobile Enhacement"]) {
+  for (const service of ["Local SEO & Geographic SEO", "Mobile Enhancement"]) {
     assert.equal((await invoke({ ...lead(), service })).status, 200, service);
   }
   assert.deepEqual(scores, ["95", "95"]);
@@ -183,7 +183,7 @@ test("every rendered option and legacy service remains accepted", async () => {
   for (const [field, options] of Object.entries(leadOptions)) {
     for (const value of options) assert.equal((await invoke({ ...lead(), [field]: value })).status, 200, `${field}: ${value}`);
   }
-  for (const service of ["SEO & Search Visibility", "UI/UX Design"]) assert.equal((await invoke({ ...lead(), service })).status, 200);
+  for (const service of ["SEO & Search Visibility", "UI/UX Design", "Mobile Enhacement"]) assert.equal((await invoke({ ...lead(), service })).status, 200);
 });
 
 test("missing fields, bad options, consent, language and URLs fail before delivery", async () => {

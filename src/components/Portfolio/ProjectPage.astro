@@ -242,6 +242,35 @@ const hasCapabilities =
         </section>
       )}
 
+      {project.resultCard && (
+        <section class="project-page_story" aria-labelledby="result-title">
+          <div class="project-page_container project-page_story-layout">
+            <Heading
+              tag="h2"
+              variant="inherit"
+              id="result-title"
+              class="project-page_subtitle"
+            >
+              Result
+            </Heading>
+            <dl class="project-page_metadata project-page_story-copy">
+              <div>
+                <dt>Problem</dt>
+                <dd>{project.resultCard.problem}</dd>
+              </div>
+              <div>
+                <dt>What I did</dt>
+                <dd>{project.resultCard.work}</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>{project.resultCard.result}</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+      )}
+
       {hasCapabilities && (
         <section
           class="project-page_capabilities"

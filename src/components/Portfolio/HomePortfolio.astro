@@ -6,6 +6,8 @@ import formal from "@/assets/logo/formal.png";
 import { projects } from "@/data/projects.ts";
 import { services } from "@/data/services.ts";
 import { SCHEDULE_URL } from "@/consts.ts";
+import JossPic from "@/assets/jossprof.webp";
+import CarmenPic from "@/assets/Carmen-profile.webp";
 import { leadOptions, leadLimits, communicationLanguages } from "@/utils/leadValidation.ts";
 
 const process = [
@@ -20,6 +22,30 @@ const process = [
     "Layouts and interactions are tested before they become expensive.",
   ],
   ["Build", "The approved direction becomes an accessible, fast product."],
+];
+
+const testimonials: { quote: string; name: string; role: string; image?: ImageMetadata }[] = [
+  {
+    // owner: replace [Name] with the Meguis owner's name once approved
+    quote:
+      "Guillermo handled everything: design, development, and SEO. After the site went live and was set up in Google Search Console, I started getting more clients.",
+    name: "Carmen Cerna",
+    role: "owner — Meguis Import & Export",
+    image: CarmenPic,
+  },
+  {
+    // owner: paste Joss Segura's approved quote before publishing
+    quote: "[PENDING APPROVAL — paste Joss Segura's approved quote]",
+    name: "Joss Segura",
+    role: "DeCorazonJoss",
+    image: JossPic,
+  },
+  {
+    quote:
+      "This project helped us launch faster with a beautiful digital experience that feels completely ours.",
+    name: "Kattia Altamirano",
+    role: "Founder & CEO, Kalta Agency",
+  },
 ];
 ---
 
@@ -41,6 +67,15 @@ const process = [
         <p>
           I design and build clear, responsive websites for businesses that care
           about how their work is understood.
+        </p>
+        <p>
+          Independent businesses and import/export companies in Costa Rica and
+          the US.
+        </p>
+        <p>
+          <a href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer"
+            >Free 30-minute review of your current website</a
+          >
         </p>
         <a class="editorial-button" href="#work"
           >See selected work <i
@@ -125,11 +160,58 @@ const process = [
                   </>
                 </a>
                 <p>{service.homepageCopy}</p>
+                {/* owner: replace [PRICE] with the real starting price for this service */}
+                <p>From $[PRICE]</p>
               </>
             </li>
           ))
         }
       </ol>
+    </div>
+  </section>
+
+  <section
+    class="editorial-testimonials_wrap"
+    aria-labelledby="testimonials-title"
+  >
+    <div class="editorial-testimonials_inner">
+      <header class="editorial-section_header editorial-testimonials_header">
+        <p class="editorial-kicker">Testimonials</p><Heading
+          tag="h2"
+          variant="inherit"
+          id="testimonials-title">Loved by builders <em>everywhere.</em></Heading
+        ><p class="editorial-serif">
+          Don&rsquo;t take my word for it, here&rsquo;s what founders I&rsquo;ve
+          worked with have to say.
+        </p>
+      </header>
+      <div class="editorial-testimonials_grid">
+        {
+          testimonials.map((testimonial) => (
+            <figure class="editorial-testimonial_card">
+              <blockquote>
+                <i class="ph ph-quotes" aria-hidden="true" />
+                <p>{testimonial.quote}</p>
+              </blockquote>
+              <figcaption>
+                {testimonial.image && (
+                  <Image
+                    src={testimonial.image}
+                    alt={`${testimonial.name}'s profile picture`}
+                    width={48}
+                    height={48}
+                    loading="lazy"
+                  />
+                )}
+                <span>
+                  <cite>{testimonial.name}</cite>
+                  <span>{testimonial.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -205,7 +287,7 @@ const process = [
           variant="inherit"
           id="contact-title">Have a project in mind?</Heading
         ><p>
-          Non of the available hours fits you for a call? or there's no space in my schedule? You can also reach me by email at
+          None of the available hours fits you for a call? or there's no space in my schedule? You can also reach me by email at
           <a href="mailto:guillermo.obando@kiguidev.me"> guillermo.obando@kiguidev.me</a>.
         </p>
         <!-- <a
@@ -343,6 +425,21 @@ const process = [
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".editorial-projects_list",
+            start: "top 78%",
+            once: true,
+          },
+        },
+      );
+      gsap.fromTo(
+        ".editorial-testimonial_card",
+        { y: 48 },
+        {
+          y: 0,
+          duration: 0.85,
+          stagger: 0.09,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".editorial-testimonials_grid",
             start: "top 78%",
             once: true,
           },
@@ -621,6 +718,7 @@ const process = [
     .editorial-work_inner,
     .editorial-services_inner,
     .editorial-personal_inner,
+    .editorial-testimonials_inner,
     .editorial-contact_inner {
       width: min(calc(100% - 2rem), 82rem);
       margin: auto;
@@ -722,6 +820,94 @@ const process = [
     .editorial-project_copy > span {
       grid-column: 1/-1;
       color: rgb(7 23 34/66%);
+    }
+    .editorial-testimonials_wrap {
+      padding-block: 0 clamp(7rem, 13vw, 12rem);
+    }
+    .editorial-testimonials_inner {
+      display: grid;
+      gap: clamp(3rem, 6vw, 5rem);
+    }
+    .editorial-testimonials_header {
+      justify-items: center;
+      text-align: center;
+    }
+    .editorial-testimonials_header h2 {
+      max-width: none;
+    }
+    .editorial-testimonials_header em {
+      display: block;
+      color: var(--accent-page);
+      font-style: normal;
+    }
+    .editorial-testimonials_grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .editorial-testimonial_card {
+      display: flex;
+      min-height: 17rem;
+      margin: 0;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2.5rem;
+      border-radius: 1.5rem;
+      background: color-mix(in srgb, var(--paper) 35%, white);
+      box-shadow: 0 1.5rem 3.5rem rgb(5 31 42/10%);
+    }
+    :global([data-theme="dark"]) .editorial-testimonial_card {
+      background: color-mix(in srgb, var(--paper) 92%, white);
+    }
+    .editorial-testimonial_card:last-child {
+      color: #edf4f3;
+      background: var(--navy);
+    }
+    .editorial-testimonial_card blockquote {
+      display: grid;
+      margin: 0;
+      gap: 1rem;
+    }
+    .editorial-testimonial_card i {
+      color: var(--accent-page);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .editorial-testimonial_card blockquote p {
+      color: color-mix(in srgb, currentColor 78%, transparent);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .editorial-testimonial_card:first-child blockquote p {
+      font:
+        500 clamp(1.25rem, 2vw, 1.6rem)/1.4 "Fraunces",
+        Georgia,
+        serif;
+    }
+    .editorial-testimonial_card figcaption {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+    }
+    .editorial-testimonial_card figcaption :global(img) {
+      width: 2.75rem;
+      height: 2.75rem;
+      flex: none;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .editorial-testimonial_card figcaption > span {
+      display: grid;
+      gap: 0.2rem;
+    }
+    .editorial-testimonial_card cite {
+      font-size: 0.9rem;
+      font-style: normal;
+      font-weight: 600;
+    }
+    .editorial-testimonial_card figcaption > span > span {
+      color: color-mix(in srgb, currentColor 66%, transparent);
+      font-size: 0.75rem;
     }
     .editorial-services_wrap,
     .editorial-personal_wrap {
@@ -971,8 +1157,15 @@ const process = [
       .editorial-work_inner,
       .editorial-services_inner,
       .editorial-personal_inner,
+      .editorial-testimonials_inner,
       .editorial-contact_inner {
         width: min(calc(100% - 4rem), 82rem);
+      }
+      .editorial-testimonials_grid {
+        grid-template-columns: 1.15fr 1fr;
+      }
+      .editorial-testimonial_card:first-child {
+        grid-row: span 2;
       }
       .editorial-hero_bottom {
         grid-template-columns: 1fr auto;

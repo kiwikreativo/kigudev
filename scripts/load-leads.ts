@@ -25,7 +25,7 @@ await Promise.all(Array.from({ length: Math.min(concurrency, count) }, async () 
     const index = cursor++;
     if (index >= count) return;
     if (rate) await new Promise((resolve) => setTimeout(resolve, Math.max(0, start + index * 1000 / rate - performance.now())));
-    const body = { name: `Synthetic ${index}`, email: `load-${index}@example.test`, description: "Synthetic project for local mocked capacity testing only.", service: "Mobile Enhacement", budget: "Over $3,000", timeline: "Within a month", decision: "I am the decision-maker", language: "en", privacyConsent: "accepted" };
+    const body = { name: `Synthetic ${index}`, email: `load-${index}@example.test`, description: "Synthetic project for local mocked capacity testing only.", service: "Mobile Enhancement", budget: "Over $3,000", timeline: "Within a month", decision: "I am the decision-maker", language: "en", privacyConsent: "accepted" };
     const began = performance.now();
     const result = await submitLead(new Request("https://example.test/.netlify/functions/submit-lead", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }));
     latencies.push(performance.now() - began);

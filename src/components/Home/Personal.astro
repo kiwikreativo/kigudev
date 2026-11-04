@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets";
+import Heading from "@/components/Typography/Heading.astro";
+import formal from "@/assets/logo/formal.png";
+---
+
+<section class="editorial-personal_wrap" aria-labelledby="personal-title">
+  <div class="editorial-personal_inner">
+    <div class="editorial-personal_copy">
+      <p class="editorial-kicker">One person, both disciplines</p><Heading
+        tag="h2"
+        variant="inherit"
+        id="personal-title">Design decisions stay close to the code.</Heading
+      ><p class="editorial-serif">
+        Kiguidev is my independent practice. I bring product thinking and
+        front-end engineering into one focused collaboration.
+      </p>
+    </div>
+    <div class="editorial-personal_portrait">
+      <Image
+        src={formal}
+        alt="Guillermo, the designer and developer behind Kiguidev"
+        widths={[480, 720, 960]}
+        sizes="(max-width: 48rem) 100vw, 42vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onHomeMotion, reveal } from "@/utils/homeMotion.ts";
+  onHomeMotion(() => reveal(".editorial-personal_copy"));
+</script>
+
+<style is:global>
+  @layer components {
+    .editorial-personal_inner {
+      display: grid;
+      align-items: center;
+      gap: 4rem;
+    }
+    .editorial-personal_portrait {
+      overflow: hidden;
+      border-radius: 1rem;
+      background: var(--accent-page);
+    }
+    .editorial-personal_portrait img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+      filter: saturate(0.8);
+    }
+    @media (width >= 48rem) {
+      .editorial-personal_inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (width < 48rem) {
+      .editorial-personal_portrait {
+        order: 2;
+      }
+    }
+  }
+</style>

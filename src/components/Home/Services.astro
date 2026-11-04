@@ -1,0 +1,104 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import { services } from "@/data/services.ts";
+---
+
+<section
+  class="editorial-services_wrap"
+  id="services"
+  aria-labelledby="services-title"
+>
+  <div class="editorial-services_inner">
+    <div class="editorial-services_intro">
+      <p class="editorial-kicker">Services</p><Heading
+        tag="h2"
+        variant="inherit"
+        id="services-title">From first question to finished product.</Heading
+      ><p class="editorial-serif">
+        Strategy, design, and engineering stay connected, so good ideas survive
+        implementation.
+      </p>
+    </div>
+    <ol class="editorial-services_list">
+      {
+        services.map((service) => (
+          <li>
+            <>
+              <a href={`/services/${service.slug}`}>
+                <>
+                  <span>{service.title}</span>
+                  <i class="ph ph-arrow-up-right" aria-hidden="true" />
+                </>
+              </a>
+              <p>{service.homepageCopy}</p>
+              {/* owner: replace [PRICE] with the real starting price for this service */}
+              <p>From $[PRICE]</p>
+            </>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  import { onHomeMotion, reveal } from "@/utils/homeMotion.ts";
+  onHomeMotion(() => reveal(".editorial-services_intro"));
+</script>
+
+<style is:global>
+  @layer components {
+    .editorial-services_inner {
+      display: grid;
+      gap: 5rem;
+    }
+    .editorial-services_list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .editorial-services_list li {
+      padding-block: 1.5rem;
+      border-bottom: 0.0625rem solid
+        color-mix(in srgb, var(--ink) 20%, transparent);
+    }
+    .editorial-services_list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: inherit;
+      text-decoration: none;
+    }
+    .editorial-services_list a span {
+      font:
+        750 clamp(2.8rem, 6vw, 5.5rem)/0.9 "Barlow Condensed",
+        sans-serif;
+      text-transform: uppercase;
+      transition:
+        color 200ms,
+        transform 250ms;
+    }
+    .editorial-services_list a:hover span {
+      color: var(--accent-page);
+      transform: translateX(0.5rem);
+    }
+    .editorial-services_list li > p {
+      max-width: 37rem;
+      margin-top: 0.8rem;
+      color: color-mix(in srgb, var(--ink) 68%, transparent);
+      line-height: 1.5;
+    }
+    @media (width >= 48rem) {
+      .editorial-services_inner {
+        grid-template-columns: minmax(18rem, 0.75fr) minmax(0, 1.25fr);
+      }
+      .editorial-services_intro {
+        position: sticky;
+        top: 7rem;
+        align-self: start;
+      }
+    }
+  }
+</style>

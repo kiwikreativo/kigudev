@@ -1,0 +1,152 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import { SCHEDULE_URL } from "@/consts.ts";
+---
+
+<section class="editorial-hero_wrap" aria-labelledby="hero-title">
+  <div class="editorial-hero_shape" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="editorial-hero_inner">
+    <p class="editorial-kicker">Design and development, working together</p>
+    <Heading
+      tag="h1"
+      variant="inherit"
+      id="hero-title"
+      class="editorial-hero_title"
+      >Useful digital<br /><em>experiences.</em></Heading
+    >
+    <div class="editorial-hero_bottom">
+      <p>
+        I design and build clear, responsive websites for businesses that care
+        about how their work is understood.
+      </p>
+      <p>
+        Independent businesses and import/export companies in Costa Rica and the
+        US.
+      </p>
+      <p>
+        <a href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer"
+          >Free 30-minute review of your current website</a
+        >
+      </p>
+      <a class="editorial-button" href="#work"
+        >See selected work <i class="ph ph-arrow-down-right" aria-hidden="true"
+        ></i></a
+      >
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { onHomeMotion } from "@/utils/homeMotion.ts";
+  onHomeMotion(() => {
+    gsap.fromTo(
+      ".editorial-hero_inner > *",
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: 0.85, stagger: 0.1, ease: "power3.out" },
+    );
+    gsap.to(".editorial-hero_shape span", {
+      rotate: 360,
+      duration: 24,
+      repeat: -1,
+      ease: "none",
+      stagger: 2,
+    });
+  });
+</script>
+
+<style is:global>
+  @layer components {
+    .editorial-hero_wrap {
+      position: relative;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+    .editorial-hero_inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      min-height: 100dvh;
+      align-content: center;
+      width: min(calc(100% - 2rem), 86rem);
+      margin: auto;
+      padding-block: 6rem 3rem;
+    }
+    .editorial-hero_title {
+      max-width: 10ch;
+      margin-top: 1.5rem;
+      font-family: "Barlow Condensed", var(--display-family);
+      font-size: clamp(5rem, 13vw, 11.5rem);
+      font-weight: 800;
+      line-height: 0.75;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+    .editorial-hero_title em {
+      color: var(--accent-page);
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 0.69em;
+      font-weight: 500;
+      line-height: 1.1;
+      text-transform: none;
+    }
+    .editorial-hero_bottom {
+      display: grid;
+      align-items: end;
+      gap: 1.5rem;
+      max-width: 58rem;
+      margin-top: clamp(3rem, 8vh, 7rem);
+    }
+    .editorial-hero_bottom > p {
+      max-width: 31rem;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      line-height: 1.5;
+    }
+    .editorial-hero_shape {
+      position: absolute;
+      top: 8%;
+      right: -6%;
+      width: min(55vw, 48rem);
+      aspect-ratio: 1;
+      opacity: 0.78;
+    }
+    .editorial-hero_shape span {
+      position: absolute;
+      inset: 12%;
+      border-radius: 42% 58% 64% 36%/42% 34% 66% 58%;
+      background: color-mix(in srgb, var(--accent-page) 68%, #8067c8);
+    }
+    .editorial-hero_shape span:nth-child(2) {
+      inset: 20%;
+      background: color-mix(in srgb, var(--paper) 55%, transparent);
+      transform: rotate(45deg);
+    }
+    .editorial-hero_shape span:nth-child(3) {
+      inset: 31%;
+      background: var(--accent-page);
+      opacity: 0.7;
+      transform: rotate(90deg);
+    }
+    @media (width >= 48rem) {
+      .editorial-hero_inner {
+        width: min(calc(100% - 4rem), 82rem);
+      }
+      .editorial-hero_bottom {
+        grid-template-columns: 1fr auto;
+      }
+    }
+    @media (width < 48rem) {
+      .editorial-hero_shape {
+        top: 15%;
+        right: -40%;
+        width: 95vw;
+        opacity: 0.42;
+      }
+      .editorial-hero_title {
+        font-size: clamp(4.5rem, 24vw, 7rem);
+      }
+    }
+  }
+</style>

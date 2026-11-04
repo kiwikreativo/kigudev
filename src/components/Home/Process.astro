@@ -1,0 +1,139 @@
+---
+import { Image } from "astro:assets";
+import Heading from "@/components/Typography/Heading.astro";
+import comic from "@/assets/logo/comic.png";
+
+const process = [
+  ["Discover", "Goals, users, constraints, and the real problem come first."],
+  [
+    "Research",
+    "References and competitors reveal what to keep and what to question.",
+  ],
+  ["Structure", "Content and journeys become a clear, useful experience."],
+  [
+    "Design",
+    "Layouts and interactions are tested before they become expensive.",
+  ],
+  ["Build", "The approved direction becomes an accessible, fast product."],
+];
+---
+
+<section
+  class="editorial-process_outer"
+  id="about"
+  aria-labelledby="process-title"
+>
+  <div class="editorial-process_wrap">
+    <div class="editorial-process_art" aria-hidden="true">
+      <div class="editorial-process_orbit"></div><Image
+        src={comic}
+        alt=""
+        widths={[420, 640]}
+        sizes="(max-width: 48rem) 80vw, 38vw"
+        loading="lazy"
+      />
+    </div>
+    <div class="editorial-process_content">
+      <p class="editorial-kicker">How I work</p><Heading
+        tag="h2"
+        variant="inherit"
+        id="process-title">A practical process with room to think.</Heading
+      ><ol>
+        {
+          process.map(([title, description]) => (
+            <li>
+              <>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onHomeMotion, reveal } from "@/utils/homeMotion.ts";
+  onHomeMotion(() => reveal(".editorial-process_content"));
+</script>
+
+<style is:global>
+  @layer components {
+    .editorial-process_outer {
+      padding: 1rem;
+    }
+    .editorial-process_wrap {
+      display: grid;
+      max-width: 88rem;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      color: #edf4f3;
+      background: var(--navy);
+    }
+    .editorial-process_art {
+      position: relative;
+      display: grid;
+      min-height: 34rem;
+      place-items: end center;
+      overflow: hidden;
+      background: #4c4cad;
+    }
+    .editorial-process_art img {
+      position: relative;
+      z-index: 2;
+      width: min(90%, 37rem);
+    }
+    .editorial-process_orbit {
+      position: absolute;
+      width: 72%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #8ad9df;
+      box-shadow: 0 0 0 4rem rgb(138 217 223/14%);
+    }
+    .editorial-process_content {
+      display: grid;
+      align-content: center;
+      gap: 1.5rem;
+      padding: clamp(2rem, 5vw, 5rem);
+    }
+    .editorial-process_content ol {
+      display: grid;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .editorial-process_content li {
+      display: grid;
+      grid-template-columns: minmax(6rem, 0.65fr) 1.35fr;
+      gap: 1.25rem;
+      padding-block: 1rem;
+      border-bottom: 0.0625rem solid rgb(237 244 243/20%);
+    }
+    .editorial-process_content li h3 {
+      font:
+        700 1.55rem/1 "Barlow Condensed",
+        sans-serif;
+      text-transform: uppercase;
+    }
+    .editorial-process_content li p {
+      color: rgb(237 244 243/70%);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    @media (width >= 48rem) {
+      .editorial-process_wrap {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (width < 48rem) {
+      .editorial-process_content li {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+    }
+  }
+</style>

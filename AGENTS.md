@@ -52,6 +52,9 @@ Task-specific procedures live in `.claude/skills/`, one folder each, with a
 - `lumos-import-webflow` — move a site off Webflow in three passes: rebuild it
   exactly from the export, swap in the components Lumos already has, then
   connect the CMS. Each pass is verified against the one before.
+- `component-per-feature` — every new feature, section or widget goes in its own
+  component (homepage sections in `src/components/Home/`) and is imported where
+  it's used. Pages and parents like `HomePortfolio.astro` only compose.
 - `lumos-upgrade-version` — move a site onto the latest framework without losing its
   customizations. Three-way merges against the commit it was scaffolded from,
   and pixel-diffs every page before and after.

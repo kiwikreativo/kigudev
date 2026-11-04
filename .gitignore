@@ -29,3 +29,6 @@ pnpm-debug.log*
 # local agent settings
 .claude/settings.local.json
 .seo-cache/
+
+# netlify local dev (incl. local db)
+.netlify/

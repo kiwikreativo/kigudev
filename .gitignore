@@ -18,6 +18,8 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.*
+!.env.example
 .env.production
 
 # macOS-specific files
@@ -30,5 +32,5 @@ pnpm-debug.log*
 .claude/settings.local.json
 .seo-cache/
 
-# netlify local dev (incl. local db)
-.netlify/
+# Local Netlify folder
+.netlify

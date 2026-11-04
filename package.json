@@ -10,6 +10,9 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "test:lead-load": "node --experimental-strip-types scripts/load-leads.ts",
+    "test:lead-browser": "node --experimental-strip-types scripts/test-lead-browser.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write ."

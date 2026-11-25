@@ -7,20 +7,7 @@ import { projects } from "@/data/projects.ts";
 import { services } from "@/data/services.ts";
 import { SCHEDULE_URL } from "@/consts.ts";
 import { leadOptions, leadLimits, communicationLanguages } from "@/utils/leadValidation.ts";
-
-const process = [
-  ["Discover", "Goals, users, constraints, and the real problem come first."],
-  [
-    "Research",
-    "References and competitors reveal what to keep and what to question.",
-  ],
-  ["Structure", "Content and journeys become a clear, useful experience."],
-  [
-    "Design",
-    "Layouts and interactions are tested before they become expensive.",
-  ],
-  ["Build", "The approved direction becomes an accessible, fast product."],
-];
+import { processSteps } from "@/data/process.ts";
 ---
 
 <div class="editorial-home_wrap">
@@ -35,7 +22,7 @@ const process = [
         variant="inherit"
         id="hero-title"
         class="editorial-hero_title"
-        >Useful digital<br /><em>experiences.</em></Heading
+        ><span class="sr-only">Web designer and front-end developer in Costa Rica. </span>Useful digital<br /><em>experiences.</em></Heading
       >
       <div class="editorial-hero_bottom">
         <p>
@@ -66,7 +53,7 @@ const process = [
           projects.map((project, index) => (
             <a
               class="editorial-project_card"
-              href={`/projects/${project.slug}`}
+              href={`/projects/${project.slug}/`}
               style={`--card-index:${index}`}
             >
               <div class="editorial-project_media">
@@ -118,7 +105,7 @@ const process = [
           services.map((service) => (
             <li>
               <>
-                <a href={`/services/${service.slug}`}>
+                <a href={`/services/${service.slug}/`}>
                   <>
                     <span>{service.title}</span>
                     <i class="ph ph-arrow-up-right" aria-hidden="true" />
@@ -155,7 +142,7 @@ const process = [
           id="process-title">A practical process with room to think.</Heading
         ><ol>
           {
-            process.map(([title, description]) => (
+            processSteps.map(([title, description]) => (
               <li>
                 <>
                   <h3>{title}</h3>
@@ -180,6 +167,9 @@ const process = [
           Kiguidev is my independent practice. I bring product thinking and
           front-end engineering into one focused collaboration.
         </p>
+        <a class="editorial-button" href="/about/"
+          >More about me <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a
+        >
       </div>
       <div class="editorial-personal_portrait">
         <Image
@@ -205,7 +195,7 @@ const process = [
           variant="inherit"
           id="contact-title">Have a project in mind?</Heading
         ><p>
-          Non of the available hours fits you for a call? or there's no space in my schedule? You can also reach me by email at
+          None of the available times work for you, or my schedule is full? You can also reach me by email at
           <a href="mailto:guillermo.obando@kiguidev.me"> guillermo.obando@kiguidev.me</a>.
         </p>
         <!-- <a
@@ -270,7 +260,7 @@ const process = [
               aria-describedby="privacy-consent-error"
             /><span
               >I have read the <a
-                href="/privacy-policy"
+                href="/privacy-policy/"
                 target="_blank"
                 rel="noopener noreferrer">Privacy Policy</a
               > and consent to the processing and international transfer of my information
@@ -520,7 +510,7 @@ const process = [
     .editorial-hero_title {
       max-width: 10ch;
       margin-top: 1.5rem;
-      font-family: "Barlow Condensed", var(--display-family);
+      font-family: var(--font-barlow), var(--display-family);
       font-size: clamp(5rem, 13vw, 11.5rem);
       font-weight: 800;
       line-height: 0.75;
@@ -529,7 +519,7 @@ const process = [
     }
     .editorial-hero_title em {
       color: var(--accent-page);
-      font-family: "Fraunces", Georgia, serif;
+      font-family: var(--font-fraunces);
       font-size: 0.69em;
       font-weight: 500;
       line-height: 1.1;
@@ -637,7 +627,7 @@ const process = [
     .editorial-personal_copy h2,
     .editorial-contact_copy h2 {
       max-width: 10ch;
-      font-family: "Barlow Condensed", var(--display-family);
+      font-family: var(--font-barlow), var(--display-family);
       font-size: clamp(3.8rem, 8vw, 7.8rem);
       font-weight: 800;
       line-height: 0.83;
@@ -647,8 +637,7 @@ const process = [
     .editorial-work_word {
       margin: clamp(4rem, 8vw, 7rem) -4vw -3vw;
       font:
-        800 clamp(12rem, 37vw, 35rem)/0.54 "Barlow Condensed",
-        sans-serif;
+        800 clamp(12rem, 37vw, 35rem)/0.54 var(--font-barlow);
       letter-spacing: -0.07em;
       opacity: 0.14;
       white-space: nowrap;
@@ -715,9 +704,7 @@ const process = [
     .editorial-project_copy h3 {
       margin-top: 0.3rem;
       font:
-        500 clamp(1.05rem, 1.7vw, 1.45rem)/1.05 "Fraunces",
-        Georgia,
-        serif;
+        500 clamp(1.05rem, 1.7vw, 1.45rem)/1.05 var(--font-fraunces);
     }
     .editorial-project_copy > span {
       grid-column: 1/-1;
@@ -741,9 +728,7 @@ const process = [
     .editorial-serif {
       max-width: 27ch;
       font:
-        500 clamp(1.45rem, 2.5vw, 2.25rem)/1.25 "Fraunces",
-        Georgia,
-        serif;
+        500 clamp(1.45rem, 2.5vw, 2.25rem)/1.25 var(--font-fraunces);
     }
     .editorial-services_list {
       display: grid;
@@ -766,8 +751,7 @@ const process = [
     }
     .editorial-services_list a span {
       font:
-        750 clamp(2.8rem, 6vw, 5.5rem)/0.9 "Barlow Condensed",
-        sans-serif;
+        750 clamp(2.8rem, 6vw, 5.5rem)/0.9 var(--font-barlow);
       text-transform: uppercase;
       transition:
         color 200ms,
@@ -837,8 +821,7 @@ const process = [
     }
     .editorial-process_content li h3 {
       font:
-        700 1.55rem/1 "Barlow Condensed",
-        sans-serif;
+        700 1.55rem/1 var(--font-barlow);
       text-transform: uppercase;
     }
     .editorial-process_content li p {

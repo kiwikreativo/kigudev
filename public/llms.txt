@@ -1,0 +1,26 @@
+# Kiguidev
+
+> Kiguidev is the independent practice of Guillermo Obando, a web designer and front-end developer in Alajuela, Costa Rica. He designs and builds clear, responsive websites for local businesses and remote clients in the United States and abroad, working in English or Spanish.
+
+## Services
+
+- [Web Redesign](https://kiguidev.me/services/web-redesign/): review and redesign of outdated or hard-to-use websites
+- [Web Development](https://kiguidev.me/services/web-development/): responsive business websites, landing pages and e-commerce
+- [Mobile Enhancement](https://kiguidev.me/services/mobile-enhancement/): usability, accessibility and responsive fixes for existing sites
+- [SEO](https://kiguidev.me/services/seo/): technical SEO, site structure, metadata and performance
+
+## Case studies
+
+- [All projects](https://kiguidev.me/projects/)
+- [DeCorazonJoss](https://kiguidev.me/projects/decorazonjoss/): event decoration website
+- [Meguis Import&Export](https://kiguidev.me/projects/meguis-import-export/): corporate logistics website
+- [Stack Chef](https://kiguidev.me/projects/stack-chef/): AI developer tool
+- [Kalta](https://kiguidev.me/projects/kalta/): marketing agency website
+- [Eghee](https://kiguidev.me/projects/eghee/): product landing page
+
+## About and contact
+
+- [About Guillermo Obando](https://kiguidev.me/about/)
+- [FAQ](https://kiguidev.me/faq/)
+- [Start a project](https://kiguidev.me/#contact)
+- Email: guillermo.obando@kiguidev.me

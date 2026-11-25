@@ -1,31 +1,42 @@
-# Kigudev Remaining SEO Action Plan
+# Kiguidev SEO Action Plan
 
-## Deploy and verify
+From the audit of 2026-11-25 ([FULL-AUDIT-REPORT.md](FULL-AUDIT-REPORT.md)).
+Audit score: **75/100**. The ticked items are done in the working tree and go live with the next deploy.
 
-1. Deploy the current build to Netlify.
-2. Confirm live canonical, Open Graph, robots, and sitemap URLs use `https://kigudev.netlify.app/`.
-3. Confirm `/example-components/` returns 404 and is absent from the sitemap.
-4. Submit one real contact-form test and enable Netlify email notifications.
-5. Confirm Netlify serves the configured security and cache headers.
+## Phase 1: Before the next deploy (Critical / High)
 
-## Add verified evidence
+- [x] 301 `/projects/chainpeek/*` → `/projects/` in `netlify.toml`
+- [x] 301 `/services/ui-ux-design/*` → `/services/web-redesign/` in `netlify.toml`
+- [x] Fixed-path favicons: `public/favicon.ico`, `favicon-96.png`, `apple-touch-icon.png` (dark badge so the icon shows on white)
+- [ ] Commit and deploy (the share image, About page, favicon and everything below)
+- [ ] After deploy, request reindexing of `/` and `/about/` in Search Console; test both redirects on the live site
 
-1. Replace stock case-study imagery with approved project screenshots and captions.
-2. Add client-approved qualitative or measurable outcomes where available.
-3. Add verified LinkedIn, GitHub, or other professional profiles to the About page and entity `sameAs` data.
-4. Replace Kattia’s missing portrait only when an approved image is available.
+## Phase 2: Week 1–2 (High-impact)
 
-## Measurement
+- [x] Trailing slash on every internal link (Nav, Footer, project and service lists)
+- [x] Homepage contact typo fixed
+- [x] `/services/ui-ux-design/` → `/services/web-redesign/`: new title, description and redesign-focused copy; project service tags updated
+- [x] Keyword phrase in the homepage H1 (`sr-only` prefix)
+- [x] Fonts self-hosted through Astro's `fonts` config: Google Fonts and Fontshare (Satoshi kept, since the footer and service pages use it)
+- [x] Person and Organization nodes on the service and project page graphs
 
-1. Add the Netlify site property to Google Search Console and submit `/sitemap-index.xml`.
-2. Configure privacy-appropriate analytics and track successful form submissions and scheduled calls.
-3. Review CrUX/Search Console Core Web Vitals after sufficient traffic exists.
-4. Monitor non-brand impressions for web design, front-end development, mobile enhancement, and technical SEO queries.
+## Phase 3: Month 1–2 (Content and authority)
 
-## Rebrand and domain migration
+- [ ] Replace stock case-study photos with real screenshots of the delivered sites (**needs your screenshots**)
+- [ ] Grow each case study to 500+ words: problem, decisions, result, client quote (**needs your input**)
+- [x] Intro paragraphs for `/services/` and `/projects/` (review the wording)
+- [ ] Add a "What you get / timeline / starting at" block to each service page (**needs your timelines and prices**)
+- [x] Longer titles: "… Services in Costa Rica", and "Project: category" for case studies
+- [x] FAQPage JSON-LD on `/faq/` (questions now live in `src/data/faq.ts`)
+- [x] `public/llms.txt`
+- [x] `Person.image` → `guillermo.jpg` (36 KB, was a 413 KB PNG)
+- [x] About hero portrait no longer fades in from invisible, so it paints immediately
 
-1. Select the replacement brand and verify domain and social-handle availability.
-2. Update centralized site name, URL, identity, metadata, and visual assets.
-3. Connect the new domain in Netlify and enable the commented permanent redirect in `netlify.toml`.
-4. Add both old and new properties to Search Console and submit a new sitemap.
-5. Keep redirects active long-term and monitor indexing during the transition.
+## Phase 4: Ongoing (Monitoring)
+
+- [ ] Search Console: submit `sitemap-index.xml`; watch the ChainPeek → Kalta and ui-ux-design → web-redesign redirects
+- [ ] PageSpeed Insights on `/` and `/about/` after deploy; field Core Web Vitals once there's traffic
+- [ ] Rich Results Test on `/about/`, `/faq/`, one service page and one case study
+- [ ] Content-Security-Policy header in `netlify.toml` (test Calendly and the form after adding it)
+- [ ] Optional: Spanish versions of the key pages with hreflang
+- [ ] Re-audit after Phase 3

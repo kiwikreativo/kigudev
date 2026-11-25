@@ -25,37 +25,38 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: "ui-ux-design",
+    slug: "web-redesign",
     number: "01",
-    title: "WEB REDESIGN",
+    title: "Web Redesign",
     titleLines: ["WEB", "REDESIGN"],
     homepageCopy:
       "Outdated websites redesigned into modern, responsive experiences built around real users and business goals.",
-    homepageDetail: "Research · user flows · design systems",
+    homepageDetail: "Site review · user flows · new design",
     paragraphs: [
-      "Good design starts with research, not a blank canvas. Before any screen gets drawn, I look at who's using the product, what they're trying to do, and where they get stuck.",
-      "That research turns into user flows: the actual paths someone takes to complete a task, mapped out so nothing forces them to guess or backtrack. From there I build a design system — colors, type, spacing, components — so the interface stays consistent as the product grows, instead of every new page reinventing its own rules.",
-      "The goal is an interface that fits the business it's built for. A SaaS dashboard and a furniture storefront need different things, and the design decisions should reflect that rather than following a generic template.",
+      "A redesign starts with the site you already have, not a blank canvas. Before anything changes, I look at who visits it, what they're trying to do, and where the current pages make them guess, scroll past or leave.",
+      "That review shows what to keep and what to rebuild. Content that works stays; confusing navigation, dated layouts and pages that break on phones get replaced. I map the paths visitors should take, then design a consistent set of colors, type, spacing and components so every page feels like the same business.",
+      "The goal is a site that fits the business it represents today. A logistics company and an event studio need different things, and the new design should reflect that rather than following a generic template.",
     ],
     included: [
-      "User and competitor research",
-      "User flow mapping",
-      "Wireframes and high-fidelity mockups",
+      "Review of the current site and competitors",
+      "New structure and user flow mapping",
+      "Responsive redesign, from wireframes to final screens",
     ],
     audience:
-      "For businesses and product teams that need a new interface, a clearer user flow, or a consistent design system before development begins.",
+      "For businesses whose website looks outdated, doesn't work well on phones, or no longer explains what they do.",
     process: [
-      "Clarify business goals, user needs, and the decisions the interface must support.",
-      "Map content and user flows before committing to visual details.",
+      "Review the current site, its content, and what visitors need from it.",
+      "Decide what to keep, rewrite or remove, and map the new page structure.",
       "Design and refine responsive screens, components, and interaction states.",
-      "Prepare an organized design system and implementation-ready handoff.",
+      "Rebuild the site, or hand off implementation-ready designs to your team.",
     ],
     faqs: [
-      { question: "Can UI/UX design be delivered without development?", answer: "Yes. The engagement can end with approved responsive designs and a reusable design system, or continue into front-end implementation." },
-      { question: "What is needed to begin?", answer: "A useful starting point is the business goal, the primary audience, existing brand material, and any current product or content that needs improvement." },
+      { question: "Do I need to start from scratch?", answer: "No. A redesign keeps the content, pages and search visibility that already work, and replaces what holds the site back." },
+      { question: "Can the redesign be delivered without development?", answer: "Yes. The engagement can end with approved responsive designs and a reusable design system, or continue into building the new site." },
+      { question: "What is needed to begin?", answer: "Access to the current site, your business goals, your main audience, and any brand material you want to keep." },
     ],
     seoDescription:
-      "UI/UX design focused on research, user flows, wireframes, high-fidelity interfaces, and reusable design systems built around real business needs.",
+      "Website redesign for businesses with outdated or hard-to-use sites: a review of what works, a clearer structure, and a modern responsive design.",
     image: uiUxDesignImage,
     imageAlt:
       "Notebook, smartphone, and interface planning materials arranged on a design desk",
@@ -91,7 +92,6 @@ export const services: Service[] = [
       "Test the finished site and provide a clear launch or handoff path.",
     ],
     faqs: [
-      { question: "Which technologies are used?", answer: "The technology is selected for the project rather than forced in advance. This site and several portfolio projects use Astro for fast, maintainable static delivery." },
       { question: "Can an existing design be developed?", answer: "Yes. Development can begin from an approved design, or design and development can be handled together as one engagement." },
     ],
     seoDescription:

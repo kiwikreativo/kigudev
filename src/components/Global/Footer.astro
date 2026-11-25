@@ -24,12 +24,12 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
           <nav aria-label="Footer">
             <ul class="footer_links">
               <li>
-                <a class="footer_link" href="/faq">
+                <a class="footer_link" href="/faq/">
                   <i class="ph ph-question" aria-hidden="true" /> FAQ
                 </a>
               </li>
               <li>
-                <a class="footer_link" href="/privacy-policy">
+                <a class="footer_link" href="/privacy-policy/">
                   <i class="ph ph-shield-check" aria-hidden="true" /> Privacy
                   Policy
                 </a>
@@ -185,7 +185,7 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
       margin-bottom: clamp(7rem, 12vw, 11rem);
       content: "KIGUIDEV";
       color: var(--editorial-foreground);
-      font-family: "Satoshi", "Geist", sans-serif;
+      font-family: var(--font-satoshi);
       font-size: clamp(6rem, 16vw, 18rem);
       font-weight: 900;
       line-height: 0.72;
@@ -204,7 +204,7 @@ const scheduleExternal = SCHEDULE_URL.startsWith("http");
     .footer_links,
     .footer_copyright {
       color: var(--editorial-muted);
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-jetbrains);
       font-size: 0.65rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;

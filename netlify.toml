@@ -21,3 +21,13 @@ functions = "netlify/functions"
   to = "https://kiguidev.me/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/projects/chainpeek/*"
+  to = "/projects/"
+  status = 301
+
+[[redirects]]
+  from = "/services/ui-ux-design/*"
+  to = "/services/web-redesign/"
+  status = 301

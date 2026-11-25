@@ -1,6 +1,15 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import SectionFaqMain from "@/components/Portfolio/SectionFaqMain.astro";
+import { SITE_URL } from "@/consts.ts";
+import { faqSchema } from "@/data/faq.ts";
+import { breadcrumbSchema, entityIds } from "@/utils/structuredData.ts";
+
+const canonical = `${SITE_URL}/faq/`;
+const structuredData = { "@context": "https://schema.org", "@graph": [
+  { ...faqSchema(canonical), isPartOf: { "@id": entityIds.website } },
+  breadcrumbSchema([{ name: "Home", url: `${SITE_URL}/` }, { name: "FAQ", url: canonical }]),
+] };
 ---
 
 <Layout
@@ -8,5 +17,6 @@ import SectionFaqMain from "@/components/Portfolio/SectionFaqMain.astro";
   title="Frequently Asked Questions"
   description="Answers to common questions about Kiguidev web design, development, timelines, responsive websites, SEO, and starting a project."
 >
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <SectionFaqMain />
 </Layout>

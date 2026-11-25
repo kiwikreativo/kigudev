@@ -12,6 +12,11 @@ export default defineConfig({
     }),
   ],
   fonts: [
+    { name: "Barlow Condensed", cssVariable: "--font-barlow", provider: fontProviders.google(), weights: [600, 700, 800], styles: ["normal", "italic"], fallbacks: ["sans-serif"] },
+    { name: "Fraunces", cssVariable: "--font-fraunces", provider: fontProviders.google(), weights: [400, 500, 600], styles: ["normal", "italic"], fallbacks: ["Georgia", "serif"] },
+    { name: "Geist", cssVariable: "--font-geist", provider: fontProviders.google(), weights: [400, 500, 600], fallbacks: ["sans-serif"] },
+    { name: "JetBrains Mono", cssVariable: "--font-jetbrains", provider: fontProviders.google(), weights: [500, 600], fallbacks: ["monospace"] },
+    { name: "Satoshi", cssVariable: "--font-satoshi", provider: fontProviders.fontshare(), weights: [400, 500, 600, 700], fallbacks: ["sans-serif"] },
     {
       name: "Inter",
       cssVariable: "--font-inter",

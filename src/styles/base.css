@@ -16,9 +16,9 @@
   --brand-text: #ffffff;
 
   /* Typography primitives */
-  --primary-family: "Geist", sans-serif;
-  --display-family: "Geist", sans-serif;
-  --label-family: "JetBrains Mono", monospace;
+  --primary-family: var(--font-geist);
+  --display-family: var(--font-geist);
+  --label-family: var(--font-jetbrains);
   --primary-regular: 400;
   --primary-medium: 500;
   --primary-bold: 700;

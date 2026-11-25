@@ -2,15 +2,17 @@
 import Layout from "@/layouts/BaseLayout.astro";
 import ContentAboutPage from "@/components/Portfolio/ContentAboutPage.astro";
 import { SITE_AUTHOR, SITE_URL } from "@/consts.ts";
-import { breadcrumbSchema, entityIds } from "@/utils/structuredData.ts";
+import { breadcrumbSchema, entityIds, entityNodes } from "@/utils/structuredData.ts";
 
 const canonical = `${SITE_URL}/about/`;
+const updated = "2026-11-25";
 const structuredData = { "@context": "https://schema.org", "@graph": [
-  { "@type": "ProfilePage", "@id": `${canonical}#webpage`, url: canonical, name: `About ${SITE_AUTHOR}`, mainEntity: { "@id": entityIds.person }, isPartOf: { "@id": entityIds.website } },
+  { "@type": "ProfilePage", "@id": `${canonical}#webpage`, url: canonical, name: `About ${SITE_AUTHOR}`, dateModified: updated, mainEntity: { "@id": entityIds.person }, isPartOf: { "@id": entityIds.website } },
+  ...entityNodes,
   breadcrumbSchema([{ name: "Home", url: `${SITE_URL}/` }, { name: "About", url: canonical }]),
 ] };
 ---
-<Layout theme="dark" title={`About ${SITE_AUTHOR}`} description="Meet Guillermo Obando, a Costa Rica-based web designer and front-end developer serving local businesses and remote US clients.">
+<Layout theme="dark" title={`About ${SITE_AUTHOR}, Web Designer in Costa Rica`} description="Meet Guillermo Obando, a Costa Rica-based web designer and front-end developer serving local businesses and remote US clients." imageAlt={`${SITE_AUTHOR}, web designer and front-end developer in Costa Rica`}>
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <ContentAboutPage />
 </Layout>

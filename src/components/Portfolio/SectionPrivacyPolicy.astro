@@ -251,7 +251,7 @@ const { render = true } = Astro.props;
     .privacy-policy_title {
       max-width: 10ch;
       margin: 0;
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(3.75rem, 9vw, 8rem);
       font-weight: 700;
       line-height: 0.84;
@@ -270,7 +270,7 @@ const { render = true } = Astro.props;
     .privacy-policy_updated {
       margin: 0;
       color: var(--editorial-subtle);
-      font-family: "JetBrains Mono", monospace;
+      font-family: var(--font-jetbrains);
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
@@ -297,7 +297,7 @@ const { render = true } = Astro.props;
       max-width: 22ch;
       margin: 0;
       color: var(--editorial-foreground);
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(1.6rem, 3vw, 2.5rem);
       font-weight: 600;
       line-height: 1.05;

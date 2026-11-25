@@ -26,13 +26,12 @@ export const siteEntityGraph = {
       name: SITE_AUTHOR,
       url: `${SITE_URL}/about/`,
       jobTitle: "Web Designer and Front-End Developer",
-      image: `${SITE_URL}/guillermo.png`,
+      image: `${SITE_URL}/guillermo.jpg`,
       email: "guillermo.obando@kiguidev.me",
       knowsAbout:['Web Design', 'Front-End Development', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'CSS', 'Astro', 'Tailwind CSS', 'Node.js', 'Express.js', 'GraphQL', 'REST APIs', 'Responsive Design', 'UI/UX Design', 'Performance Optimization', 'Accessibility', 'SEO', 'Version Control (Git)', 'Agile Methodologies'],
       knowsLanguage: ["es", "en"],
       sameAs: [
         "https://www.linkedin.com/in/guillermo-obando/",
-        "https://github.com/kiwikreativo",
       ],
       homeLocation: {
         "@type": "Country",
@@ -74,6 +73,10 @@ export const siteEntityGraph = {
     },
   ],
 };
+
+export const entityNodes = siteEntityGraph["@graph"].filter(
+  (node) => node["@id"] === entityIds.person || node["@id"] === entityIds.organization,
+);
 
 export const breadcrumbSchema = (
   items: Array<{ name: string; url: string }>,

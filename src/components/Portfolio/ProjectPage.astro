@@ -21,8 +21,7 @@ const metadata = [
   ["Focus", project.focus],
   ["Duration", project.duration],
 ].filter((entry) => entry[1]);
-const hasCapabilities =
-  project.services.length > 0 || project.technologies?.length;
+const hasCapabilities = project.services.length > 0;
 ---
 
 {
@@ -256,7 +255,7 @@ const hasCapabilities =
                 id="capabilities-title"
                 class="project-page_subtitle"
               >
-                Services &amp; Technology
+                Services
               </Heading>
             </div>
             <div class="project-page_capability-groups">
@@ -266,22 +265,10 @@ const hasCapabilities =
                   <ul>
                     {project.services.map((service) => (
                       <li>
-                        <a href={`/services/${service.slug}`}>
+                        <a href={`/services/${service.slug}/`}>
                           {service.title}
                           <i class="ph ph-arrow-up-right" aria-hidden="true" />
                         </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {project.technologies?.length && (
-                <div>
-                  <h3>Technology</h3>
-                  <ul>
-                    {project.technologies.map((technology) => (
-                      <li>
-                        <span>{technology}</span>
                       </li>
                     ))}
                   </ul>
@@ -293,7 +280,7 @@ const hasCapabilities =
       )}
 
       <nav class="project-page_next" aria-labelledby="next-project-title">
-        <a href={`/projects/${nextProject.slug}`}>
+        <a href={`/projects/${nextProject.slug}/`}>
           <div class="project-page_container project-page_next-layout">
             <div>
               <p class="project-page_eyebrow">Next Project</p>
@@ -460,7 +447,7 @@ const hasCapabilities =
       max-width: 12ch;
       margin: 0;
       color: var(--project-foreground);
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(3.5rem, 7vw, 9rem);
       font-weight: 700;
       line-height: 0.8;
@@ -526,7 +513,7 @@ const hasCapabilities =
     .project-page_subtitle {
       max-width: 12ch;
       margin: 0;
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(3.2rem, 6.5vw, 7rem);
       font-weight: 600;
       line-height: 0.86;
@@ -689,7 +676,7 @@ const hasCapabilities =
       gap: 1rem;
       min-height: 4rem;
       color: var(--project-foreground);
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(1.15rem, 2vw, 1.75rem);
       letter-spacing: -0.025em;
       text-decoration: none;
@@ -730,7 +717,7 @@ const hasCapabilities =
     .project-page_next-title {
       max-width: 14ch;
       margin: 0;
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(3.5rem, 8vw, 8.5rem);
       font-weight: 700;
       line-height: 0.82;
@@ -773,7 +760,7 @@ const hasCapabilities =
     .project-page_cta-title {
       max-width: 11ch;
       margin: 0;
-      font-family: "Geist", var(--display-family);
+      font-family: var(--font-geist), var(--display-family);
       font-size: clamp(3.75rem, 9vw, 9rem);
       font-weight: 700;
       line-height: 0.82;
@@ -977,7 +964,7 @@ const hasCapabilities =
     .project-page_subtitle,
     .project-page_next-title,
     .project-page_cta-title {
-      font-family: "Barlow Condensed", var(--display-family);
+      font-family: var(--font-barlow), var(--display-family);
       font-weight: 800;
       letter-spacing: -0.045em;
     }
@@ -989,7 +976,7 @@ const hasCapabilities =
     .project-page_lede,
     .project-page_story-copy .text,
     .project-page_cta-copy {
-      font-family: "Fraunces", Georgia, serif;
+      font-family: var(--font-fraunces);
     }
     .project-page_lede {
       color: var(--project-foreground);

@@ -6,6 +6,7 @@ import { SITE_NAME, SITE_URL } from "@/consts.ts";
 import {
   breadcrumbSchema,
   entityIds,
+  entityNodes,
 } from "@/utils/structuredData.ts";
 
 export function getStaticPaths() {
@@ -40,6 +41,7 @@ const structuredData = {
       publisher: { "@id": entityIds.organization },
       about: project.services.map((service) => service.title),
     },
+    ...entityNodes,
     {
       "@type": "WebPage",
       "@id": `${canonicalUrl}#webpage`,
@@ -59,7 +61,7 @@ const structuredData = {
 
 <Layout
   theme="dark"
-  title={`${project.title} — Case Study`}
+  title={`${project.title}: ${project.category}`}
   description={project.seoDescription}
   image={project.image.src}
 >

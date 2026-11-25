@@ -189,7 +189,7 @@ const { render = true, service, otherServices } = Astro.props;
             <ul class="service-page_related-list">
               {otherServices.map((related) => (
                 <li>
-                  <a href={`/services/${related.slug}`}>
+                  <a href={`/services/${related.slug}/`}>
                     <span class="service-page_related-number">
                       {related.number}
                     </span>
@@ -330,7 +330,7 @@ const { render = true, service, otherServices } = Astro.props;
     .service-page_title {
       margin: 0;
       color: var(--service-foreground);
-      font-family: "Satoshi", var(--display-family);
+      font-family: var(--font-satoshi), var(--display-family);
       font-size: clamp(3rem, 5vw, 8rem);
       font-weight: 700;
       line-height: 0.8;
@@ -494,7 +494,7 @@ const { render = true, service, otherServices } = Astro.props;
     .service-page_subtitle {
       max-width: 8ch;
       margin: 0;
-      font-family: "Satoshi", var(--display-family);
+      font-family: var(--font-satoshi), var(--display-family);
       font-size: clamp(3.25rem, 4.5vw, 5rem);
       font-weight: 600;
       line-height: 0.86;
@@ -550,7 +550,7 @@ const { render = true, service, otherServices } = Astro.props;
       max-width: 34ch;
       margin: 0;
       color: var(--service-foreground);
-      font-family: "Satoshi", var(--display-family);
+      font-family: var(--font-satoshi), var(--display-family);
       font-size: clamp(1.5rem, 3vw, 2.75rem);
       line-height: 1.05;
       letter-spacing: -0.035em;
@@ -575,7 +575,7 @@ const { render = true, service, otherServices } = Astro.props;
     }
 
     .service-page_related-title {
-      font-family: "Satoshi", var(--display-family);
+      font-family: var(--font-satoshi), var(--display-family);
       font-size: clamp(1.5rem, 3vw, 2.75rem);
       line-height: 1;
       letter-spacing: -0.035em;
@@ -614,7 +614,7 @@ const { render = true, service, otherServices } = Astro.props;
       max-width: 11ch;
       margin: 0;
       color: var(--service-foreground);
-      font-family: "Satoshi", var(--display-family);
+      font-family: var(--font-satoshi), var(--display-family);
       font-size: clamp(4rem, 9vw, 9rem);
       font-weight: 700;
       line-height: 0.82;
@@ -795,7 +795,7 @@ const { render = true, service, otherServices } = Astro.props;
     .service-page_included-list p,
     .service-page_related-title,
     .service-page_cta-title {
-      font-family: "Barlow Condensed", var(--display-family);
+      font-family: var(--font-barlow), var(--display-family);
       font-weight: 800;
       letter-spacing: -0.045em;
     }
@@ -806,7 +806,7 @@ const { render = true, service, otherServices } = Astro.props;
     .service-page_lede,
     .service-page_body .text,
     .service-page_cta-copy {
-      font-family: "Fraunces", Georgia, serif;
+      font-family: var(--font-fraunces);
     }
     .service-page_lede {
       color: var(--service-foreground);

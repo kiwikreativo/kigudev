@@ -2,6 +2,7 @@ import type { ImageMetadata } from "astro";
 import chainpeekImage from "@/assets/projects/chainpeek.webp";
 import decorazonjossImage from "@/assets/projects/decorazonjoss.webp";
 import egheeImage from "@/assets/projects/eghee.webp";
+import kaltaImage from "@/assets/projects/kalta.webp";
 import meguisImage from "@/assets/projects/meguis.webp";
 import stackChefImage from "@/assets/projects/stack-chef.webp";
 
@@ -13,7 +14,7 @@ export interface ProjectGalleryItem {
 
 export interface ProjectService {
   title: string;
-  slug: "ui-ux-design" | "web-development" | "mobile-enhancement" | "seo";
+  slug: "web-redesign" | "web-development" | "mobile-enhancement" | "seo";
 }
 
 export interface Project {
@@ -32,7 +33,6 @@ export interface Project {
   photoCredit: string;
   photoUrl: string;
   services: ProjectService[];
-  technologies?: string[];
   challenge?: string[];
   approach?: string[];
   solution?: string[];
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     category: "Event decoration website",
     shortDescription:
       "Business website for Decorazon Joss, an event decoration company, built with Astro.",
-    role: "Web Design, Development, and SEO",
+    role: "Web Design and Development",
     focus: "Brand presence & inquiries",
     duration: "4 weeks",
     image: decorazonjossImage,
@@ -63,10 +63,10 @@ export const projects: Project[] = [
     photoUrl:
       "https://www.pexels.com/photo/elegant-indoor-wedding-reception-setup-35985211/",
     services: [
-      { title: "UI/UX Design", slug: "ui-ux-design" },
+      { title: "Web Redesign", slug: "web-redesign" },
       { title: "Web Development", slug: "web-development" },
     ],
-    technologies: ["Astro"],
+    projectUrl: "https://decorazonjoss.netlify.app/",
     challenge: [
       "DeCorazonJoss needed a focused business website that could communicate the character of its event-decoration work while making it easy for prospective clients to understand the service and start an inquiry.",
     ],
@@ -101,7 +101,7 @@ export const projects: Project[] = [
     photoUrl:
       "https://www.pexels.com/photo/container-ship-at-terminal-burchardkai-in-hamburg-21234960/",
     services: [
-      { title: "UI/UX Design", slug: "ui-ux-design" },
+      { title: "Web Redesign", slug: "web-redesign" },
       { title: "Web Development", slug: "web-development" },
     ],
     projectUrl: "https://meguis.net/",
@@ -139,7 +139,7 @@ export const projects: Project[] = [
     photoUrl:
       "https://www.pexels.com/photo/person-facing-a-big-screen-with-numbers-9783346/",
     services: [
-      { title: "UI/UX Design", slug: "ui-ux-design" },
+      { title: "Web Redesign", slug: "web-redesign" },
       { title: "Web Development", slug: "web-development" },
     ],
     projectUrl: "https://stackcheff.netlify.app/",
@@ -159,6 +159,44 @@ export const projects: Project[] = [
       "Explore the Stack Chef case study: an AI-powered application for scaffolding and generating development boilerplates.",
   },
   {
+    slug: "kalta",
+    number: "06",
+    title: "Kalta",
+    titleLines: ["Kalta"],
+    category: "Marketing agency website",
+    shortDescription:
+      "A bilingual website for Kalta, a Costa Rica agency combining digital content, paid advertising, and AI automation.",
+    role: "Web Design, Development, and SEO",
+    focus: "Services & lead generation",
+    duration: "5 weeks",
+    image: kaltaImage,
+    imageAlt:
+      "Team reviewing marketing charts on a laptop used as contextual imagery for Kalta",
+    imageKind: "contextual",
+    photoCredit: "fauxels",
+    photoUrl: "https://www.pexels.com/photo/photo-of-person-using-laptop-3183174/",
+    services: [
+      { title: "Web Redesign", slug: "web-redesign" },
+      { title: "Web Development", slug: "web-development" },
+      { title: "SEO", slug: "seo" },
+    ],
+    projectUrl: "https://kaltaagency.com",
+    challenge: [
+      "Kalta offers three distinct services, digital content, paid advertising, and AI automation, and needed a website, local & Geographic SEO and custom email with domain that presented them as one connected way of working instead of three unrelated offers.",
+    ],
+    approach: [
+      "The site was structured around a single idea: communication and operations should move forward together. Each service line got its own concise card, a short process section explains how the team works, and an automation diagram in the hero shows how tools like CRM, Slack, Gmail, and Google Sheets connect through n8n.",
+    ],
+    solution: [
+      "I designed and developed a bilingual Spanish and English website with a dark, focused visual system, service cards that lead to quote requests, a four-step process overview, and a contact form that asks visitors which service they need before they write.",
+    ],
+    outcome: [
+      "Kalta now has a clear digital presence, a custom enterprise email, and positioning with local and Geographic SEO that explains its integrated offer in a few scrolls and turns interest into qualified conversations through a single, structured contact path.",
+    ],
+    seoDescription:
+      "Explore the Kalta case study: a bilingual marketing agency website presenting digital content, paid advertising, and AI automation services.",
+  },
+  {
     slug: "eghee",
     number: "04",
     title: "Eghee",
@@ -175,7 +213,7 @@ export const projects: Project[] = [
     photoCredit: "eat kubba",
     photoUrl:
       "https://www.pexels.com/photo/bread-slices-on-brown-wooden-chopping-board-11842180/",
-    services: [{ title: "UI/UX Design", slug: "ui-ux-design" }],
+    services: [{ title: "Web Redesign", slug: "web-redesign" }],
     projectUrl: "https://egghee.netlify.app/",
     challenge: [
       "Eghee needed a landing page that could introduce premium ghee and egg bread products through a clear story rather than presenting visitors with an undifferentiated product list.",
@@ -192,45 +230,7 @@ export const projects: Project[] = [
     seoDescription:
       "Explore the Eghee case study: a modern product landing page focused on premium ghee, egg bread, and product storytelling.",
   },
-  {
-    slug: "chainpeek",
-    number: "05",
-    title: "ChainPeek",
-    titleLines: ["Chain", "Peek"],
-    category: "Web3 wallet dApp",
-    shortDescription:
-      "A Web3 dApp for connecting a MetaMask wallet, checking balances, and sending funds through a lightweight wallet interface.",
-    role: "Web Design & Development",
-    focus: "Wallet flows",
-    duration: "5 weeks",
-    image: chainpeekImage,
-    imageAlt:
-      "Cryptocurrency interface on a phone used as contextual imagery for ChainPeek",
-    imageKind: "contextual",
-    photoCredit: "Leeloo The First",
-    photoUrl:
-      "https://www.pexels.com/photo/white-smartphone-on-gray-laptop-8358145/",
-    services: [
-      { title: "UI/UX Design", slug: "ui-ux-design" },
-      { title: "Web Development", slug: "web-development" },
-    ],
-    projectUrl: "https://chaiinpeek.netlify.app/",
-    technologies: ["MetaMask"],
-    challenge: [
-      "ChainPeek needed to make essential wallet actions understandable within a compact Web3 interface, where unclear connection states or transaction steps can quickly reduce user confidence.",
-    ],
-    approach: [
-      "The experience was organized around a short sequence: connect a MetaMask wallet, confirm account information, review balances, and prepare a transfer. Each state was treated as part of one continuous task rather than a collection of disconnected controls.",
-    ],
-    solution: [
-      "I designed and developed a lightweight wallet interface with focused actions, readable account information, and responsive layouts that preserve the transaction flow on smaller screens.",
-    ],
-    outcome: [
-      "The resulting dApp provides a clearer path through common wallet actions and demonstrates how a restrained interface can reduce friction in a technically unfamiliar workflow.",
-    ],
-    seoDescription:
-      "Explore the ChainPeek case study: a lightweight Web3 wallet interface for connecting MetaMask, checking balances, and sending funds.",
-  },
+  
 ];
 
 export const projectBySlug = new Map(

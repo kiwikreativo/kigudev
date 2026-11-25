@@ -1,78 +1,770 @@
 ---
+import { Image } from "astro:assets";
 import Heading from "@/components/Typography/Heading.astro";
-import Paragraph from "@/components/Typography/Paragraph.astro";
-import Button from "@/components/Button.astro";
+import formal from "@/assets/logo/formal.png";
+import comic from "@/assets/logo/comic.png";
+import workspace from "@/assets/Workspace.webp";
+import Accordion from "@/components/Interactive/Accordion.astro";
+import AccordionItem from "@/components/Interactive/AccordionItem.astro";
+import { processSteps } from "@/data/process.ts";
+import { projects } from "@/data/projects.ts";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/guillermo-obando/";
+
+const name = "GUILLERMO";
+const values = ["Responsibility", "Empathy", "Clarity"];
+const quote = "A clear website isn't a simpler website. It's one where every decision has a reason you can explain.";
+const mission = "Every project should leave a business easier to understand and easier to trust.";
+const words = (text: string) => text.split(" ");
+
+const principles = [
+  {
+    title: "Responsibility",
+    text: "I own the outcome, not just the tasks. Problems get raised early, together with options to solve them.",
+    example: "If something is at risk, you hear it from me first, with a plan.",
+  },
+  {
+    title: "Empathy",
+    text: "I design for the person using the site, not for my portfolio. Their questions shape the structure.",
+    example: "I think about your visitors before I think about layout.",
+  },
+  {
+    title: "Clarity",
+    text: "No jargon and no surprises. Scope, cost and timing are agreed in plain language before work starts.",
+    example: "Every estimate lists what is included and what is not.",
+  },
+  {
+    title: "Care for craft",
+    text: "Sites are accessible, responsive and easy to update later. The work should hold up long after launch.",
+    example: "You can edit your own content without calling me for every change.",
+  },
+];
 ---
 
 <article class="about-page_wrap">
+  <!-- Hero -->
   <header class="about-page_hero">
-    <div class="about-page_container">
-      <p class="about-page_eyebrow">About / Guillermo Obando</p>
-      <Heading tag="h1" variant="inherit" class="about-page_title">
-        Design thinking meets front-end engineering.
+    <p class="about-page_tagline">
+      {values.map((value, index) => <>{index > 0 && <span aria-hidden="true">•</span>}{value}</>)}
+    </p>
+    <div class="about-page_stage">
+      <p class="about-page_name" aria-hidden="true">
+        {name.split("").map((letter) => <span>{letter}</span>)}
+      </p>
+      <div class="about-page_portrait">
+        <span class="about-page_sun" aria-hidden="true"></span>
+        <Image
+          src={formal}
+          alt="Guillermo Obando, web designer and front-end developer"
+          widths={[480, 720, 960]}
+          sizes="(max-width: 48rem) 90vw, 32rem"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+    <div class="about-page_hero-copy">
+      <Heading tag="h1" variant="inherit" class="about-page_intro">
+        <span class="sr-only">Guillermo Obando. </span>I build clear, honest
+        websites for businesses that want to be understood.
       </Heading>
-      <Paragraph class="about-page_lede">
-        I&rsquo;m Guillermo Obando, the designer and developer behind Kiguidev. I
-        work from Costa Rica with local and remote US clients to create clear,
-        responsive digital experiences.
-      </Paragraph>
+      <a class="about-page_button" href="/#contact"
+        >Let&rsquo;s talk <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a
+      >
     </div>
   </header>
 
-  <section class="about-page_section" aria-labelledby="work-title">
-    <div class="about-page_container about-page_layout">
-      <Heading tag="h2" variant="inherit" id="work-title" class="about-page_subtitle">
-        How I work
-      </Heading>
-      <div class="about-page_copy">
-        <Paragraph>
-          My work combines user experience design, interface systems, and
-          front-end development. That combination keeps design decisions close
-          to implementation and helps avoid handoff gaps that weaken the final
-          product.
-        </Paragraph>
-        <Paragraph>
-          Projects begin with the business goal and the people using the
-          product. From there, I define structure, design the interface, build
-          responsive components, and test the experience across devices.
-        </Paragraph>
+  <!-- Who I am -->
+  <section class="about-page_section" aria-labelledby="who-title">
+    <div class="about-page_container about-page_split">
+      <div class="about-page_copy about-page_reveal">
+        <p class="about-page_kicker">Who I am</p>
+        <Heading tag="h2" variant="inherit" id="who-title" class="about-page_title">
+          Designer and developer in Costa Rica.
+        </Heading>
+        <p>
+          I&rsquo;m Guillermo Obando, a web designer and front-end developer.
+          Through Kiguidev, my independent practice, I take projects from the
+          first conversation to a working website: research, structure,
+          interface design and the code behind it.
+        </p>
+        <p>
+          I work from Alajuela, Costa Rica, with businesses here and remote
+          clients in the United States and abroad. We can work in English or
+          Spanish, whichever is easier for your team. See the{" "}
+          <a href="/services/">services I offer</a> and{" "}
+          <a href="/projects/">recent projects</a> to know what working
+          together looks like.
+        </p>
+        <dl class="about-page_facts">
+          <div><dt>Based in</dt><dd>Alajuela, Costa Rica</dd></div>
+          <div><dt>Clients in</dt><dd>Costa Rica, US and abroad</dd></div>
+          <div><dt>Languages</dt><dd>English and Spanish</dd></div>
+          <div><dt>Experience</dt><dd>1 year building websites for clients</dd></div>
+          <div><dt>Focus</dt><dd>Business websites, landing pages, UI/UX design</dd></div>
+          <div><dt>Projects delivered</dt><dd><a href="/projects/">{projects.length} case studies</a></dd></div>
+          <div><dt>Profile</dt><dd><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer me">LinkedIn <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></dd></div>
+        </dl>
+      </div>
+      <div class="about-page_media">
+        <Image
+          src={comic}
+          alt="Illustrated portrait of Guillermo Obando"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 48rem) 90vw, 40vw"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
 
-  <section class="about-page_section alternate" aria-labelledby="collaboration-title">
-    <div class="about-page_container about-page_layout">
-      <Heading tag="h2" variant="inherit" id="collaboration-title" class="about-page_subtitle">
-        Remote collaboration
-      </Heading>
-      <div class="about-page_copy">
-        <Paragraph>
-          I support businesses in Costa Rica and remote clients in the United
-          States. Communication, project scope, and practical next steps stay
-          visible throughout the engagement so decisions can be made without
-          unnecessary complexity.
-        </Paragraph>
-        <Button element="link" href="/#contact">Start a project</Button>
+  <!-- My story -->
+  <section class="about-page_section" aria-labelledby="story-title">
+    <div class="about-page_container about-page_story">
+      <figure class="about-page_workspace">
+        <div class="about-page_media">
+          <Image
+            src={workspace}
+            alt="Guillermo's desk: an ultrawide monitor, keyboard and notebook under warm light"
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 48rem) 90vw, 45vw"
+            loading="lazy"
+          />
+        </div>
+        <figcaption>Where the work happens, in Alajuela.</figcaption>
+      </figure>
+      <div class="about-page_story-copy">
+        <div class="about-page_reveal">
+          <p class="about-page_kicker">My story</p>
+          <Heading tag="h2" variant="inherit" id="story-title" class="about-page_title">
+            Why I do this work.
+          </Heading>
+        </div>
+        <p class="about-page_reveal">
+          A website is often the first conversation a business has with someone
+          new. When it is confusing, people leave without saying why. When it is
+          clear, they stay and ask. I like being the person who makes the second
+          outcome more likely.
+        </p>
+        <figure class="about-page_quote">
+          <blockquote class="about-page_scrub">
+            {words(quote).map((word) => <span class="about-page_word">{word} </span>)}
+          </blockquote>
+        </figure>
+        <Accordion openFirst class="about-page_chapters about-page_reveal">
+          <AccordionItem heading="How it started">
+            <p>
+              My first site was my own portfolio. I came from the backend side
+              and knew almost nothing about design, but I wanted to show my
+              work, and that simple static site gave me the confidence to keep
+              learning. My first client site, for the customs business{" "}
+              <a href="/projects/meguis-import-export/">Meguis Import&amp;Export</a>,
+              was a new challenge: I had to learn how the business worked before
+              I could build a site that met its needs.
+            </p>
+          </AccordionItem>
+          <AccordionItem heading="A typical day">
+            <p>
+              I work in Pomodoro blocks: 50 minutes of focus, then a 10 to 15
+              minute break, with a task tracker keeping priorities in order.
+              Client calls go in the morning or late afternoon to fit US time
+              zones, and if my availability changes, you hear about it right
+              away.
+            </p>
+          </AccordionItem>
+          <AccordionItem heading="Outside of work">
+            <p>
+              My faith matters a lot to me. I go to church on Sundays and make
+              time every day to read the Bible and pray. That foundation keeps
+              me focused and motivated, at work and outside it.
+            </p>
+          </AccordionItem>
+        </Accordion>
       </div>
+    </div>
+  </section>
+
+  <!-- Working principles -->
+  <section class="about-page_section" aria-labelledby="principles-title">
+    <div class="about-page_container">
+      <div class="about-page_reveal">
+        <p class="about-page_kicker">What represents me</p>
+        <Heading tag="h2" variant="inherit" id="principles-title" class="about-page_title">
+          How I show up for clients.
+        </Heading>
+      </div>
+      <ol class="about-page_cards">
+        {
+          principles.map((principle, index) => (
+            <li class="about-page_card">
+              <span class="about-page_number">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+              <p class="about-page_example">&ldquo;{principle.example}&rdquo;</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="about-page_mission" aria-label="My mission">
+    <p class="about-page_scrub">
+      {words(mission).map((word) => <span class="about-page_word">{word} </span>)}
+    </p>
+  </section>
+
+  <!-- How I work -->
+  <section class="about-page_section" aria-labelledby="process-title">
+    <div class="about-page_container">
+      <div class="about-page_reveal about-page_heading-row">
+        <div>
+          <p class="about-page_kicker">How I work</p>
+          <Heading tag="h2" variant="inherit" id="process-title" class="about-page_title">
+            Five steps, every project.
+          </Heading>
+        </div>
+        <a class="about-page_link" href="/#about"
+          >See it on the homepage <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a
+        >
+      </div>
+      <ol class="about-page_cards five">
+        {
+          processSteps.map(([title, description], index) => (
+            <li class="about-page_card">
+              <span class="about-page_number">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Next step -->
+  <section class="about-page_cta" aria-labelledby="cta-title">
+    <div class="about-page_container about-page_cta-inner about-page_reveal">
+      <Heading tag="h2" variant="inherit" id="cta-title" class="about-page_title">
+        Let&rsquo;s talk about your project.
+      </Heading>
+      <p>
+        Get in touch and tell me more about the problem you want to solve.
+        I&rsquo;ll reply with honest next steps.
+      </p>
+      <a class="about-page_button" href="/#contact"
+        >Go to the contact form <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a
+      >
     </div>
   </section>
 </article>
 
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+  let context: gsap.Context | undefined;
+  const initialize = () => {
+    context?.revert();
+    const root = document.querySelector<HTMLElement>(".about-page_wrap");
+    if (!root || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    context = gsap.context(() => {
+      const heroScroll = { trigger: ".about-page_hero", start: "top top", end: "bottom top", scrub: true };
+      root.classList.add("is-animated");
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .to(".about-page_sun", { opacity: 1, scale: 1, duration: 0.8 }, 0)
+        .to(".about-page_name span", { opacity: 1, y: 0, duration: 0.6, stagger: 0.03 }, 0.1)
+        .from(".about-page_portrait img", { y: 60, duration: 0.7 }, 0.15);
+      gsap.to(".about-page_name", { yPercent: -25, ease: "none", scrollTrigger: heroScroll });
+      gsap.to(".about-page_sun", { scale: 1.2, ease: "none", scrollTrigger: heroScroll });
+      gsap.utils.toArray<HTMLElement>(".about-page_media").forEach((media) =>
+        gsap.fromTo(
+          media,
+          { scale: 0.82 },
+          { scale: 1, ease: "none", scrollTrigger: { trigger: media, start: "top bottom", end: "center center", scrub: true } },
+        ),
+      );
+      gsap.utils.toArray<HTMLElement>(".about-page_reveal").forEach((element) =>
+        gsap.from(element, { opacity: 0, y: 32, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: element, start: "top 85%", once: true } }),
+      );
+      gsap.utils.toArray<HTMLElement>(".about-page_cards").forEach((list) =>
+        gsap.from(list.children, { opacity: 0, y: 56, duration: 0.8, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: list, start: "top 80%", once: true } }),
+      );
+      gsap.utils.toArray<HTMLElement>(".about-page_scrub").forEach((element) =>
+        gsap.fromTo(
+          element.querySelectorAll(".about-page_word"),
+          { opacity: 0.15 },
+          { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: element, start: "top 80%", end: "bottom 50%", scrub: true } },
+        ),
+      );
+    }, root);
+  };
+  initialize();
+  document.addEventListener("astro:page-load", initialize);
+  document.addEventListener("astro:before-swap", () => context?.revert());
+</script>
+
 <style>
   @layer components {
-    .about-page_wrap { color: var(--text); background: var(--background); }
-    .about-page_container { width: min(calc(100% - 2.5rem), 80rem); margin-inline: auto; }
-    .about-page_hero { padding-block: clamp(9rem, 16vw, 15rem) clamp(6rem, 10vw, 9rem); }
-    .about-page_eyebrow { margin: 0 0 1.5rem; color: var(--accent); font-family: var(--label-family); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
-    .about-page_title { max-width: 12ch; margin: 0; font-family: var(--display-family); font-size: clamp(3.25rem, 9vw, 8rem); font-weight: 500; line-height: 0.88; letter-spacing: -0.055em; text-wrap: balance; }
-    .about-page_lede { max-width: 48rem; margin: 2.5rem 0 0 auto; color: var(--text-secondary); font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.6; }
-    .about-page_section { padding-block: clamp(5rem, 10vw, 9rem); border-top: 0.0625rem solid var(--border); }
-    .about-page_section.alternate { background: var(--surface-secondary); }
-    .about-page_layout { display: grid; gap: 3rem; }
-    .about-page_subtitle { max-width: 8ch; margin: 0; font-family: var(--display-family); font-size: clamp(2.75rem, 6vw, 5.5rem); font-weight: 500; line-height: 0.92; letter-spacing: -0.045em; }
-    .about-page_copy { display: grid; max-width: 42rem; gap: 1.5rem; }
-    .about-page_copy p { margin: 0; color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; }
-    .about-page_copy :global(.button_wrap) { justify-self: start; }
-    @media (width >= 48rem) { .about-page_layout { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; } }
+    .about-page_wrap {
+      --paper: #eef0e8;
+      --ink: #071722;
+      --accent-page: #089eb5;
+      --accent-deep: #116f86;
+      --surface: color-mix(in srgb, var(--ink) 6%, var(--paper));
+      --muted: color-mix(in srgb, var(--ink) 72%, var(--paper));
+      color: var(--ink);
+      background: var(--paper);
+      overflow-x: clip;
+    }
+    :global([data-theme="dark"]) .about-page_wrap {
+      --paper: #081721;
+      --ink: #edf4f3;
+      --accent-page: #30b8c9;
+      --accent-deep: #68d2de;
+    }
+    .about-page_wrap :where(h1, h2, h3, p, blockquote, figure, dl, dd, ol) {
+      margin: 0;
+    }
+    .about-page_wrap :where(a):focus-visible {
+      outline: 0.15rem solid var(--accent-page);
+      outline-offset: 0.25rem;
+    }
+
+    /* Shared */
+    .about-page_container {
+      width: min(calc(100% - 2rem), 82rem);
+      margin-inline: auto;
+    }
+    .about-page_section {
+      padding-block: clamp(7rem, 13vw, 12rem);
+    }
+    .about-page_kicker,
+    .about-page_tagline,
+    .about-page_number {
+      font: 600 0.72rem/1.2 var(--label-family);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-page_kicker {
+      margin-bottom: 1.5rem;
+      color: var(--accent-page);
+    }
+    .about-page_title {
+      max-width: 14ch;
+      font-family: var(--font-barlow), var(--display-family);
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+    .about-page_button {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 3rem;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 100vw;
+      padding-inline: 1.6rem;
+      color: #071722;
+      background: var(--accent-page);
+      font-weight: 650;
+      text-decoration: none;
+      white-space: nowrap;
+      transition:
+        transform 250ms ease,
+        background 250ms ease;
+    }
+    .about-page_button:hover {
+      background: color-mix(in srgb, var(--accent-page) 80%, #ffffff);
+      transform: translateY(-0.15rem);
+    }
+    .about-page_button:active {
+      transform: scale(0.98);
+    }
+
+    /* Hero */
+    .about-page_hero {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100dvh;
+      overflow: hidden;
+      padding-block: calc(var(--nav-height) + 1.5rem) clamp(2.5rem, 6vh, 4rem);
+      background: radial-gradient(
+        ellipse 70% 55% at 50% 55%,
+        color-mix(in srgb, var(--accent-page) 14%, transparent),
+        transparent 70%
+      );
+    }
+    .about-page_tagline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6em 1.2em;
+      padding-inline: 1rem;
+      letter-spacing: clamp(0.15em, 1.2vw, 0.32em);
+    }
+    .about-page_tagline span {
+      color: var(--accent-page);
+    }
+    .about-page_stage {
+      position: relative;
+      display: grid;
+      place-items: end center;
+      margin-top: 1rem;
+    }
+    .about-page_name {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      inset-inline: 0;
+      color: color-mix(in srgb, var(--accent-page) 15%, transparent);
+      font: 800 clamp(5rem, 24vw, 26rem)/0.8 var(--font-barlow), var(--display-family);
+      letter-spacing: -0.03em;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .about-page_name {
+      will-change: transform;
+    }
+    .about-page_name span {
+      display: inline-block;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .about-page_name span {
+        opacity: 0;
+        transform: translateY(40%);
+        animation: about-page-show 0.6s 2s forwards;
+      }
+      .about-page_sun {
+        opacity: 0;
+        transform: scale(0.6);
+        animation: about-page-show 0.8s 2s forwards;
+      }
+      .about-page_wrap.is-animated :is(.about-page_name span, .about-page_sun) {
+        animation: none;
+      }
+    }
+    @keyframes about-page-show {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    .about-page_portrait {
+      position: relative;
+      display: grid;
+      justify-items: center;
+    }
+    .about-page_sun {
+      position: absolute;
+      z-index: -1;
+      top: 2%;
+      left: 50%;
+      width: 106%;
+      aspect-ratio: 1;
+      translate: -50% 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 40%,
+        color-mix(in srgb, var(--accent-page) 70%, #ffffff),
+        var(--accent-page) 55%,
+        var(--accent-deep)
+      );
+      will-change: transform;
+    }
+    .about-page_sun::after {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle closest-side,
+        transparent 60%,
+        color-mix(in srgb, var(--accent-page) 45%, transparent) 62.5%,
+        transparent
+      );
+    }
+    .about-page_portrait :global(img) {
+      display: block;
+      width: auto;
+      max-width: 90vw;
+      height: clamp(20rem, 52dvh, 38rem);
+      object-fit: contain;
+      mask-image:
+        linear-gradient(to bottom, #000 72%, transparent),
+        linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+      mask-composite: intersect;
+    }
+    .about-page_hero-copy {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      justify-items: center;
+      gap: 1.75rem;
+      width: min(calc(100% - 2rem), 52rem);
+      margin: -1.5rem auto 0;
+      text-align: center;
+    }
+    .about-page_intro {
+      max-width: 36ch;
+      font:
+        500 clamp(1.4rem, 2.6vw, 2.3rem)/1.25 var(--font-fraunces);
+      text-wrap: balance;
+    }
+
+    /* Who I am */
+    .about-page_split {
+      display: grid;
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+    .about-page_copy {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .about-page_copy > p,
+    .about-page_story-copy > p,
+    .about-page_chapters p {
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      line-height: 1.75;
+    }
+    .about-page_title + p {
+      margin-top: 1rem;
+    }
+    .about-page_facts {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 0.0625rem solid color-mix(in srgb, var(--ink) 15%, transparent);
+    }
+    .about-page_facts div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem 2rem;
+    }
+    .about-page_facts dt {
+      color: var(--muted);
+      font: 600 0.72rem/1.6 var(--label-family);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-page_facts dd {
+      font-weight: 600;
+    }
+    .about-page_copy a,
+    .about-page_chapters a {
+      color: var(--accent-page);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 200ms ease;
+    }
+    .about-page_copy a:hover,
+    .about-page_chapters a:hover {
+      color: var(--ink);
+    }
+    .about-page_media {
+      overflow: hidden;
+      border-radius: 1.5rem;
+      background: radial-gradient(circle at 50% 35%, var(--accent-page), var(--accent-deep));
+    }
+    .about-page_media :global(img) {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .about-page_media:hover :global(img) {
+      transform: scale(1.05);
+    }
+
+    /* Story */
+    .about-page_story {
+      display: grid;
+      gap: clamp(3rem, 6vw, 5rem);
+      align-items: start;
+    }
+    .about-page_workspace {
+      display: grid;
+      gap: 1rem;
+    }
+    .about-page_workspace figcaption {
+      color: var(--muted);
+      font: 600 0.72rem/1.4 var(--label-family);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-page_story-copy {
+      display: grid;
+      gap: 1.75rem;
+    }
+    .about-page_chapters :global(.accordion_item) {
+      border-bottom-color: color-mix(in srgb, var(--ink) 15%, transparent);
+    }
+    .about-page_chapters :global(.accordion_title) {
+      font: 750 clamp(1.5rem, 2vw, 1.8rem)/1 var(--font-barlow), var(--display-family);
+      text-transform: uppercase;
+    }
+    .about-page_chapters :global(.accordion_icon) {
+      border-color: var(--accent-page);
+      color: var(--accent-page);
+    }
+    .about-page_quote {
+      margin-block: 2rem;
+      border-left: 0.25rem solid var(--accent-page);
+      border-radius: 0 1rem 1rem 0;
+      padding: clamp(1.75rem, 4vw, 2.75rem);
+      background: var(--surface);
+    }
+    .about-page_quote blockquote {
+      font:
+        500 clamp(1.4rem, 2.4vw, 2rem)/1.3 var(--font-fraunces);
+    }
+
+    /* Cards */
+    .about-page_cards {
+      display: grid;
+      gap: 1rem;
+      margin-top: clamp(3rem, 6vw, 5rem);
+      padding: 0;
+      list-style: none;
+    }
+    .about-page_card {
+      display: grid;
+      align-content: start;
+      gap: 1rem;
+      border: 0.0625rem solid color-mix(in srgb, var(--ink) 8%, transparent);
+      border-radius: 1.25rem;
+      padding: clamp(1.5rem, 2.5vw, 2rem);
+      background: var(--surface);
+      transition:
+        transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 350ms;
+    }
+    .about-page_card:hover {
+      border-color: var(--accent-page);
+      transform: translateY(-0.4rem);
+    }
+    .about-page_number {
+      color: var(--accent-page);
+      font-size: 0.85rem;
+    }
+    .about-page_card h3 {
+      font: 750 clamp(1.7rem, 2.4vw, 2.1rem)/1 var(--font-barlow), var(--display-family);
+      text-transform: uppercase;
+    }
+    .about-page_card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .about-page_card .about-page_example {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 0.0625rem solid color-mix(in srgb, var(--ink) 12%, transparent);
+      color: var(--ink);
+      font:
+        italic 500 1.05rem/1.45 var(--font-fraunces);
+    }
+    .about-page_heading-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .about-page_link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 0.0625rem solid currentColor;
+      padding-bottom: 0.25rem;
+      color: var(--accent-page);
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    /* Mission */
+    .about-page_mission {
+      display: grid;
+      place-items: center;
+      padding: clamp(7rem, 14vw, 13rem) 1rem;
+      color: #071722;
+      background: var(--accent-page);
+    }
+    .about-page_mission p {
+      max-width: 22ch;
+      font: 800 clamp(2.6rem, 6.5vw, 6.2rem)/0.92 var(--font-barlow), var(--display-family);
+      letter-spacing: -0.03em;
+      text-align: center;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    /* Next step */
+    .about-page_cta {
+      padding-block: clamp(7rem, 13vw, 12rem);
+      background: var(--surface);
+    }
+    .about-page_cta-inner {
+      display: grid;
+      justify-items: center;
+      gap: 1.75rem;
+      text-align: center;
+    }
+    .about-page_cta-inner > p {
+      max-width: 44ch;
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      line-height: 1.7;
+    }
+
+    @media (width >= 48rem) {
+      .about-page_container {
+        width: min(calc(100% - 4rem), 82rem);
+      }
+      .about-page_split {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+      .about-page_story {
+        grid-template-columns: 0.95fr 1.05fr;
+      }
+      .about-page_workspace {
+        position: sticky;
+        top: 7rem;
+      }
+      .about-page_cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .about-page_cards.five > :last-child {
+        grid-column: 1 / -1;
+      }
+    }
+    @media (width >= 64rem) {
+      .about-page_cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .about-page_cards.five {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+      .about-page_cards.five > :last-child {
+        grid-column: auto;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-page_wrap *,
+      .about-page_wrap *::before,
+      .about-page_wrap *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
   }
 </style>
